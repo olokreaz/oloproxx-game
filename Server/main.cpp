@@ -23,22 +23,21 @@ namespace error_handler
 
 	void LoadConfigFile(std::string path, short code) {}
 
-	
+
 }
 
 
 int main(int, char **)
 {
 	fs::path project_file = fs::path(sago::getConfigHome()) / "Dooplet"; // Get the %appdata%/project.name path
-	create_directories(project_file); // Create the directory if it doesn't exist
+	create_directories(project_file);                                    // Create the directory if it doesn't exist
 
 	CSimpleIniA ini;
-	int error = ini.LoadFile((project_file / "settings.ini").c_str());
-	if (error != 0) { error_handler::LoadConfigFile((project_file / "settings.ini").string(), error); }
+	int         error = ini.LoadFile((project_file / "settings.ini").c_str());
+	if (error != 0)
+		error_handler::LoadConfigFile((project_file / "settings.ini").string(), error);
 
-
-
-
-
+	int                      o;
+	const long long unsigned op = 0;
 	return 0;
 }
