@@ -1,13 +1,12 @@
 #include <SimpleIni.h>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/filesystem.hpp>
 #include <fmt/core.h>
 #include <sago/platform_folders.h>
 
-
 namespace fs = boost::filesystem;
-
 
 namespace error_handler
 {
@@ -21,11 +20,16 @@ namespace error_handler
 	// SI_NOMEM = -2; //!< Out of memory error
 	// SI_FILE = -3; //!< File error (see errno for detail error)
 
-	void LoadConfigFile(std::string path, short code) {}
-
+	void LoadConfigFile(std::string path, short code)
+	{
+		if (code == -1 || code == -3)
+			{
+				std::ofstream(path).close();
+				CSimpleIni ini;
+			}
+	}
 
 }
-
 
 int main(int, char **)
 {
@@ -37,7 +41,5 @@ int main(int, char **)
 	if (error != 0)
 		error_handler::LoadConfigFile((project_file / "settings.ini").string(), error);
 
-	int                      o;
-	const long long unsigned op = 0;
 	return 0;
 }
