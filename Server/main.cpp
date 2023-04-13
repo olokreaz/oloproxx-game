@@ -18,11 +18,6 @@ namespace fs = boost::filesystem;
 // SI_NOMEM = -2; //!< Out of memory error
 // SI_FILE = -3; //!< File error (see errno for detail error)
 
-/*
- *	dooplet = MTA5MzIyNjU3Nzg1NDIwNjAxMw.GrGLn7.AL1KrP1xw_aX7qnAwdcgmEV_nYen9P_AiZ1zXc
- *	oloprox = MTA5MzI1MzM1NTMyMjc1MzE0NA.GpsW3c.a3w1AtXOIR82jCNRvP6b4lfkBXNfdBRc0waQBw
- */
-
 #include <yaml-cpp/yaml.h>
 
 int main(int, char **)
@@ -55,12 +50,16 @@ int main(int, char **)
 							}
 						if (cli.get_command() == "N")
 							cli.write("okay ♥");
-						exit(1);
+return 0;
 					}
 		}
 
-	if
+	
 
 	YAML::Node General_config = YAML::LoadFile((project_dir / "config.yaml").string()); 
 		return 0;
 }
+
+/*
+
+ */
