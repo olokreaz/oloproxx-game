@@ -1,65 +1,107 @@
+#include <argh.h>
 #include <commandline.h>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/string_file.hpp>
 #include <fmt/core.h>
 #include <sago/platform_folders.h>
-#include <steam/steam_api.h>
 
 namespace fs = boost::filesystem;
 
-// SI_OK = 0; //!< No error
-// SI_UPDATED = 1; //!< An existing value was updated
-// SI_INSERTED = 2; //!< A new value was inserted
-// 
-// for any error with (retval < 0) 
-// SI_FAIL = -1; //!< Generic failure
-// SI_NOMEM = -2; //!< Out of memory error
-// SI_FILE = -3; //!< File error (see errno for detail error)
-
 #include <yaml-cpp/yaml.h>
 
-int main(int, char **)
+bool LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 {
-	const fs::path project_dir = fs::path(sago::getConfigHome()) / "oloprox" / "dooplet";
 	// Get the %appdata%/project.name path
-	if (!fs::exists(project_dir))
-		create_directories(project_dir); // Create the directory if it doesn't exist
+	if (!fs::exists(dir))
+		create_directories(dir); // Create the directory if it doesn't exist
 
-	Commandline cli;
-	bool        bNullFileConfig = false;
-
-	if (!fs::exists(project_dir / "config.yaml"))
+	if (!fs::exists(dir / "config.yaml"))
 		{
 			cli.write(fmt::format("Not Found File settins:{}, Create him? Y(yes)/N(no)",
-						(project_dir / "config.yaml").string()));
+						(dir / "config.yaml").string()));
+
 			while (true)
 				if (cli.has_command())
 					{
 						if (cli.get_command() == "Y")
 							{
 								std::ofstream
-									fs((project_dir / "config.yaml").string());
+									fs((dir / "config.yaml").string());
 								// Creat General Config
 								if (!fs.is_open())
-									throw;
+									throw "Dont Create File";
 								fs.close();
-								bNullFileConfig = true;
-								break;
+								return false;
 							}
+
 						if (cli.get_command() == "N")
-							cli.write("okay ♥");
-return 0;
+							{
+								cli.write("okay ♥");
+								exit(0);
+							}
+
+						cli.write("Please, send Y/N (yes or no)");
 					}
 		}
 
-	
-
-	YAML::Node General_config = YAML::LoadFile((project_dir / "config.yaml").string()); 
-		return 0;
+	return true;
 }
 
-/*
+bool ParseLoadFile(
+	const fs::path project_dir,
+	Commandline &  cli,
+	YAML::Node     config
+	)
+{
+	config = YAML::LoadFile((project_dir / "config.yaml").string());
+	if (config.size() == 0)
+		{
+			cli.write(fmt::format("This file {{ {} }} haven't settings, Create default settings?",
+						(project_dir / "config.yaml").string()));
+			while (true)
+				if (cli.has_command())
+					{
+						if (cli.get_command() == "Y")
+							return false;
 
- */
+						if (cli.get_command() == "N")
+							{
+								cli.write("okay ♥");
+								exit(0);
+							}
+
+						cli.write("Please, send Y/N (yes or no)");
+					}
+		}
+	return true;
+}
+
+int main(int, char **)
+{
+	const fs::path project_dir = fs::path(sago::getConfigHome()) / "oloprox" / "dooplet";
+	Commandline    cli;
+
+	LoadGeneralConfig(project_dir, cli);
+	std::cout << typeid(cli).name() << std::endl;
+
+	YAML::Node config;
+	if (!ParseLoadFile(project_dir, cli, config))
+		{
+			std::cout << "Generated File " << project_dir / "config.yaml" << std::endl;
+			config[ "General" ][ "Config dir" ] = std::vector<std::string> {
+					(project_dir / ".config").string(),
+					(project_dir / ".setting").string()
+				};
+			
+			config[ "General" ][ "Temp dir" ] = boost::filesystem::temp_directory_path().string();
+
+			std::ofstream fout((project_dir / "config.yaml").string());
+			if (fout.is_open())
+				fout << config;
+		}
+
+	return 0;
+}

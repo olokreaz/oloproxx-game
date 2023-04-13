@@ -167,6 +167,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="utils\utils.ixx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="discord\" />
+    <Folder Include="networking\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".clang-format" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
