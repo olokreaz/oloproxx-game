@@ -4,8 +4,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Server\Server.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{5B8DEAE6-C786-4614-86AC-D48DB2B37BAA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Discord Bot", "Discord Bot\Discord Bot.vcxproj", "{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -30,13 +28,5 @@ Global
 		{5B8DEAE6-C786-4614-86AC-D48DB2B37BAA}.Release|Win32.Build.0 = Release|Win32
 		{5B8DEAE6-C786-4614-86AC-D48DB2B37BAA}.Release|x64.ActiveCfg = Release|x64
 		{5B8DEAE6-C786-4614-86AC-D48DB2B37BAA}.Release|x64.Build.0 = Release|x64
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Debug|Win32.Build.0 = Debug|Win32
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Debug|x64.ActiveCfg = Debug|x64
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Debug|x64.Build.0 = Debug|x64
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Release|Win32.ActiveCfg = Release|Win32
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Release|Win32.Build.0 = Release|Win32
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Release|x64.ActiveCfg = Release|x64
-		{FBBF930E-E608-4A3A-8BBE-9FEDF4B07174}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal

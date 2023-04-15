@@ -166,12 +166,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dooplet Bot.ixx" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="utils\utils.ixx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="discord\" />
     <Folder Include="networking\" />
+    <Folder Include="utils\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".clang-format" />

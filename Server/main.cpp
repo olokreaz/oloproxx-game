@@ -93,9 +93,9 @@ int main(int, char **)
 			std::cout << "Generated File " << project_dir / "config.yaml" << std::endl;
 			config[ "General" ][ "Config dir" ] = std::vector<std::string> {
 					(project_dir / ".config").string(),
-					(project_dir / ".setting").string()
+					(project_dir / ".settings").string()
 				};
-			
+
 			config[ "General" ][ "Temp dir" ] = boost::filesystem::temp_directory_path().string();
 
 			std::ofstream fout((project_dir / "config.yaml").string());
