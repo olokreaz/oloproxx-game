@@ -1,0 +1,64 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+AccessModifierOffset: -8
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignOperands: false
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakAfterDefinitionReturnType: false
+AlwaysBreakTemplateDeclarations: No
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping: 
+  AfterCaseLabel: true
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: true
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: true
+  BeforeWhile: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: AfterColon
+ColumnLimit: 115
+CompactNamespaces: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ContinuationIndentWidth: 16
+Cpp11BracedListStyle: false
+IncludeCategories: 
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentCaseBlocks: true
+IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
+IndentWidth: 8
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+NamespaceIndentation: All
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: false
+SpaceInEmptyParentheses: true
+SpacesInAngles: true
+SpacesInConditionalStatement: true
+SpacesInCStyleCastParentheses: true
+SpacesInParentheses: true
+SpacesInSquareBrackets: true
+UseTab: Always
+...

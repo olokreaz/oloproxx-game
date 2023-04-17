@@ -1,0 +1,56 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+AccessModifierOffset: -8
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: false
+AlignOperands: true
+AlignTrailingComments: false
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: false
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping: 
+  AfterCaseLabel: true
+  AfterClass: false
+  AfterControlStatement: true
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: true
+  BeforeWhile: false
+  IndentBraces: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: AfterColon
+ColumnLimit: 110
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ContinuationIndentWidth: 8
+IncludeCategories: 
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentCaseBlocks: true
+IndentWidth: 8
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+SpaceAfterCStyleCast: true
+SpacesBeforeTrailingComments: 0
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: true
+SpacesInSquareBrackets: true
+UseTab: Always
+...
