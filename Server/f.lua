@@ -1,3 +1,3 @@
-function TEST(a)
-    return a + "123"
+function get()
+    return "123"
 end

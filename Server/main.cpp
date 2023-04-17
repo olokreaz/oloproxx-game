@@ -110,6 +110,7 @@ std::string GetTypeName(T)
 }
 }
 
+#include <lua.hpp>
 
 int main(int, char **)
 {
@@ -121,9 +122,6 @@ int main(int, char **)
 	YAML::Node config;
 	utils::GenereteConfig(project_dir, cli, config);
 
-	
-	
-	// all tags
-	
+
 	return 0;
 }
