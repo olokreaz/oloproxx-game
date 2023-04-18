@@ -6,6 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/string_file.hpp>
 #include <fmt/core.h>
+#include <fmt/format.h>
 #include <sago/platform_folders.h>
 
 namespace fs = boost::filesystem;
@@ -31,8 +32,9 @@ bool LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 					{
 						if (cli.get_command() == "Y")
 							{
-								std::ofstream
-									fs((dir / "config.yaml").string());
+								std::ofstream fs(
+									(dir / "config.yaml").string()
+									);
 								// Creat General Config
 								if (!fs.is_open())
 									throw "Dont Create File";
@@ -95,22 +97,47 @@ void GenereteConfig(const fs::path project_dir, Commandline &cli, YAML::Node &co
 				};
 
 			config[ "General" ][ "Temp dir" ] = boost::filesystem::temp_directory_path().string();
-
-			std::ofstream fout((project_dir / "config.yaml").string(), std::ios::trunc);
-			if (fout.is_open())
-				fout << config;
+			config[ "General" ][ "Logged" ][ "dir" ] = (project_dir / ".log").string();
+			config[ "General" ][ "Logged" ][ "level" ] = "info";
 		}
 }
 
-template < typename T >
-std::string GetTypeName(T)
-{
-	std::string s = typeid(T).name();
-	return s.substr(s.find(" ") != std::string::npos ? s.find(" ") + 1 : 0);
-}
-}
+class file {
+	fs::path m_path;
 
-#include <lua.hpp>
+public:
+	file(fs::path path) :
+		m_path {path} {}
+
+	friend void operator<<(file i, YAML::Node &root)
+	{
+		using namespace fmt::literals;
+		std::ofstream ofs(i.m_path.string(), std::ios::trunc);
+		if (!ofs.is_open())
+			throw fmt::system_error(errno
+						, "Can't open file {{ {file} }}\n"
+						, "file"_a = i.m_path.string()
+				);
+		ofs << root;
+		ofs.close();
+	}
+
+	friend void operator>>(file i, YAML::Node &root)
+	{
+		using namespace fmt::literals;
+		std::ifstream ifs(i.m_path.string());
+		if (!ifs.is_open())
+			throw fmt::system_error(errno
+						, "Can't open file {{ {file} }}\n"
+						, "file"_a = i.m_path.string()
+				);
+		root = YAML::Load(ifs);
+		ifs.close();
+	}
+
+};
+
+}
 
 int main(int, char **)
 {
@@ -120,8 +147,8 @@ int main(int, char **)
 	utils::LoadGeneralConfig(project_dir, cli);
 
 	YAML::Node config;
+	utils::file(project_dir / "config.yaml") >> config;
 	utils::GenereteConfig(project_dir, cli, config);
-
 
 	return 0;
 }
