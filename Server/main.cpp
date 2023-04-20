@@ -1,19 +1,13 @@
-#include <argh.h>
 #include <commandline.h>
-#include <fstream>
-#include <iostream>
 #include <string>
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/string_file.hpp>
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <boost/filesystem/path.hpp>
 #include <sago/platform_folders.h>
-
-namespace fs = boost::filesystem;
 
 #include <yaml-cpp/yaml.h>
 
-import utils;
+namespace fs = boost::filesystem;
+
+# include <utils.hpp>;
 
 int main(int, char **)
 {
@@ -25,8 +19,6 @@ int main(int, char **)
 	YAML::Node config;
 	utils::file(project_dir / "config.yaml") >> config;
 	utils::GenereteConfig(project_dir, cli, config);
-
-	
 
 	return 0;
 }

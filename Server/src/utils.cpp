@@ -1,22 +1,13 @@
-module;
-#include <argh.h>
 #include <commandline.h>
 #include <fstream>
 #include <iostream>
-#include <string>
+#include <utils.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/filesystem/string_file.hpp>
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <sago/platform_folders.h>
-
-namespace fs = boost::filesystem;
-
 #include <yaml-cpp/yaml.h>
-export module utils;
 
-namespace utils {
-bool LoadGeneralConfig(const fs::path &dir, Commandline &cli)
+bool utils::LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 {
 	// Get the %appdata%/project.name path
 	if (!fs::exists(dir))
@@ -57,17 +48,14 @@ bool LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 	return true;
 }
 
-bool ParseLoadFile(
-	const fs::path project_dir
-	, Commandline &cli
-	, YAML::Node config
-	)
+bool utils::ParseLoadFile(const fs::path project_dir, Commandline &cli, YAML::Node config)
 {
 	config = YAML::LoadFile((project_dir / "config.yaml").string());
 	if (config.size() == 0)
 		{
-			cli.write(fmt::format("This file {{ {} }} haven't settings, Create default settings?"
-					      , (project_dir / "config.yaml").string()
+			cli.write(fmt::format(
+					"This file {{ {} }} haven't settings, Create default settings?"
+					, (project_dir / "config.yaml").string()
 					)
 				);
 			while (true)
@@ -88,7 +76,7 @@ bool ParseLoadFile(
 	return true;
 }
 
-void GenereteConfig(const fs::path project_dir, Commandline &cli, YAML::Node &config)
+void utils::GenereteConfig(const fs::path project_dir, Commandline &cli, YAML::Node &config)
 {
 	if (!utils::ParseLoadFile(project_dir, cli, config))
 		{
@@ -98,45 +86,38 @@ void GenereteConfig(const fs::path project_dir, Commandline &cli, YAML::Node &co
 					, (project_dir / ".settings").string()
 				};
 
-			config[ "General" ][ "Temp dir" ] = boost::filesystem::temp_directory_path().string();
-			config[ "General" ][ "Logged" ][ "dir" ] = (project_dir / ".log").string();
+			config[ "General" ][ "Temp dir" ] = boost::filesystem::temp_directory_path().
+				string();
+			config[ "General" ][ "Logged" ][ "dir" ]   = (project_dir / ".log").string();
 			config[ "General" ][ "Logged" ][ "level" ] = "info";
 		}
 }
 
-class file {
-	fs::path m_path;
+utils::file::file(fs::path path):
+	m_path {path} {}
 
-public:
-	file(fs::path path) :
-		m_path {path} {}
+void operator<<(utils::file i, YAML::Node &root)
+{
+	using namespace fmt::literals;
+	std::ofstream ofs(i.m_path.string(), std::ios::trunc);
+	if (!ofs.is_open())
+		throw fmt::system_error(errno
+					, "Can't open file {{ {file} }}\n"
+					, "file"_a = i.m_path.string()
+			);
+	ofs << root;
+	ofs.close();
+}
 
-	friend void operator<<(file i, YAML::Node &root)
-	{
-		using namespace fmt::literals;
-		std::ofstream ofs(i.m_path.string(), std::ios::trunc);
-		if (!ofs.is_open())
-			throw fmt::system_error(errno
-						, "Can't open file {{ {file} }}\n"
-						, "file"_a = i.m_path.string()
-				);
-		ofs << root;
-		ofs.close();
-	}
-
-	friend void operator>>(file i, YAML::Node &root)
-	{
-		using namespace fmt::literals;
-		std::ifstream ifs(i.m_path.string());
-		if (!ifs.is_open())
-			throw fmt::system_error(errno
-						, "Can't open file {{ {file} }}\n"
-						, "file"_a = i.m_path.string()
-				);
-		root = YAML::Load(ifs);
-		ifs.close();
-	}
-
-};
-
+void operator>>(utils::file i, YAML::Node &root)
+{
+	using namespace fmt::literals;
+	std::ifstream ifs(i.m_path.string());
+	if (!ifs.is_open())
+		throw fmt::system_error(errno
+					, "Can't open file {{ {file} }}\n"
+					, "file"_a = i.m_path.string()
+			);
+	root = YAML::Load(ifs);
+	ifs.close();
 }
