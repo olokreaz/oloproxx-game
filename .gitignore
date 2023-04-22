@@ -1,7 +1,9 @@
-bin/
 obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
 Server/x64
 Client/x64
+Launcher/x64
+x64
+build x64/

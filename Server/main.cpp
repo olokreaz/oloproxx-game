@@ -1,5 +1,4 @@
 #include <commandline.h>
-#include <string>
 #include <boost/filesystem/path.hpp>
 #include <sago/platform_folders.h>
 
@@ -7,10 +6,11 @@
 
 namespace fs = boost::filesystem;
 
-# include <utils.hpp>;
+#include <utils.hpp>
 
 int main(int, char **)
 {
+
 	const fs::path project_dir = fs::path(sago::getConfigHome()) / "oloprox" / "dooplet";
 	Commandline cli;
 

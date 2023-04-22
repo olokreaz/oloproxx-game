@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{12BE3F17-13E0-4D43-9683-E1E65173601B}</ProjectGuid>
+    <ProjectGuid>{5FE16ACD-9CF9-4B37-A3A8-0A3BA4431585}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Server</RootNamespace>
+    <RootNamespace>Launcher</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,13 +43,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(SolutionName) $(ProjectName) - $(Configuration)$(Platform)</TargetName>
     <OutDir>$(SolutionDir)\build $(Platform)\$(SolutionName) $(Configuration)\</OutDir>
-    <TargetName>$(ProjectName)</TargetName>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;$(ProjectName)\include</ExternalIncludePath>
   </PropertyGroup>
@@ -89,8 +89,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\build $(Platform)\$(SolutionName) $(Configuration)\</OutDir>
-    <TargetName>$(ProjectName)</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <TargetName>$(SolutionName) $(ProjectName) - $(Configuration)$(Platform)</TargetName>
     <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;$(ProjectName)\include</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -118,15 +117,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>true</EnableModules>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Native</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;steam_api64.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;steam_api64.lib;vulkan-1.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -160,18 +158,21 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableModules>true</EnableModules>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Native</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;steam_api64.lib;vulkan-1.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\utils.cpp">
+    <ClCompile Include="Launcher.cpp" />
+    <ClCompile Include="src\Window.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -201,7 +202,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>Default</LanguageStandard_C>
       <MinimalRebuild>false</MinimalRebuild>
       <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
       <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
@@ -213,7 +214,7 @@
       <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\Dooplet Server.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>x64\Debug\Dooplet Launcher - Debugx64.pch</PrecompiledHeaderOutputFile>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -226,7 +227,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <SpectreMitigation>false</SpectreMitigation>
       <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\Server.tlog\</TrackerLogDirectory>
+      <TrackerLogDirectory>x64\Debug\Launcher.tlog\</TrackerLogDirectory>
       <TranslateIncludes>false</TranslateIncludes>
       <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -250,13 +251,21 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.vcxproj">
+      <Project>{5b8deae6-c786-4614-86ac-d48db2b37baa}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server\Server.vcxproj">
+      <Project>{12be3f17-13e0-4d43-9683-e1e65173601b}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="script\" />
+    <Folder Include="shader\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".clang-format" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\utils.hpp" />
+    <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -26,7 +26,7 @@
 ### __#__ Системные требования
 
 ***
-  * ОС: Windows 7, 8, 10
+  * ОС: Windows 7, 8, 10 (64-bit)
   * Процессор: 1.5 GHz
   * Оперативная память: 1 GB
   * Видеокарта: 512 MB
@@ -37,3 +37,24 @@
 
 #### Присоеинтесь к нам в Discord
 [![Discord](https://img.shields.io/discord/1093091240536440845.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=AC2D9A)](https://discord.gg/GS6xQz8f3Z)
+
+
+### __#__ Зависимости
+- **boost**
+- **spdlog**
+- **yaml-cpp**
+- **vulkan**
+- **glfw**
+- **glm**
+- **shader compiler (glslang)**
+- **steam**
+- **lua**
+- **fmt**
+- **tinyobjloader**
+- **freetype**
+- **discord rpc**
+- **gainput**
+- **discord game sdk**
+
+### __#__ Download
+[![Github all releases](https://img.shields.io/github/downloads/olokreaz/Dooplet/total.svg)]()
