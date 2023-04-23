@@ -3,38 +3,40 @@ Language: Cpp
 BasedOnStyle: LLVM
 AccessModifierOffset: -8
 AlignConsecutiveAssignments: true
-AlignConsecutiveDeclarations: false
-AlignOperands: true
-AlignTrailingComments: false
+AlignConsecutiveDeclarations: true
+AlignOperands: false
+AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: false
-AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakTemplateDeclarations: No
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping: 
   AfterCaseLabel: true
   AfterClass: false
-  AfterControlStatement: true
+  AfterControlStatement: false
   AfterEnum: false
   AfterFunction: true
-  AfterNamespace: false
+  AfterNamespace: true
   AfterStruct: false
   AfterUnion: false
   AfterExternBlock: true
-  BeforeCatch: true
-  BeforeElse: true
+  BeforeCatch: false
+  BeforeElse: false
   BeforeLambdaBody: true
   BeforeWhile: false
-  IndentBraces: true
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 BreakBeforeBraces: Custom
 BreakConstructorInitializers: AfterColon
-ColumnLimit: 110
+ColumnLimit: 115
+CompactNamespaces: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
-ContinuationIndentWidth: 8
+ContinuationIndentWidth: 16
+Cpp11BracedListStyle: false
 IncludeCategories: 
   - Regex: '^<.*'
     Priority: 1
@@ -44,13 +46,19 @@ IncludeCategories:
     Priority: 3
 IncludeIsMainRegex: '([-_](test|unittest))?$'
 IndentCaseBlocks: true
+IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
 IndentWidth: 8
 MacroBlockBegin: ''
 MacroBlockEnd: ''
+NamespaceIndentation: All
 SpaceAfterCStyleCast: true
-SpacesBeforeTrailingComments: 0
-SpacesInAngles: false
+SpaceAfterTemplateKeyword: false
+SpaceInEmptyParentheses: true
+SpacesInAngles: true
+SpacesInConditionalStatement: true
 SpacesInCStyleCastParentheses: true
+SpacesInParentheses: true
 SpacesInSquareBrackets: true
 UseTab: Always
 ...

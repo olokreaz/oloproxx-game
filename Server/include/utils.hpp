@@ -1,7 +1,7 @@
 #pragma once
 
 #include <commandline.h>
-#include <boost/filesystem/string_file.hpp>s
+#include <boost/filesystem.hpp>
 #include <yaml-cpp/yaml.h>
 
 namespace fs = boost::filesystem;

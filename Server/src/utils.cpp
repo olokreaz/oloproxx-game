@@ -1,22 +1,21 @@
-#include <commandline.h>
 #include <fstream>
 #include <iostream>
-#include <utils.hpp>
-#include <boost/filesystem.hpp>
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <yaml-cpp/yaml.h>
+
+#include <boost/algorithm/string.hpp>
+
+#include <utils.hpp>
 
 bool utils::LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 {
-	// Get the %appdata%/project.name path
 	if (!fs::exists(dir))
-		create_directories(dir);// Create the directory if it doesn't exist
+		create_directories(dir);
 
-	if (!fs::exists(dir / "config.yaml"))
+	if (!fs::exists(dir / "config.yml"))
 		{
-			cli.write(fmt::format("Not Found File settins:{}, Create him? Y(yes)/N(no)"
-					      , (dir / "config.yaml").string()
+			cli.write(fmt::format("Not Found File settins:{},\n Create him? Y(yes)/N(no)"
+					      , (dir / "config.yml").string()
 					)
 				);
 
@@ -26,9 +25,8 @@ bool utils::LoadGeneralConfig(const fs::path &dir, Commandline &cli)
 						if (cli.get_command() == "Y")
 							{
 								std::ofstream fs(
-									(dir / "config.yaml").string()
+									(dir / "config.yml").string()
 									);
-								// Creat General Config
 								if (!fs.is_open())
 									throw "Dont Create File";
 								fs.close();

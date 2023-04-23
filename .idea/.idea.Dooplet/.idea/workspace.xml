@@ -11,52 +11,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="377345a3-7e39-4d51-bce6-9bafed77ee93" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/CL.command.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/CL.read.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/CL.write.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/Client.lastbuildstate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link-cvtres.read.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link-cvtres.write.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link-rc.read.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link-rc.write.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link.command.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link.read.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link.read.2.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/link.write.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/Client.tlog/unsuccessfulbuild" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/main.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/vc143.idb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Debug/vc143.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Debug/Client.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Launcher/Launcher.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Launcher/Launcher.vcxproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Launcher/Launcher.vcxproj.filters" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Launcher/include/Window.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Launcher/src/Window.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Debug/Server.tlog/Server.lastbuildstate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Debug/Server.tlog/unsuccessfulbuild" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Debug/Server_MD.tlog/CL.command.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Debug/Server_MD.tlog/Microsoft.Build.CPPTasks.CL.read.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Debug/Server_MD.tlog/Microsoft.Build.CPPTasks.CL.write.1.tlog" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/assigner.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/steam_api64.lib" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build x64/Dooplet Debug/steam_api64.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/msbuild.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/Client.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/include/.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Discord Dooplet bot/dllmain.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Discord Dooplet bot/include/.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/Server.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/include/.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/include/Engine.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/Engine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Client.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/main.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Dooplet.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Dooplet.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resource/11E2291B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Discord Dooplet bot/Discord Dooplet bot.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/Discord Dooplet bot/Discord Dooplet bot.vcxproj.filters" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher/include/Window.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher/src/Window.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.clang-format" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/Server.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/include/utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/include/utils.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/utils.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +78,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -128,7 +105,7 @@
       <command value="open" />
     </option>
   </component>
-  <component name="RunManager" selected="C++ Project.Launcher">
+  <component name="RunManager" selected="C++ Project.Client">
     <configuration name="Client" type="CppProject" factoryName="C++ Project">
       <configuration_1>
         <option name="CONFIGURATION" value="Debug" />
@@ -172,54 +149,6 @@
       </configuration_4>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Client/Client.vcxproj" />
       <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="Launcher" type="CppProject" factoryName="C++ Project">
-      <configuration_1>
-        <option name="CONFIGURATION" value="Debug" />
-        <option name="PLATFORM" value="Win32" />
-        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Launcher/Launcher.vcxproj" />
-        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
-        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
-        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      </configuration_1>
-      <configuration_2>
-        <option name="CONFIGURATION" value="Debug" />
-        <option name="PLATFORM" value="x64" />
-        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Launcher/Launcher.vcxproj" />
-        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
-        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
-        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      </configuration_2>
-      <configuration_3>
-        <option name="CONFIGURATION" value="Release" />
-        <option name="PLATFORM" value="Win32" />
-        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Launcher/Launcher.vcxproj" />
-        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
-        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
-        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      </configuration_3>
-      <configuration_4>
-        <option name="CONFIGURATION" value="Release" />
-        <option name="PLATFORM" value="x64" />
-        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Launcher/Launcher.vcxproj" />
-        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
-        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
-        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
-        <option name="PASS_PARENT_ENVS" value="1" />
-        <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      </configuration_4>
-      <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Launcher/Launcher.vcxproj" />
-      <method v="2">
-        <option name="Build" default="false" projectName="Server" projectPath="file://$PROJECT_DIR$/Server/Server.vcxproj" />
-        <option name="Build" default="false" projectName="Client" projectPath="file://$PROJECT_DIR$/Client/Client.vcxproj" />
         <option name="Build" />
       </method>
     </configuration>
@@ -315,7 +244,8 @@
       <workItem from="1682019328686" duration="2817000" />
       <workItem from="1682025339331" duration="607000" />
       <workItem from="1682053928967" duration="3167000" />
-      <workItem from="1682169916918" duration="3636000" />
+      <workItem from="1682169916918" duration="21854000" />
+      <workItem from="1682240063296" duration="7651000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0.0">
       <created>1681032048036</created>
@@ -464,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681995858990</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="1000-7">
+      <created>1682175117198</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1682175117198</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +437,8 @@
     <MESSAGE value="added declared function write/read config file" />
     <MESSAGE value="commit" />
     <MESSAGE value="reformat utils.cpp utils.hpp" />
-    <option name="LAST_COMMIT_MESSAGE" value="reformat utils.cpp utils.hpp" />
+    <MESSAGE value="1000-7" />
+    <option name="LAST_COMMIT_MESSAGE" value="1000-7" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
