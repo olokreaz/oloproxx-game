@@ -10,30 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377345a3-7e39-4d51-bce6-9bafed77ee93" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/Client.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/include/.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Discord Dooplet bot/dllmain.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Discord Dooplet bot/include/.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/include/.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/include/Engine.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/Engine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Client.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dooplet.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Dooplet.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Discord Dooplet bot/Discord Dooplet bot.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher/Launcher.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/Discord Dooplet bot/Discord Dooplet bot.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher/include/Window.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher/src/Window.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.clang-format" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/include/utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/include/utils.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/utils.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="377345a3-7e39-4d51-bce6-9bafed77ee93" name="Changes" comment="reset" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,14 +27,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Server/main.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/c++/DoopletG/Server/src/utils.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/c++/DoopletG/Client/main.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -71,33 +41,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "rider.code.cleanup.on.save.profile": "Built-in: Reformat & Apply Syntax Style",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;rider.code.cleanup.on.save.profile&quot;: &quot;Built-in: Reformat &amp; Apply Syntax Style&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\olokreZ-op\\AppData\\Local\\JetBrains\\Shared\\vAny\\DecompilerCache",
-      "C:\\Users\\olokreZ-op\\AppData\\Local\\JetBrains\\Shared\\vAny\\SourcesCache",
-      "C:\\Users\\olokreZ-op\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\olokreZ-op\\AppData\\Local\\JetBrains\\Shared\\vAny\\DecompilerCache&quot;,
+      &quot;C:\\Users\\olokreZ-op\\AppData\\Local\\JetBrains\\Shared\\vAny\\SourcesCache&quot;,
+      &quot;C:\\Users\\olokreZ-op\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="git" />
@@ -245,7 +215,10 @@
       <workItem from="1682025339331" duration="607000" />
       <workItem from="1682053928967" duration="3167000" />
       <workItem from="1682169916918" duration="21854000" />
-      <workItem from="1682240063296" duration="7651000" />
+      <workItem from="1682240063296" duration="8034000" />
+      <workItem from="1682318724592" duration="1883000" />
+      <workItem from="1682339640500" duration="11238000" />
+      <workItem from="1682405276119" duration="2707000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0.0">
       <created>1681032048036</created>
@@ -401,7 +374,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682175117198</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="refactor">
+      <created>1682261779730</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1682261779730</updated>
+    </task>
+    <task id="LOCAL-00024" summary="reset">
+      <created>1682407485219</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1682407485219</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,7 +425,9 @@
     <MESSAGE value="commit" />
     <MESSAGE value="reformat utils.cpp utils.hpp" />
     <MESSAGE value="1000-7" />
-    <option name="LAST_COMMIT_MESSAGE" value="1000-7" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="reset" />
+    <option name="LAST_COMMIT_MESSAGE" value="reset" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

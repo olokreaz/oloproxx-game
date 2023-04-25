@@ -5,6 +5,8 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
+#include <steam/isteamclient.h>
+#include <steam/steamtypes.h>
 
 using namespace fmt::literals;
 using namespace std;
@@ -12,15 +14,11 @@ using namespace std;
 namespace vs = views;
 namespace rng = ranges;
 
+#include <Server.hpp>
+
 int main( int, char ** )
 {
 
-	vector< string > names = { "John", "Jane", "Jack", "Jill" };
-
-	auto names_view = names | vs::transform( [] ( const auto &name ) { return name + " Doe"; } );
-
-	fmt::print( "Names: {}\n", names_view );
 
 	return 0;
 }
-
