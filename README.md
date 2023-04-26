@@ -1,4 +1,4 @@
-<p align="center"><a href="https://dooplet.oloprox.com" target="_blank"><img src="https://oloprox.com/storage/logo/LOGO-NAME-DOOPLET-COLOR.svg?" width="400" alt="Dooplet Logo"></a></p>
+<p align="center"><a href="https://dooplet.oloprox.com" target="_blank"><img src="https://oloprox.com/storage/logo/LOGO-NAME-DOOPLET-COLOR.svg" width="400" alt="Dooplet Logo"></a></p>
 
 
 
@@ -14,7 +14,7 @@
 
 ***
 
-#### Dooplet - это игра для больщшой и маленькой компании,2d игра в стиле co-op . Цель игры: убить всех врагов и пройти все уровни.
+#### Oloprox - это игра для больщшой и маленькой компании,2d игра в стиле co-op . Цель игры: убить всех врагов и пройти все уровни.
 1. игре 6 различных видов оружия, с помощью которых можно убивать врагов.
 2. У каждого оружия есть своя особенность, например оружие с лазером, которое наносит урон всем врагам вокруг, или оружие, которое взрывается при попадании в него.
 3. Также в игре есть несколько секретных уровней, которые открываются при прохождении определенных этапов.
