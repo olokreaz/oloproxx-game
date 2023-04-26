@@ -16,9 +16,14 @@ namespace rng = ranges;
 
 #include <Server.hpp>
 
+namespace fs = boost::filesystem;
+namespace dll = boost::dll;
+
 int main( int, char ** )
 {
 
+	fmt::print( "vec: {:f}" 
+	, 112.8e+55);
 
 	return 0;
 }

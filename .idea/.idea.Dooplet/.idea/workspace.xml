@@ -10,7 +10,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="377345a3-7e39-4d51-bce6-9bafed77ee93" name="Changes" comment="reset" />
+    <list default="true" id="377345a3-7e39-4d51-bce6-9bafed77ee93" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Dooplet/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Client/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET-COLOR.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET-COLOR.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET-WHITE.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET-no-by.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/LOGO-NAME-DOOPLET.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO-NAME.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/LOGO.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/NAME-DOOPLET-no-by.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/NAME-DOOPLET.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Resource/NAME-DOOPLET.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resource/NAME.svg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -218,7 +230,9 @@
       <workItem from="1682240063296" duration="8034000" />
       <workItem from="1682318724592" duration="1883000" />
       <workItem from="1682339640500" duration="11238000" />
-      <workItem from="1682405276119" duration="2707000" />
+      <workItem from="1682405276119" duration="5499000" />
+      <workItem from="1682432864916" duration="4347000" />
+      <workItem from="1682485106459" duration="601000" />
     </task>
     <task id="LOCAL-00001" summary="v1.0.0">
       <created>1681032048036</created>
@@ -388,7 +402,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682407485219</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="reset">
+      <created>1682420059051</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1682420059051</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
