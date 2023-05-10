@@ -1,4 +1,4 @@
-<p align="center"><a href="https://dooplet.oloprox.com" target="_blank"><img src="https://oloprox.com/storage/logo/LOGO-NAME-DOOPLET-COLOR.svg" width="400" alt="Dooplet Logo"></a></p>
+<p align="center"><a href="https://oloprox.com" target="_blank"><img src="https://oloprox.com/storage/logo/LOGO-NAME-DOOPLET-COLOR-noby.svg" width="400" alt="Dooplet Logo"></a></p>
 
 
 
