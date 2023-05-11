@@ -41,7 +41,5 @@ int main( int, char ** )
 	set_default_logger( g_logger );
 	#endif
 
-	
-	
 	return app->run( );
 }
