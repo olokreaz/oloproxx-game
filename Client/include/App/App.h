@@ -51,93 +51,15 @@ class CApp {
 	tf::Executor m_executor;
 	tf::Taskflow m_taskflow;
 
-	void SteamInit( )
-	{
-		spdlog::info( "Start SteamAPI init" );
-		if ( !SteamAPI_Init( ) ) spdlog::error( "Failed SteamAPI init" );
-		else spdlog::info( "Finish SteamAPI init" );
+	void SteamInit( );
 
-		SteamNetworkingUtils( )->SetDebugOutputFunction( k_ESteamNetworkingSocketsDebugOutputType_Msg
-								 , [] (
-							 ESteamNetworkingSocketsDebugOutputType nType
-							 , const char *                         pszMsg
-						 )
-									 {
-										 /*								 		* {
-	k_ESteamNetworkingSocketsDebugOutputType_None = 0,
-	k_ESteamNetworkingSocketsDebugOutputType_Bug = 1, // You used the API incorrectly, or an internal error happened
-	k_ESteamNetworkingSocketsDebugOutputType_Error = 2, // Run-time error condition that isn't the result of a bug.  (E.g. we are offline, cannot bind a port, etc)
-	k_ESteamNetworkingSocketsDebugOutputType_Important = 3, // Nothing is wrong, but this is an important notification
-	k_ESteamNetworkingSocketsDebugOutputType_Warning = 4,
-	k_ESteamNetworkingSocketsDebugOutputType_Msg = 5, // Recommended amount
-	k_ESteamNetworkingSocketsDebugOutputType_Verbose = 6, // Quite a bit
-	k_ESteamNetworkingSocketsDebugOutputType_Debug = 7, // Practically everything
-	k_ESteamNetworkingSocketsDebugOutputType_Everything = 8, // Wall of text, detailed packet contents breakdown, etc
-	k_ESteamNetworkingSocketsDebugOutputType__Force32Bit = 0x7fffffff
-};
-										  */
+	void ShutdownSteam( );
 
-										 switch ( nType ) {
-											 case
-											 k_ESteamNetworkingSocketsDebugOutputType_Bug
-											 : spdlog::critical( "Steam NetWork: {}"
-													     , pszMsg
-													   );
-												 break;
-											 case
-											 k_ESteamNetworkingSocketsDebugOutputType_Error
-											 : spdlog::error( "Steam NetWork: {}"
-													  , pszMsg
-													);
-												 break;
-											 case
-											 k_ESteamNetworkingSocketsDebugOutputType_Important
-											 :
-											 case
-											 k_ESteamNetworkingSocketsDebugOutputType_Msg
-											 :
-											 case
-											 k_ESteamNetworkingSocketsDebugOutputType_Verbose
-											 : spdlog::info( "Steam NetWork: {}"
-													 , pszMsg
-												       );
-										 }
-									 }
-							       );
-
-		SteamUtils( )->SetWarningMessageHook( [] ( auto lvl, auto msg )
-							     {
-								     if ( !lvl )
-									     spdlog::info( "Steam: {}"
-											   , msg
-											 );
-								     else spdlog::warn( "Steam: {}", msg );
-							     }
-						    );
-	}
-
-	void ShutdownSteam( )
-	{
-		spdlog::info( "Shoutdown SteamAPI" );
-		SteamAPI_Shutdown( );
-	}
-
-	void update( )
-	{
-		while ( true ) if ( g_cmd.has_command( ) ) if ( g_cmd.get_command( ) == "/stop" ) return;
-	}
+	void update( );
 
 public:
-	int8 run( )
-	{
-		auto [
-			UpdateSocket,
-			UpdateEvent
-		] = m_taskflow.emplace( update, "Update" );
+	int8 run( );
 
-		return 0;
-	}
-
-	CApp( ) { SteamInit( ); }
-	~CApp( ) = default;
+	CApp( );
+	~CApp( );
 };
