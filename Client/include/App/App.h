@@ -7,7 +7,6 @@
 #include <steam/steam_api.h>
 #include <taskflow/taskflow.hpp>
 
-extern Commandline g_cmd;
 /*
  class CThread {
  	static inline std::map< int, std::thread > m_threads;
@@ -30,21 +29,12 @@ extern Commandline g_cmd;
  };
 */
 
-// extern CThread g_ThreadPool;
-
-template< class T > class Command {
-	std::string type_name( ) const
-	{
-		return std::string( typeid( T ).name( ) ).substr( std::ranges::find( typeid( T ).name( ), " " ) );
-	}
-
-protected:
-	const std::string m_CommaneName;
-
-	Command( const std::string &commane_name = type_name( ) ) : m_CommaneName { commane_name }
-	{
-		spdlog::debug( "commnad_name: {}", m_CommaneName );
-	}
+enum class EModeRun {
+	none = -1
+	, all
+	, client
+	, server
+	,
 };
 
 class CApp {
@@ -52,13 +42,16 @@ class CApp {
 	tf::Taskflow m_taskflow;
 
 	void SteamInit( );
-
 	void ShutdownSteam( );
 
-	void update( );
+	void     update( );
+	EModeRun m_eMode;
 
 public:
 	int8 run( );
+
+	EModeRun mode( ) { return m_eMode; }
+	auto     mode( EModeRun m ) { m_eMode = m; }
 
 	CApp( );
 	~CApp( );

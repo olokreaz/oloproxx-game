@@ -68,17 +68,24 @@ void CApp::ShutdownSteam( )
 	SteamAPI_Shutdown( );
 }
 
-void CApp::update( ) { while ( true ) if ( g_cmd.has_command( ) ) if ( g_cmd.get_command( ) == "/stop" ) return; }
+void CApp::update( )
+{
+	std::string b;
+	while ( true ) if ( std::getline( std::cin, b ) ) if ( b == "/stop" ) return;
+}
 
 int8 CApp::run( )
 {
-	auto [
-		UpdateSocket,
-		UpdateEvent
-	] = m_taskflow.emplace( update, "Update" );
-
+	spdlog::info( "Start App" );
 	return 0;
 }
 
-CApp::CApp( ) { SteamInit( ); }
+CApp::CApp( )
+{
+	SteamInit( );
+
+	
+	
+}
+
 CApp::~CApp( ) = default;
