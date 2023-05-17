@@ -64,7 +64,7 @@ void CApp::SteamInit( )
 					    );
 }
 
-void CApp::ShutdownSteam( )
+void CApp::SteamShutdown( )
 {
 	spdlog::info( "Shoutdown SteamAPI" );
 	SteamAPI_Shutdown( );
@@ -83,18 +83,17 @@ void CApp::handler( ) {}
 int8 CApp::run( )
 {
 
-	auto [ t_recv, t_send, t_handler ] = m_taskEventLoop.emplace( [this] { this->recv( ); }
-								      , [this] { this->send( ); }
-								      , [this] { this->handler( ); }
-								    );
-	spdlog::info( "StartEvent loop" );
+	// auto [ t_recv, t_send, t_handler ] = m_taskEventLoop.emplace( [this] { this->recv( ); }
+	// 							      , [this] { this->send( ); }
+	// 							      , [this] { this->handler( ); }
+	// 							    );
+	//
+	// spdlog::info( "StartEvent loop" );
+	//
+	// while ( s_bQuit ) m_executorEventLoop.run( m_taskEventLoop );
+	//
+	// m_executorEventLoop.wait_for_all( );
 
-	while ( g_bQuit ) {
-		m_executorEventLoop.run( m_taskEventLoop );
-	}
-
-	m_executorEventLoop.wait_for_all( );
-	
 	return 0;
 }
 
@@ -104,7 +103,12 @@ CApp::CApp( )
 
 	auto task_SteamInit = taskflow.emplace( [this] { SteamInit( ); } );
 
-	m_executor.run_and_wait( taskflow );
+	// m_executor.run_and_wait( taskflow );
 }
 
-CApp::~CApp( ) = default;
+CApp::~CApp( )
+{
+	tf::Taskflow taskflow;
+	auto         task_ShoutDownSteam = taskflow.emplace( [this] { this->SteamShutdown( ); } );
+
+};

@@ -2,7 +2,6 @@
 #include <commandline.h>
 #include <map>
 #include <spdlog/spdlog.h>
-#include <steam/isteamnetworkingutils.h>
 #include <steam/isteamutils.h>
 #include <steam/steam_api.h>
 #include <taskflow/taskflow.hpp>
@@ -29,8 +28,6 @@
  };
 */
 
-extern bool g_bQuit;
-
 enum class EModeRun {
 	none = -1
 	, all
@@ -40,12 +37,8 @@ enum class EModeRun {
 };
 
 class CApp {
-	tf::Executor m_executor;
-	tf::Executor m_executorEventLoop;
-	tf::Taskflow m_taskEventLoop;
-
 	void SteamInit( );
-	void ShutdownSteam( );
+	void SteamShutdown( );
 
 	void     update( );
 	EModeRun m_eMode;
@@ -62,4 +55,6 @@ public:
 
 	CApp( );
 	~CApp( );
+
+	static inline bool s_bQuit = { false };
 };
