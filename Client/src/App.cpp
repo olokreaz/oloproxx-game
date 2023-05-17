@@ -1,5 +1,7 @@
 #include <include/App/App.h>
 
+#include <steam/isteamnetworkingsockets.h>
+
 void CApp::SteamInit( )
 {
 	spdlog::info( "Start SteamAPI init" );
@@ -74,18 +76,35 @@ void CApp::update( )
 	while ( true ) if ( std::getline( std::cin, b ) ) if ( b == "/stop" ) return;
 }
 
+void CApp::recv( ) { ISteamNetworkingMessage *msg; }
+void CApp::send( ) {}
+void CApp::handler( ) {}
+
 int8 CApp::run( )
 {
-	spdlog::info( "Start App" );
+
+	auto [ t_recv, t_send, t_handler ] = m_taskEventLoop.emplace( [this] { this->recv( ); }
+								      , [this] { this->send( ); }
+								      , [this] { this->handler( ); }
+								    );
+	spdlog::info( "StartEvent loop" );
+
+	while ( g_bQuit ) {
+		m_executorEventLoop.run( m_taskEventLoop );
+	}
+
+	m_executorEventLoop.wait_for_all( );
+	
 	return 0;
 }
 
 CApp::CApp( )
 {
-	SteamInit( );
+	tf::Taskflow taskflow;
 
-	
-	
+	auto task_SteamInit = taskflow.emplace( [this] { SteamInit( ); } );
+
+	m_executor.run_and_wait( taskflow );
 }
 
 CApp::~CApp( ) = default;

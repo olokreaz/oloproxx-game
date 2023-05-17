@@ -29,6 +29,8 @@
  };
 */
 
+extern bool g_bQuit;
+
 enum class EModeRun {
 	none = -1
 	, all
@@ -39,13 +41,18 @@ enum class EModeRun {
 
 class CApp {
 	tf::Executor m_executor;
-	tf::Taskflow m_taskflow;
+	tf::Executor m_executorEventLoop;
+	tf::Taskflow m_taskEventLoop;
 
 	void SteamInit( );
 	void ShutdownSteam( );
 
 	void     update( );
 	EModeRun m_eMode;
+
+	void recv( );
+	void send( );
+	void handler( );
 
 public:
 	int8 run( );
