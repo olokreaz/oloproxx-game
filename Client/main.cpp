@@ -12,7 +12,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include "types.hpp"
 
 #include "include/App/App.h"
 
@@ -32,7 +31,7 @@ static inline shared_ptr< spdlog::logger > g_logger
 					 );
 #endif
 
-static inline shared_ptr< CApp > app( new CApp( ) );
+static inline shared_ptr< CApp > g_app( new CApp( ) );
 
 int main( int, char ** )
 {
@@ -40,6 +39,8 @@ int main( int, char ** )
 	set_default_logger( g_logger );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
+
+	
 	
 	return 0;
 	// return app->run( );

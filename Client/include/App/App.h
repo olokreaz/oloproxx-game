@@ -53,6 +53,13 @@ public:
 	EModeRun mode( ) { return m_eMode; }
 	auto     mode( EModeRun m ) { m_eMode = m; }
 
+	if consteval {
+		
+	}
+	else {
+		
+	}
+
 	CApp( );
 	~CApp( );
 
