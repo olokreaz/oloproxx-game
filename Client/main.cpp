@@ -14,7 +14,7 @@
 
 
 #include "include/App/App.h"
-#include <ctype.h>
+#include <coroutine>
 
 using namespace std;
 using namespace fmt::literals;
@@ -34,13 +34,14 @@ static inline shared_ptr< spdlog::logger > g_logger
 
 static inline shared_ptr< CApp > g_app( new CApp( ) );
 
-
 int main( int, char ** )
 {
 	#ifndef _DEBUG
 	set_default_logger( g_logger );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
+
+	
 	
 	return 0;
 	// return app->run( );
