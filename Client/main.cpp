@@ -12,9 +12,8 @@
 
 #include <spdlog/spdlog.h>
 
-
-#include "include/App/App.h"
 #include <coroutine>
+#include "include/App/App.h"
 
 using namespace std;
 using namespace fmt::literals;
@@ -41,10 +40,6 @@ int main( int, char ** )
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
 
-	
-	
 	return 0;
 	// return app->run( );
 }
-
-
