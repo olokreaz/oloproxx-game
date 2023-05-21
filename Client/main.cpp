@@ -32,12 +32,12 @@ static inline shared_ptr< spdlog::logger > g_logger
 
 CApp_t g_app( new CApp( ) );
 
-
 template< class T > class CPackage {
-	int32 const m_size = { sizeof T };
-	T           m_content;
+	T m_content;
 
 public:
+	int32 const size = { sizeof T };
+
 	T* operator->( ) { return &m_content; }
 };
 
@@ -64,7 +64,22 @@ int main( int, char ** )
 	CPackage< testData > Package;
 
 	Package->id   = "087B0DBF-0CB9-4611-A68B-BA6F46DEF4C3";
-	Package->name = "";
+	Package->name = "Pidorasin";
+	Package->setPassword( "123456" );
+
+	vector< std::byte > buffer( sizeof Package );
+
+	memcpy( buffer.data( ), &Package, Package.size );
+
+	fmt::print( "buffer: {}\n", buffer );
+
+	/// next programm
+
+	auto buffer2 = buffer;
+	fmt::print( "buffer2: {}\n", buffer2 );
+
+	CPackage< testData > Package2 = *reinterpret_cast< CPackage< testData > * >( buffer2.data( ) );
+	fmt::print( "data: \nid: {}\nname: {}", Package2->id, Package2->name );
 
 	return 0;
 	// return app->run( );
