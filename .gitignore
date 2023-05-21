@@ -66,6 +66,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+**/*.obj
+
 #######################################
 x64
 

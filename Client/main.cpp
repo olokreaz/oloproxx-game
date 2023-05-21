@@ -34,6 +34,14 @@ CApp_t g_app( new CApp( ) );
 
 import <iostream>;
 
+template< class T > class CPackage {
+	int32 const m_size = { sizeof T };
+	T           m_content;
+
+public:
+	T* operator->( ) { return m_content; }
+};
+
 int main( int, char ** )
 {
 	#ifndef _DEBUG
@@ -46,8 +54,18 @@ int main( int, char ** )
 	struct testData {
 		string id;
 		string name;
+
+		bool check_pass( string &pass ) { return password_crypted == pass; }
+		void setPassword( string npass ) { password_crypted = npass; }
+
+	protected:
 		string password_crypted;
-	}              data;
+	};
+
+	CPackage< testData > Package;
+
+	Package->id   = "087B0DBF-0CB9-4611-A68B-BA6F46DEF4C3";
+	Package->name = "";
 
 	return 0;
 	// return app->run( );
