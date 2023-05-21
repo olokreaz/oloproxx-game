@@ -11,7 +11,7 @@ void CApp::SteamInit( )
 	SteamNetworkingUtils( )->SetDebugOutputFunction( k_ESteamNetworkingSocketsDebugOutputType_Msg
 							 , [] (
 						 ESteamNetworkingSocketsDebugOutputType nType
-						 , const char *                         pszMsg
+						 , char const *                         pszMsg
 					 )
 								 {
 									 switch ( nType ) {
@@ -75,10 +75,6 @@ void CApp::update( )
 	std::string b;
 	while ( true ) if ( std::getline( std::cin, b ) ) if ( b == "/stop" ) return;
 }
-
-void CApp::recv( ) { ISteamNetworkingMessage *msg; }
-void CApp::send( ) {}
-void CApp::handler( ) {}
 
 int8 CApp::run( )
 {

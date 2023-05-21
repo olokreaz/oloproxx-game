@@ -52,10 +52,11 @@ public:
 
 	EModeRun mode( ) { return m_eMode; }
 	auto     mode( EModeRun m ) { m_eMode = m; }
-	
 
 	CApp( );
 	~CApp( );
 
 	static inline bool s_bQuit = { false };
 };
+
+using CApp_t = std::shared_ptr< CApp >;

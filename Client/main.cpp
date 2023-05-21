@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <iostream>
-#include <ostream>
 #include <ranges>
 #include <string>
 #include <vector>
@@ -31,9 +30,9 @@ static inline shared_ptr< spdlog::logger > g_logger
 					 );
 #endif
 
-static inline shared_ptr< CApp > g_app( new CApp( ) );
+CApp_t g_app( new CApp( ) );
 
-
+import <iostream>;
 
 int main( int, char ** )
 {
@@ -42,8 +41,14 @@ int main( int, char ** )
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
 
-	
-	
+	tf::Taskflow tf( "main" );
+
+	struct testData {
+		string id;
+		string name;
+		string password_crypted;
+	}              data;
+
 	return 0;
 	// return app->run( );
 }
