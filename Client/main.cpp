@@ -38,7 +38,7 @@ template< class T > class CPackage {
 	T           m_content;
 
 public:
-	T* operator->( ) { return m_content; }
+	T* operator->( ) { return &m_content; }
 };
 
 int main( int, char ** )
