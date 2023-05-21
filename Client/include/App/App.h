@@ -47,6 +47,8 @@ class CApp {
 	void send( );
 	void handler( );
 
+	static inline std::shared_ptr< CApp > s_instanceCallback = { nullptr };
+
 public:
 	int8 run( );
 

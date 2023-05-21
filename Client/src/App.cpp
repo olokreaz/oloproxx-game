@@ -93,18 +93,10 @@ int8 CApp::run( )
 	return 0;
 }
 
-CApp::CApp( )
-{
-	tf::Taskflow taskflow;
-
-	auto task_SteamInit = taskflow.emplace( [this] { SteamInit( ); } );
-
-	// m_executor.run_and_wait( taskflow );
-}
+CApp::CApp( ) { s_instanceCallback = std::shared_ptr< CApp >( this ); }
 
 CApp::~CApp( )
 {
 	tf::Taskflow taskflow;
 	auto         task_ShoutDownSteam = taskflow.emplace( [this] { this->SteamShutdown( ); } );
-
-};
+}
