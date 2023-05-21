@@ -32,7 +32,6 @@ static inline shared_ptr< spdlog::logger > g_logger
 
 CApp_t g_app( new CApp( ) );
 
-import <iostream>;
 
 template< class T > class CPackage {
 	int32 const m_size = { sizeof T };
