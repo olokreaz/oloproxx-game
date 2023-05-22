@@ -79,21 +79,12 @@ void CApp::update( )
 int8 CApp::run( )
 {
 
-	// auto [ t_recv, t_send, t_handler ] = m_taskEventLoop.emplace( [this] { this->recv( ); }
-	// 							      , [this] { this->send( ); }
-	// 							      , [this] { this->handler( ); }
-	// 							    );
-	//
-	// spdlog::info( "StartEvent loop" );
-	//
-	// while ( s_bQuit ) m_executorEventLoop.run( m_taskEventLoop );
-	//
-	// m_executorEventLoop.wait_for_all( );
+	SteamInit( );
 
 	return 0;
 }
 
-CApp::CApp( ) { s_instanceCallback = std::shared_ptr< CApp >( this ); }
+CApp::CApp( ) {  }
 
 CApp::~CApp( )
 {
