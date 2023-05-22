@@ -6,6 +6,9 @@
 #include <steam/steam_api.h>
 #include <taskflow/taskflow.hpp>
 
+#include "include/Socket/Client.h"
+#include "include/Socket/Server.h"
+
 /*
  class CThread {
  	static inline std::map< int, std::thread > m_threads;
@@ -37,26 +40,32 @@ enum class EModeRun {
 };
 
 class CApp {
+public:
+	struct IEtc {
+		CServer server;
+		CClient client;
+	};
+
+private:
+	tf::Taskflow m_AppTask;
+	IEtc         m_etc;
+
 	void SteamInit( );
 	void SteamShutdown( );
-
-	void     update( );
-	EModeRun m_eMode;
-
+	void update( );
 	void recv( );
 	void send( );
 	void handler( );
 
+
 public:
 	int8 run( );
-
-	EModeRun mode( ) { return m_eMode; }
-	auto     mode( EModeRun m ) { m_eMode = m; }
 
 	CApp( );
 	~CApp( );
 
-	static inline bool s_bQuit = { false };
-};
+	IEtc* operator->( ) { return &m_etc; }
 
-using CApp_t = std::shared_ptr< CApp >;
+	static inline EModeRun m_eMode = { EModeRun::none };
+	static inline bool     s_bQuit = { false };
+};

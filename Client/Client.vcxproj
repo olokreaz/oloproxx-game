@@ -80,6 +80,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\build $(Platform)\$(SolutionName) $(Configuration)\bin\</OutDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);</IncludePath>
+    <TargetName>$(SolutionName) Launcher</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -113,12 +114,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <EnableModules>true</EnableModules>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <BuildStlModules>true</BuildStlModules>
       <TranslateIncludes>true</TranslateIncludes>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -564,7 +566,6 @@
     <ClInclude Include="include\App\App.h" />
     <ClInclude Include="include\Socket\Client.h" />
     <ClInclude Include="include\Socket\Server.h" />
-    <ClInclude Include="include\Socket\Socket.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
