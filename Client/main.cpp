@@ -29,6 +29,7 @@ string logfilename = fmt::format( "logs/{:%Y-%m-%d}.log"
 static inline shared_ptr< spdlog::logger > g_logger = spdlog::basic_logger_mt( "Global"  , logfilename);
 #endif
 
+
 int main( int argc, char **argv )
 {
 
@@ -38,7 +39,6 @@ int main( int argc, char **argv )
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
 
 	CApp app;
-	
 
 	return 0;
 }

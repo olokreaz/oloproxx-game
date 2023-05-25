@@ -28,11 +28,10 @@ public:
 
 private:
 	tf::Taskflow m_AppTask;
-	
+
 	void SteamInit( );
 	void SteamShutdown( );
 	void update( );
-	void handler( );
 
 	void cli_parser_show_opt( clipp::group *cl, std::string str = ".exe" );
 
@@ -41,7 +40,6 @@ private:
 public:
 	CApp( );
 	~CApp( );
-
 
 	static inline EModeRun m_eMode = { EModeRun::none };
 	static inline bool     s_bQuit = { false };

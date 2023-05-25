@@ -1,5 +1,6 @@
 #include <include/App/App.h>
 
+#include <commandline.h>
 #include <steam/isteamnetworkingsockets.h>
 
 void CApp::SteamInit( )
@@ -17,15 +18,15 @@ void CApp::SteamInit( )
 									 switch ( nType ) {
 										 case
 										 k_ESteamNetworkingSocketsDebugOutputType_Bug
-										 : spdlog::critical( "Steam NetWork: {}"
-												     , pszMsg
-												   );
-											 break;
-										 case
-										 k_ESteamNetworkingSocketsDebugOutputType_Error
 										 : spdlog::error( "Steam NetWork: {}"
 												  , pszMsg
 												);
+											 break;
+										 case
+										 k_ESteamNetworkingSocketsDebugOutputType_Error
+										 : spdlog::critical( "Steam NetWork: {}"
+												     , pszMsg
+												   );
 											 break;
 										 case
 										 k_ESteamNetworkingSocketsDebugOutputType_Important
@@ -53,7 +54,7 @@ void CApp::SteamInit( )
 								 }
 						       );
 
-	SteamUtils( )->SetWarningMessageHook( [] ( auto lvl, auto msg )
+	SteamUtils( )->SetWarningMessageHook( [] ( int lvl, char const *msg )
 						     {
 							     if ( !lvl )
 								     spdlog::info( "Steam: {}"
@@ -70,13 +71,7 @@ void CApp::SteamShutdown( )
 	SteamAPI_Shutdown( );
 }
 
-void CApp::update( )
-{
-	std::string b;
-	while ( true ) if ( std::getline( std::cin, b ) ) if ( b == "/stop" ) return;
-}
-
-void CApp::handler( ) {}
+void CApp::update( ) { }
 
 void CApp::cli_parser_show_opt( clipp::group *cl, std::string str )
 {
