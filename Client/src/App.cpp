@@ -76,18 +76,104 @@ void CApp::update( )
 	while ( true ) if ( std::getline( std::cin, b ) ) if ( b == "/stop" ) return;
 }
 
-int8 CApp::run( )
+void CApp::handler( ) {}
+
+void CApp::cli_parser_show_opt( clipp::group *cl, std::string str )
 {
-
-	SteamInit( );
-
-	return 0;
+	std::cout << clipp::make_man_page( *cl ) << std::endl;
 }
 
-CApp::CApp( ) {  }
+bool CApp::cli_parser_start_app( clipp::group *cli )
+{
+	int         port;
+	std::string address;
+	auto        cliS = (
+		clipp::command( "server" ) & clipp::opt_value( "listen port", port )
+	);
+
+	auto cliC = (
+		clipp::command( "client" ) & ( clipp::opt_value( "address:port", address ) |
+					       clipp::opt_value( "address" )
+					       & clipp::value( "port", port ) )
+	);
+
+	auto cliHelp = (
+		clipp::command( "help", "?" )
+		& clipp::opt_value( "command" ).call( [&] ( std::string arg )
+							     {
+								     if (
+									     arg
+									     ==
+									     "client" )
+									     cli_parser_show_opt( &
+												 cliC
+												);
+								     else if
+								     (
+									     arg
+									     ==
+									     "server" )
+									     cli_parser_show_opt( &
+												 cliS
+												);
+								     else
+									     cli_parser_show_opt( &
+												 *cli
+												);
+								     exit( 0 );
+							     }
+						    )
+	);
+
+	auto log_lvl = (
+
+		clipp::option( "--log", "-l" ) & clipp::value( "level" ).
+						 call( [] ( std::string arg )
+							      {
+								      if ( arg == "trace" )
+									      spdlog::set_level( spdlog::level::trace
+											       );
+								      else if ( arg == "debug" )
+									      spdlog::set_level( spdlog::level::debug
+											       );
+								      else if ( arg == "info" )
+									      spdlog::set_level( spdlog::level::info
+											       );
+								      else if ( arg == "warn" )
+									      spdlog::set_level( spdlog::level::warn
+											       );
+								      else if ( arg == "err" )
+									      spdlog::set_level( spdlog::level::err
+											       );
+								      else if ( arg == "critical" )
+									      spdlog::set_level( spdlog::level::critical
+											       );
+								      else if ( arg == "off" )
+									      spdlog::set_level( spdlog::level::off
+											       );
+							      }
+						     )
+						 .doc( "trace, debug, info, warn, err, critical, off, default info"
+						     )
+	);
+
+	*cli = ( cliHelp | cliC | cliS | log_lvl );
+
+	return !parse( __argc, __argv, *cli ); // return true else error
+}
+
+CApp::CApp( )
+{
+	clipp::group cli;
+	if ( cli_parser_start_app( &cli ) ) cli_parser_show_opt( &cli );
+	if ( this->m_eMode == EModeRun::none ) return;
+
+	spdlog::info( "Start application" );
+}
 
 CApp::~CApp( )
 {
 	tf::Taskflow taskflow;
 	auto         task_ShoutDownSteam = taskflow.emplace( [this] { this->SteamShutdown( ); } );
+	spdlog::info( "Finish application" );
 }

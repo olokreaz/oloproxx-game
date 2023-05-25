@@ -2,38 +2,21 @@
 #include <commandline.h>
 #include <map>
 #include <spdlog/spdlog.h>
-#include <steam/isteamutils.h>
 #include <steam/steam_api.h>
 #include <taskflow/taskflow.hpp>
 
 #include "include/Socket/Client.h"
 #include "include/Socket/Server.h"
 
-/*
- class CThread {
- 	static inline std::map< int, std::thread > m_threads;
+#include <clipp.h>
+#include <iostream>
+#include <ranges>
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/variant2.hpp>
 
- public:
- 	std::map< int, std::thread >::iterator begin( ) { return m_threads.begin( ); }
- 	std::map< int, std::thread >::iterator end( ) { return m_threads.end( ); }
-
- 	void add_thread( std::thread &&thread )
- 	{
- 		m_threads[ m_threads.size( ) + 1 ] = move( thread );
- 		thread.detach( );
- 	}
-
- 	void join_all( )
- 	{
- 		for ( auto &[ id, th ] : m_threads ) th.join( );
- 		m_threads.clear( );
- 	}
- };
-*/
-
-enum class EModeRun {
-	none = -1
-	, all
+enum class EModeRun : int16 {
+	none = 0
 	, client
 	, server
 	,
@@ -41,30 +24,24 @@ enum class EModeRun {
 
 class CApp {
 public:
-	struct IEtc {
-		CServer server;
-		CClient client;
-	};
+	using Socket_t = boost::variant2::variant< CServer, CClient >;
 
 private:
 	tf::Taskflow m_AppTask;
-	IEtc         m_etc;
-
+	
 	void SteamInit( );
 	void SteamShutdown( );
 	void update( );
-	void recv( );
-	void send( );
 	void handler( );
 
+	void cli_parser_show_opt( clipp::group *cl, std::string str = ".exe" );
+
+	bool cli_parser_start_app( clipp::group *cli );
 
 public:
-	int8 run( );
-
 	CApp( );
 	~CApp( );
 
-	IEtc* operator->( ) { return &m_etc; }
 
 	static inline EModeRun m_eMode = { EModeRun::none };
 	static inline bool     s_bQuit = { false };
