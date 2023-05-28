@@ -78,18 +78,18 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <LinkIncremental>true</LinkIncremental>
-        <OutDir>$(SolutionDir)\build $(Platform)\$(SolutionName) $(Configuration)\bin\</OutDir>
+        <OutDir>$(SolutionDir)\build $(Platform)\</OutDir>
         <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);</IncludePath>
-        <TargetName>$(SolutionName) Launcher</TargetName>
+        <TargetName>$(SolutionName) Launcher - $(Configuration)</TargetName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
-        <OutDir>$(SolutionDir)\build $(Platform)\$(SolutionName) $(Configuration)\bin\</OutDir>
+        <OutDir>$(SolutionDir)\build $(Platform)\</OutDir>
         <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);</IncludePath>
-        <TargetName>$(SolutionName) Launcher</TargetName>
+        <TargetName>$(SolutionName) Launcher - $(Configuration)</TargetName>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <ClCompile>
@@ -120,6 +120,7 @@
             <EnableModules>true</EnableModules>
             <DisableSpecificWarnings>4996</DisableSpecificWarnings>
             <BuildStlModules>true</BuildStlModules>
+            <LanguageStandard_C>stdc17</LanguageStandard_C>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
@@ -163,6 +164,7 @@
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
             <EnableModules>true</EnableModules>
             <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+            <LanguageStandard_C>stdc17</LanguageStandard_C>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
