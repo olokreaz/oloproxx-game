@@ -12,14 +12,9 @@
             "provides": [
                 {
                     "logical-name": "std",
-                    "source-path": "e:\\c++\\oloprox\\client\\std.ixx",
+                    "source-path": "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.36.32532\\modules\\std.ixx",
                     "is-interface": true
                 }
-            ],
-            "requires": []
-        }
-    ]
-}        }
             ],
             "requires": []
         }

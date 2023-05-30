@@ -29,6 +29,8 @@ string logfilename = fmt::format( "logs/{:%Y-%m-%d}.log"
 static inline shared_ptr< spdlog::logger > g_logger = spdlog::basic_logger_mt( "Global"  , logfilename);
 #endif
 
+shared_ptr< CApplication > g_pApp = make_shared< CApplication >( );
+
 int main( int argc, char **argv )
 {
 
@@ -37,11 +39,10 @@ int main( int argc, char **argv )
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
 
-	shared_ptr< CApplication > app = make_shared< CApplication >( );
-
 	return 0;
 }
 
 /*
  get Refernce server / client from https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/examples/example_chat.cpp
  */
+//  App.h(10, 21): [C5050] Возможная несовместимая среда при импорте модуля "socket.client": mismatched C++ versions.  Current "202002" module version "202004" (компилируется исходный файл src\App.cpp)

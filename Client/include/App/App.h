@@ -7,6 +7,9 @@
 
 #include <clipp.h>
 
+import socket.client;
+import socket.server;
+
 enum class EModeRun : int16 {
 	none = 0
 	, client
@@ -16,7 +19,9 @@ enum class EModeRun : int16 {
 
 class CApplication {
 public:
-	inline static std::shared_ptr< CApplication > s_app = nullptr;
+	inline static std::shared_ptr< CApplication > s_app           = nullptr;
+	std::shared_ptr< socket::CServer >                    m_pSocketServer = nullptr;
+	std::shared_ptr< socket::CClient >                    m_pSocketClient = nullptr;
 
 private:
 	tf::Taskflow m_AppTask;

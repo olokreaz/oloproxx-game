@@ -165,21 +165,21 @@ void CApplication::app_start_choose_mode( )
 		if ( cmd.has_command( ) ) {
 			if ( cmd.get_command( ) == "server" ) {
 				this->m_eMode = EModeRun::server;
-				return;
-			}
-			if ( cmd.get_command( ) == "client" ) {
+				break;
+			} else if ( cmd.get_command( ) == "client" ) {
 				this->m_eMode = EModeRun::client;
-				return;
-			}
+				break;
+			} else cmd.write( "Choose mode on run app:(server / client)" );
 		}
-	// next call function <3
+
 }
 
 CApplication::CApplication( )
 {
 	clipp::group cli;
-	if ( cli_parser_start_app( &cli ) ) cli_parser_show_opt( &cli );
-	if ( this->m_eMode == EModeRun::none );
+	cli_parser_start_app( &cli );
+
+	if ( this->m_eMode == EModeRun::none ) app_start_choose_mode( );
 
 	spdlog::info( "Start application" );
 }
@@ -187,6 +187,6 @@ CApplication::CApplication( )
 CApplication::~CApplication( )
 {
 	tf::Taskflow taskflow;
-	auto         task_ShoutDownSteam = taskflow.emplace( [this] { this->SteamShutdown( ); } );
+	tf::Task     Shoutdawn_task = taskflow.emplace( [this] { this->SteamShutdown( ); } );
 	spdlog::info( "Finish application" );
 }
