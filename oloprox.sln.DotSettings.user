@@ -10,6 +10,11 @@
     &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::Test1.test1&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0aa5ac7f_002D4d18_002D4b7d_002Db6f3_002Da864bc4afe5b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestName" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::2441194D-B439-4CF9-8EBA-0E3CB6CBEC55::Windows,Version=v10.0.22621::TestCaseName.TestName&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=13435725_002D042c_002D474b_002Db13e_002D449f1d534477/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
@@ -25,9 +30,9 @@
     &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2cf77943_002Db867_002D4fd8_002Da899_002D72f512d0a42d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="test1 #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2cf77943_002Db867_002D4fd8_002Da899_002D72f512d0a42d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="test1 #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::Test1.test1&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::2441194D-B439-4CF9-8EBA-0E3CB6CBEC55::Windows,Version=v10.0.22621::TaskTest.ContinueWithWhenAntecedentTaskCompletedThenContinuationRun&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5d70369c_002D47ce_002D4784_002D87a8_002D71fbd9de340f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlog" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
