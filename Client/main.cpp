@@ -13,6 +13,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include "utils.hpp"
+
 using namespace std;
 using namespace fmt::literals;
 
@@ -29,13 +31,6 @@ static inline shared_ptr< spdlog::logger > g_logger = spdlog::basic_logger_mt( "
 #endif
 
 #include <concurrencpp/concurrencpp.h>
-#include <types/types.hpp>
-
-struct my_struct {
-	int32_t a;
-	int32_t b;
-	int32_t c;
-};
 
 int main( int argc, char **argv )
 {
@@ -43,9 +38,10 @@ int main( int argc, char **argv )
 	spdlog::register_logger( g_logger );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v" );
+	spdlog::stdout_logger_mt( "Networking" );
 
-	types::CPackage< > pkg;
-
+	
+	
 	return 0;
 }
 

@@ -336,7 +336,9 @@
     </ItemGroup>
     <ItemGroup>
       <ClInclude Include="Application\Application.hpp" />
-      <ClInclude Include="types\types.hpp" />
+      <ClInclude Include="types\Handler.hpp" />
+      <ClInclude Include="types\Package.hpp" />
+      <ClInclude Include="utils.hpp" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
     <ImportGroup Label="ExtensionTargets">
