@@ -4,11 +4,14 @@
 #include <steam/steamnetworkingtypes.h>
 #include <steam/steamtypes.h>
 
-namespace utils
+namespace details
 {
-	static void NetworkDebugOutput( ESteamNetworkingSocketsDebugOutputType eType, const char *szmsg )
-	{ // use spdlog
-		auto logger = spdlog::get( "Networking" );
+	void NetworkDebugOutput(
+		ESteamNetworkingSocketsDebugOutputType eType
+		, const char *                         szmsg
+	)
+	{
+		static std::shared_ptr< spdlog::logger > logger = spdlog::get( "Networking" );
 		switch ( eType ) {
 			case k_ESteamNetworkingSocketsDebugOutputType_Bug :
 			case k_ESteamNetworkingSocketsDebugOutputType_Error : logger->error( szmsg );

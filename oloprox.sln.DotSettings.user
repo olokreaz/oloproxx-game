@@ -64,4 +64,6 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::Test1.test1&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/ShowComments/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
