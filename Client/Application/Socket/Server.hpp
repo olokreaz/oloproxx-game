@@ -1,4 +1,5 @@
 #pragma once
+#include <concurrencpp/concurrencpp.h>
 #include <spdlog/spdlog.h>
 #include <steam/isteamnetworkingsockets.h>
 #include <steam/isteamnetworkingutils.h>
@@ -6,9 +7,6 @@
 
 #include <types/Package.hpp>
 #include "details.hpp"
-
-#include <concurrencpp/concurrencpp.h>
-
 using concurrencpp::result;
 
 class CServer {
@@ -33,6 +31,8 @@ public:
 
 	void close( );
 
+	explicit CServer( bool *bQuit ) : m_bQuit( bQuit ) { }
+
 protected:
 	result< void >                     recieve( );
 	template< class T > result< void > send(
@@ -41,8 +41,7 @@ protected:
 	) const noexcept;
 	result< void > notify( );
 
-private
-:
+private:
 	void onNetConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t *pInfo );
 
 	static void CallbackNetConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t *pInfo );

@@ -35,7 +35,10 @@ int main( int argc, char **argv )
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 
-	CApplication app;
+	bool bQuit = false;
+
+	CApplication app( &bQuit );
+
 	app.init( );
 
 	return 0;

@@ -1,36 +1,50 @@
 #pragma once
+#include <memory>
 #include <thread>
-
+#include <concurrencpp/concurrencpp.h>
 #include <spdlog/spdlog.h>
 #include <steam/steam_api.h>
 
+#include "Socket/Client.hpp"
+#include "Socket/Server.hpp"
+
+#define WHILE while (true)
+#define WHILE_QUIT while ( !m_bQuit )
+
+enum class ESocketType {
+	CLIENT
+	, SERVER
+	, ALL
+	, NONE
+};
+
 class CApplication {
-	bool                              m_bQuit       = { false };
+	bool *                            m_bQuit       = { nullptr };
 	std::shared_ptr< spdlog::logger > m_logger      = { spdlog::get( "Global" ) };
 	std::shared_ptr< spdlog::logger > m_steamlogger = { spdlog::get( "Steam" ) };
 
+	ESocketType m_eSocketType = { ESocketType::NONE };
+
 public:
-	void init( )
-	{
-		m_steamlogger->info( "Initializing Steam API..." );
+	void SteamInit( );
 
-		m_steamlogger->info( "Checking on exist steam_appid.txt file.." );
+	void init(
+		ESocketType eSocketType = ESocketType::NONE
+	);
 
-		if ( !SteamAPI_Init( ) ) {
-			m_steamlogger->error( "SteamAPI_Init() failed!" );
-			m_bQuit = true;
-			return;
-		}
-		m_steamlogger->info( "Steam API initialized." );
-	}
+	concurrencpp::result< void > run( );
 
-	void shoutdown( )
-	{
-		m_steamlogger->info( "Shutting down Steam API..." );
-		SteamAPI_Shutdown( );
-		m_steamlogger->info( "Steam API shut down." );
-	}
-	
+	void shoutdown( );
 
-	operator bool( ) { return m_bQuit; }
+	operator bool( ) const;
+
+	explicit CApplication( bool *b_quit );
+
+	struct socket_t {
+		std::shared_ptr< CServer > m_server;
+		std::shared_ptr< CClient > m_client;
+	};
+
+private:
+	socket_t m_socket;
 };
