@@ -8,7 +8,9 @@
 #include <steam/steamtypes.h>
 
 #include <types/Package.hpp>
-#include "details.hpp"
+
+#define WHILE while (true)
+#define WHILE_QUIT while ( !*m_pbQuit )
 
 using concurrencpp::result;
 
@@ -16,39 +18,25 @@ class CClient {
 	std::shared_ptr< spdlog::logger > m_logger     = { spdlog::get( "Networking" ) };
 	bool *                            m_bQuit      = nullptr;
 	ISteamNetworkingSockets *         m_pInterface = { SteamNetworkingSockets( ) };
-	uint16                            m_nPort      = { 40'000 };
-	SteamNetworkingIPAddr             m_serverLocalAddr { };
+
+	std::thread *m_pThreadSelf = { nullptr };
 
 public:
 	struct settings_socket_t {
-		HSteamListenSocket hListenSock = { k_HSteamListenSocket_Invalid };
+		HSteamNetConnection   hConn   = { k_HSteamNetConnection_Invalid };
+		uint16                m_nPort = { 40'000 };
+		SteamNetworkingIPAddr m_serverLocalAddr { };
 	};
 
 private:
-	settings_socket_t m_settings;
+	settings_socket_t m_settings_connections;
 
 	static inline CClient *s_pCallbackInstance = { nullptr };
 
-	result< ISteamNetworkingMessage * > m_recieve( )
-	{
-		ISteamNetworkingMessage *pIncomingMsg = nullptr;
-		while ( true ) {
-			const int nMsgs = m_pInterface->ReceiveMessagesOnConnection( m_settings.hListenSock
-					, &pIncomingMsg
-					, 1
-				);
-			assert( nMsgs == 1 && pIncomingMsg );
-
-			if ( nMsgs < 0 ) spdlog::critical( "Failed to recieve message from server" );
-			if ( nMsgs == 0 ) continue;
-
-			if ( pIncomingMsg ) co_return pIncomingMsg;
-		}
-	}
-
 protected:
-	void connect( );
-	void disconnect( );
+	void           connect( std::string ip, uint16 port );
+	void           disconnect( );
+	result< void > UserInputCallback( );
 
 public:
 	void init( );
@@ -62,6 +50,7 @@ protected:
 	result< void > recieve( );
 
 	template< class T > result< void > send( const types::CPackage< T > pkg ) const noexcept;
+	template< class T > result< void > notify( const types::CPackage< T > pkg ) const noexcept;
 
 private:
 	void onNetConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t *pInfo );
@@ -69,4 +58,6 @@ private:
 	static void CallbackNetConnectionStatusChanged( SteamNetConnectionStatusChangedCallback_t *pInfo );
 
 	void PollConnectionStateChages( );
+
+	friend class CApplication;
 };

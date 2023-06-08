@@ -8,11 +8,13 @@
 namespace types
 {
 	template< class T > class CPackage {
-		uint32 m_hashTpye = typeid( T ).hash_code( );
-		uint32 m_size     = sizeof( T );
-		T      m_data;
-
 	public:
+		uint32      m_hashTpye = typeid( T ).hash_code( );
+		uint32      m_size     = sizeof( T );
+		std::string m_typeName = typeid( T ).name( );
+
+		T m_data;
+
 		CPackage( ) = default;
 		CPackage( const T &data ) { m_data = data; }
 

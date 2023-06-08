@@ -5,12 +5,15 @@
 #include <spdlog/spdlog.h>
 #include <steam/steam_api.h>
 
+#include <queue>
+
 #include "Socket/Client.hpp"
 #include "Socket/Server.hpp"
 
-#define WHILE while (true)
-#define WHILE_QUIT while ( !m_bQuit )
+#include <Application/Socket/details.hpp>
 
+#define WHILE while (true)
+#define WHILE_QUIT while ( !*m_pbQuit )
 enum class ESocketType {
 	CLIENT
 	, SERVER
@@ -19,11 +22,15 @@ enum class ESocketType {
 };
 
 class CApplication {
-	bool *                            m_bQuit       = { nullptr };
+	bool *                            m_pbQuit      = { nullptr };
 	std::shared_ptr< spdlog::logger > m_logger      = { spdlog::get( "Global" ) };
 	std::shared_ptr< spdlog::logger > m_steamlogger = { spdlog::get( "Steam" ) };
 
 	ESocketType m_eSocketType = { ESocketType::NONE };
+
+	std::thread *             m_pThreadLocalInput = { nullptr };
+	std::mutex                m_mutexLocalInput;
+	std::queue< std::string > QueueLocalInput;
 
 public:
 	void SteamInit( );
@@ -32,14 +39,20 @@ public:
 		ESocketType eSocketType = ESocketType::NONE
 	);
 
-	concurrencpp::result< void > run( );
+	void initSocket( )
+	{
+		SteamNetworkingUtils( ) -> SetDebugOutputFunction(
+								k_ESteamNetworkingSocketsDebugOutputType_Msg
+								, details::Networking::NetDebugOutput
+								);
+	}
 
-	void shoutdown( );
-
+	result< void > run( );
+	void           shoutdown( );
 	operator bool( ) const;
-
 	explicit CApplication( bool *b_quit );
 
+public:
 	struct socket_t {
 		std::shared_ptr< CServer > m_server;
 		std::shared_ptr< CClient > m_client;

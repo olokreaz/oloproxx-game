@@ -341,6 +341,7 @@
       <ClInclude Include="Application\Socket\Client.hpp" />
       <ClInclude Include="Application\Socket\details.hpp" />
       <ClInclude Include="Application\Socket\Server.hpp" />
+      <ClInclude Include="types\Command.hpp" />
       <ClInclude Include="types\Handler.hpp" />
       <ClInclude Include="types\Package.hpp" />
       <ClInclude Include="types\User.hpp" />
