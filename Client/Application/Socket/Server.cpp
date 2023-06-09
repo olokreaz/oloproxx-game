@@ -113,3 +113,12 @@ template< class T > result< void > CServer::send(
 						);
 	co_return;
 }
+
+template< class T > result<void> CServer::notify( const types::CPackage<T> pkg, std::initializer_list<types::CUser> ) const noexcept
+{
+	while ( true ) {
+		for ( auto &user : {1,2,3,4} /*temp code*/ ) {
+			send( user, &pkg );
+		}
+	}
+}

@@ -1,6 +1,8 @@
 #include "Client.hpp"
-
 #include "details.hpp"
+
+#include <boost/dynamic_bitset.hpp>
+
 void CClient::connect( std::string ip, uint16 port ) { }
 
 void CClient::disconnect( )
@@ -15,7 +17,7 @@ void CClient::init( ) {}
 
 void CClient::run( )
 {
-	m_pThreadSelf = new std::thread( [ this ]() -> result< void >
+	m_pThread = new std::thread( [ this ]( ) -> result< void >
 						{
 							WHILE {
 								this -> recieve( );
@@ -23,14 +25,14 @@ void CClient::run( )
 							}
 						}
 					);
-	m_pThreadSelf -> detach( );
+	m_pThread -> detach( );
 }
 
 void CClient::close( )
 {
 	*m_bQuit = true;
-	m_pThreadSelf -> join( );
-	delete m_pThreadSelf;
+	m_pThread -> join( );
+	delete m_pThread;
 }
 
 result< void > CClient::recieve( )

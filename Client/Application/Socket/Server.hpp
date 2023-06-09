@@ -31,7 +31,8 @@ public:
 	void           init( );
 	result< void > run( );
 
-	void close( );
+	void         close( );
+	std::thread* getThread( ) { return m_pThread; }
 
 	explicit CServer( bool *bQuit );
 

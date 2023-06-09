@@ -19,7 +19,7 @@ class CClient {
 	bool *                            m_bQuit      = nullptr;
 	ISteamNetworkingSockets *         m_pInterface = { SteamNetworkingSockets( ) };
 
-	std::thread *m_pThreadSelf = { nullptr };
+	std::thread *m_pThread = { nullptr };
 
 public:
 	struct settings_socket_t {
@@ -43,6 +43,7 @@ public:
 	void run( );
 
 	void close( );
+	std::thread* getThread( ) { return m_pThread; }
 
 	explicit CClient( bool *bQuit ) : m_bQuit( bQuit ) { }
 

@@ -40,7 +40,8 @@ int main( int argc, char **argv )
 	bool bQuit = false;
 
 	CApplication app( &bQuit );
-	app.init( );
+	app . init( );
+	app . run( );
 
 	return 0;
 }
