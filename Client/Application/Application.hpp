@@ -50,15 +50,13 @@ public:
 	result< void > run( );
 	void           shoutdown( );
 
-	decltype(auto) getAllThread()
+	auto getAllThread( )
 	{
-		return {m_pThreadLocalInput, m_socket.m_client->getThread(), m_socket.m_server->getThread()};
+		return std::make_tuple( m_pThreadLocalInput, m_socket . m_client -> getThread( ), m_socket . m_server -> getThread( ) );
 	}
-	
+
 	operator bool( ) const;
 	explicit CApplication( bool *b_quit );
-
-	
 
 public:
 	struct socket_t {
