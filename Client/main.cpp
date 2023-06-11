@@ -43,12 +43,6 @@ int main( int argc, char **argv )
 	app . init( );
 	app . run( );
 
-	auto [ local_th, client_th, server_th ] = app . getAllThread( );
-
-	if ( local_th -> joinable( ) ) local_th -> join( );
-	if ( client_th -> joinable( ) ) client_th -> join( );
-	if ( server_th -> joinable( ) ) server_th -> join( );
-
 	return 0;
 }
 

@@ -43,7 +43,6 @@ public:
 	void run( );
 
 	void close( );
-	std::thread* getThread( ) { return m_pThread; }
 
 	explicit CClient( bool *bQuit ) : m_bQuit( bQuit ) { }
 

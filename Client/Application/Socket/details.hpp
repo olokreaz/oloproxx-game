@@ -13,27 +13,27 @@ namespace details::Networking
 	{
 		static std::shared_ptr< spdlog::logger > logger = spdlog::get( "Networking" );
 		switch ( eType ) {
-			case k_ESteamNetworkingSocketsDebugOutputType_Bug : logger->critical( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Bug: logger -> critical( szmsg );
 				ExitProcess( EXIT_FAILURE );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Error : logger->error( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Error: logger -> error( szmsg );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Important : logger->warn( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Important: logger -> warn( szmsg );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Warning : logger->warn( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Warning: logger -> warn( szmsg );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Msg : logger->info( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Msg: logger -> info( szmsg );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Verbose :
-			case k_ESteamNetworkingSocketsDebugOutputType_Debug : logger->debug( szmsg );
+			case k_ESteamNetworkingSocketsDebugOutputType_Verbose:
+			case k_ESteamNetworkingSocketsDebugOutputType_Debug: logger -> debug( szmsg );
 				break;
-			default : logger->info( szmsg );
+			default: logger -> info( szmsg );
 		}
 	}
 
-	static void NetFatalError( const std::string_view msg )
+	template< class... T > static void NetFatalError( const std::string_view msg, T... data )
 	{
-		NetDebugOutput( k_ESteamNetworkingSocketsDebugOutputType_Bug, msg.data( ) );
+		NetDebugOutput( k_ESteamNetworkingSocketsDebugOutputType_Bug, fmt::format( fmt::runtime( msg ), data... ) . c_str( ) );
 	}
 
 	static result< ISteamNetworkingMessage * > recieve(
@@ -45,16 +45,16 @@ namespace details::Networking
 		WHILE {
 			int nMsgs;
 			if ( !bIsServer )
-				nMsgs = SteamNetworkingSockets( )->
+				nMsgs = SteamNetworkingSockets( ) ->
 						ReceiveMessagesOnConnection( hPool_and_Conn
 										, &pIncomingMsg
 										, 1
 									);
 			else
-				nMsgs = SteamNetworkingSockets( )->
+				nMsgs = SteamNetworkingSockets( ) ->
 						ReceiveMessagesOnPollGroup( hPool_and_Conn
-										, &pIncomingMsg
-										, 1
+									, &pIncomingMsg
+									, 1
 									);
 
 			assert( nMsgs == 1 && pIncomingMsg );
@@ -62,8 +62,8 @@ namespace details::Networking
 			if ( nMsgs < 0 ) spdlog::critical( "Failed to recieve message from server" );
 			if ( nMsgs == 0 ) continue;
 
-			void *                    pMsgData = pIncomingMsg->m_pData;
-			types::CPackage< void * > pkg = static_cast< types::CPackage< void * > * >( pMsgData );
+			void *                    pMsgData = pIncomingMsg -> m_pData;
+			types::CPackage< void * > pkg      = static_cast< types::CPackage< void * > * >( pMsgData );
 
 			if ( pIncomingMsg ) co_return pIncomingMsg;
 		}

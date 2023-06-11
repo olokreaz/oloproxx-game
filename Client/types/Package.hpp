@@ -10,7 +10,7 @@ namespace types
 	template< class T > class CPackage {
 	public:
 		uint32      m_hashTpye = typeid( T ).hash_code( );
-		uint32      m_size     = sizeof( T );
+		uint32      m_sizeData    = sizeof( T );
 		std::string m_typeName = typeid( T ).name( );
 
 		T m_data;
@@ -21,14 +21,14 @@ namespace types
 		CPackage( const CPackage &other )
 		{
 			m_hashTpye = other.m_hashTpye;
-			m_size     = other.m_size;
+			m_sizeData     = other.m_sizeData;
 			m_data     = other.m_data;
 		}
 
 		CPackage& operator=( const CPackage &other )
 		{
 			m_hashTpye = other.m_hashTpye;
-			m_size     = other.m_size;
+			m_sizeData     = other.m_sizeData;
 			m_data     = other.m_data;
 			return *this;
 		}
@@ -36,14 +36,14 @@ namespace types
 		CPackage( CPackage &&other ) noexcept
 		{
 			m_hashTpye = other.m_hashTpye;
-			m_size     = other.m_size;
+			m_sizeData     = other.m_sizeData;
 			m_data     = std::move( other.m_data );
 		}
 
 		CPackage& operator=( CPackage &&other ) noexcept
 		{
 			m_hashTpye = other.m_hashTpye;
-			m_size     = other.m_size;
+			m_sizeData     = other.m_sizeData;
 			m_data     = std::move( other.m_data );
 			return *this;
 		}
@@ -53,7 +53,7 @@ namespace types
 		const T& GetData( ) const { return m_data; }
 		void     SetData( const T &data ) { m_data = data; }
 		uint32   GetHashType( ) const { return m_hashTpye; }
-		uint32   GetSize( ) const { return m_size; }
+		uint32   GetSize( ) const { return m_sizeData; }
 
 	private:
 		friend class boost::serialization::access;
@@ -61,7 +61,7 @@ namespace types
 		template< class Archive > void serialize( Archive &ar, const uint32 version )
 		{
 			ar & m_hashTpye;
-			ar & m_size;
+			ar & m_sizeData;
 			ar & m_data;
 		}
 	};

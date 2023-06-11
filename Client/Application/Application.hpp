@@ -50,11 +50,6 @@ public:
 	result< void > run( );
 	void           shoutdown( );
 
-	auto getAllThread( )
-	{
-		return std::make_tuple( m_pThreadLocalInput, m_socket . m_client -> getThread( ), m_socket . m_server -> getThread( ) );
-	}
-
 	operator bool( ) const;
 	explicit CApplication( bool *b_quit );
 
