@@ -77,7 +77,7 @@ namespace details::Networking
 	};
 
 	class CUserConntroller : public types::CUserManager< CNetUser > {
-		map< HSteamNetConnection, type > m_mapUsers;
+		std::map< HSteamNetConnection, type > m_mapUsers;
 
 	public:
 		void add_( const type &user ) override { m_mapUsers . insert( { user . m_hConn, user } ); }
