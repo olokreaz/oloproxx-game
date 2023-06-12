@@ -40,6 +40,7 @@ void CApplication::init( ESocketType eSocketType )
 
 result< void > CApplication::run( )
 {
+	*m_pbQuit = false;
 	if ( m_eSocketType == ESocketType::CLIENT ) m_socket . m_client -> run( );
 	else if ( m_eSocketType == ESocketType::SERVER ) m_socket . m_server -> run( );
 	else if ( m_eSocketType == ESocketType::ALL ) {
@@ -62,6 +63,12 @@ result< void > CApplication::run( )
 						);
 	m_pThreadLocalInput -> detach( );
 
+	// main code update loop
+	WHILE_QUIT runLocalInputCallback( );
+
+	spdlog::info( "Shutting down..." );
+
+	*m_pbQuit = true;
 	co_return;
 }
 
@@ -71,6 +78,8 @@ void CApplication::shoutdown( )
 	SteamAPI_Shutdown( );
 	m_steamlogger -> info( "Steam API shut down." );
 }
+
+void CApplication::runLocalInputCallback( ) { }
 
 CApplication::operator bool( ) const { return m_pbQuit; }
 CApplication::CApplication( bool *b_quit ): m_pbQuit { b_quit } {}

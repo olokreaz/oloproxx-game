@@ -15,10 +15,10 @@
 #define WHILE while (true)
 #define WHILE_QUIT while ( !*m_pbQuit )
 enum class ESocketType {
-	CLIENT
+	NONE
+	, CLIENT
 	, SERVER
 	, ALL
-	, NONE
 };
 
 class CApplication {
@@ -32,14 +32,10 @@ class CApplication {
 	std::mutex                m_mutexLocalInput;
 	std::queue< std::string > QueueLocalInput;
 
-public:
+private:
 	void SteamInit( );
 
-	void init(
-		ESocketType eSocketType = ESocketType::NONE
-	);
-
-	void initSocket( )
+	void SocketInit( )
 	{
 		SteamNetworkingUtils( ) -> SetDebugOutputFunction(
 								k_ESteamNetworkingSocketsDebugOutputType_Msg
@@ -47,8 +43,14 @@ public:
 								);
 	}
 
+	void shoutdown( );
+
+	void runLocalInputCallback( );
+
+public:
+	void init( ESocketType eSocketType = ESocketType::NONE );
+
 	result< void > run( );
-	void           shoutdown( );
 
 	operator bool( ) const;
 	explicit CApplication( bool *b_quit );

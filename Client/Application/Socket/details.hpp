@@ -1,4 +1,6 @@
 #pragma once
+#include <map>
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_sinks.h>
 #include <steam/steamnetworkingtypes.h>
@@ -72,5 +74,17 @@ namespace details::Networking
 	class CNetUser : public types::CUser {
 	public:
 		HSteamNetConnection m_hConn = { k_HSteamNetConnection_Invalid };
+	};
+
+	class CUserConntroller : public types::CUserManager< CNetUser > {
+		map< HSteamNetConnection, type > m_mapUsers;
+
+	public:
+		void add_( const type &user ) override { m_mapUsers . insert( { user . m_hConn, user } ); }
+
+		void remove( const type &user ) override { }
+
+		CUserConntroller( )  = default;
+		~CUserConntroller( ) = default;
 	};
 }
