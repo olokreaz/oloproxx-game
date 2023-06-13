@@ -12,6 +12,8 @@
 
 #include <Application/Socket/details.hpp>
 
+#include "types/Command.hpp"
+
 #define WHILE while (true)
 #define WHILE_QUIT while ( !*m_pbQuit )
 enum class ESocketType {
@@ -32,8 +34,15 @@ class CApplication {
 	std::mutex                m_mutexLocalInput;
 	std::queue< std::string > QueueLocalInput;
 
-private:
+protected:
+	void chooseSocketType( );
 	void SteamInit( );
+
+	void CommandHandlerInit( )
+	{
+		types::CCommand::setClient( m_socket . m_client );
+		types::CCommand::setServer( m_socket . m_server );
+	}
 
 	void SocketInit( )
 	{

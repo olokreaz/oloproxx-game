@@ -1,6 +1,8 @@
 #pragma once
 #include <boost/serialization/access.hpp>
 
+#include <absl/time/time.h>
+
 #include <steam/steamtypes.h>
 
 #include "User.hpp"
@@ -9,51 +11,47 @@ namespace types
 {
 	template< class T > class CPackage {
 	public:
-		uint32      m_hashTpye = typeid( T ).hash_code( );
-		uint32      m_sizeData    = sizeof( T );
-		std::string m_typeName = typeid( T ).name( );
-
-		T m_data;
+		uint32      m_hashTpye = typeid( T ) . hash_code( );
+		uint32      m_sizeData = sizeof( T );
+		std::string m_typeName = typeid( T ) . name( );
+		T           m_data;
 
 		CPackage( ) = default;
 		CPackage( const T &data ) { m_data = data; }
 
 		CPackage( const CPackage &other )
 		{
-			m_hashTpye = other.m_hashTpye;
-			m_sizeData     = other.m_sizeData;
-			m_data     = other.m_data;
+			m_hashTpye = other . m_hashTpye;
+			m_sizeData = other . m_sizeData;
+			m_data     = other . m_data;
 		}
 
 		CPackage& operator=( const CPackage &other )
 		{
-			m_hashTpye = other.m_hashTpye;
-			m_sizeData     = other.m_sizeData;
-			m_data     = other.m_data;
+			m_hashTpye = other . m_hashTpye;
+			m_sizeData = other . m_sizeData;
+			m_data     = other . m_data;
 			return *this;
 		}
 
 		CPackage( CPackage &&other ) noexcept
 		{
-			m_hashTpye = other.m_hashTpye;
-			m_sizeData     = other.m_sizeData;
-			m_data     = std::move( other.m_data );
+			m_hashTpye = other . m_hashTpye;
+			m_sizeData = other . m_sizeData;
+			m_data     = std::move( other . m_data );
 		}
 
 		CPackage& operator=( CPackage &&other ) noexcept
 		{
-			m_hashTpye = other.m_hashTpye;
-			m_sizeData     = other.m_sizeData;
-			m_data     = std::move( other.m_data );
+			m_hashTpye = other . m_hashTpye;
+			m_sizeData = other . m_sizeData;
+			m_data     = std::move( other . m_data );
 			return *this;
 		}
 
-		~CPackage( ) = default;
+		T* operator->( ) { return &m_data; }
 
-		const T& GetData( ) const { return m_data; }
-		void     SetData( const T &data ) { m_data = data; }
-		uint32   GetHashType( ) const { return m_hashTpye; }
-		uint32   GetSize( ) const { return m_sizeData; }
+		~CPackage( ) = default;
 
 	private:
 		friend class boost::serialization::access;
@@ -66,12 +64,12 @@ namespace types
 		}
 	};
 
-	template< class T > class CMessage {
+	template< class T > struct CMessage {
 		CPackage< T > m_package;
 		CUser         m_sender;
-		std::tm       m_time;
-		CMessage( ) { }
+		absl::Time    m_SendingTime;
 	};
 
 	template< class T > using package_t = CPackage< T >;
+	template< class T > using message_t = CMessage< T >;
 }

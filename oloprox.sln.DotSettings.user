@@ -1,70 +1,18 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">INFO</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=04f5fc4d_002D6e22_002D42d6_002D90e7_002Defe1a9646f97/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=082ca6c2_002D0100_002D4346_002D80a4_002Db1b9256dfd67/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::Test1.test1&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0aa5ac7f_002D4d18_002D4b7d_002Db6f3_002Da864bc4afe5b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestName" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::2441194D-B439-4CF9-8EBA-0E3CB6CBEC55::Windows,Version=v10.0.22621::TestCaseName.TestName&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=13435725_002D042c_002D474b_002Db13e_002D449f1d534477/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=24bb0008_002D92e9_002D4f12_002Da394_002Ddcd259d9fa18/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=29e1e5fd_002De0ad_002D4531_002Da828_002Dac0dfc4c7705/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2cf77943_002Db867_002D4fd8_002Da899_002D72f512d0a42d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="test1 #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::2441194D-B439-4CF9-8EBA-0E3CB6CBEC55::Windows,Version=v10.0.22621::TaskTest.ContinueWithWhenAntecedentTaskCompletedThenContinuationRun&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5d70369c_002D47ce_002D4784_002D87a8_002D71fbd9de340f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlog" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::LOgers.TestSpdlog&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=608a2872_002Dde2e_002D45d3_002D8e89_002D8bc2f9a0a173/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7d54ead4_002D4579_002D461f_002D90c4_002Dc6cba9af1a42/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #7" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f4f92e4f_002Db4d1_002D4e26_002Da910_002D9e9ee33e5ed9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f877123e_002D0d06_002D4c46_002D97b6_002D342ee43760e5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestSpdlogErrHandler #8" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::TestCaseName.TestSpdlogErrHandler&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ff3a62df_002D98fa_002D4add_002Dabec_002D4cf275eb2522/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="test1 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;GTest::26DD629B-5158-4B79-BE80-EDF50DF7095E::Windows,Version=v10.0.22621::Test1.test1&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/ShowComments/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>

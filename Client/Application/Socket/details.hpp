@@ -20,8 +20,7 @@ namespace details::Networking
 				break;
 			case k_ESteamNetworkingSocketsDebugOutputType_Error: logger -> error( szmsg );
 				break;
-			case k_ESteamNetworkingSocketsDebugOutputType_Important: logger -> warn( szmsg );
-				break;
+			case k_ESteamNetworkingSocketsDebugOutputType_Important:
 			case k_ESteamNetworkingSocketsDebugOutputType_Warning: logger -> warn( szmsg );
 				break;
 			case k_ESteamNetworkingSocketsDebugOutputType_Msg: logger -> info( szmsg );
@@ -81,8 +80,11 @@ namespace details::Networking
 
 	public:
 		void add_( const type &user ) override { m_mapUsers . insert( { user . m_hConn, user } ); }
+		void remove( const type &user ) override { m_mapUsers . erase( user . m_hConn ); }
+		void remove( const HSteamNetConnection &hConn ) { m_mapUsers . erase( hConn ); }
+		void find( const HSteamNetConnection &hConn ) { m_mapUsers . find( hConn ); }
 
-		void remove( const type &user ) override { }
+		auto operator[]( const HSteamNetConnection &hConn ) { return m_mapUsers . at( hConn ); }
 
 		CUserConntroller( )  = default;
 		~CUserConntroller( ) = default;

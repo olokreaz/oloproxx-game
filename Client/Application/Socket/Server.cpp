@@ -22,6 +22,9 @@ result< void > CServer::run( )
 {
 	m_logger -> info( "Running server..." );
 
+	SteamNetworkingConfigValue_t opt;
+	opt . SetPtr( k_ESteamNetworkingConfig_Callback_ConnectionStatusChanged, ( void * ) this -> CallbackNetConnectionStatusChanged );
+
 	m_settings_socket . hListenSock = m_pInterface -> CreateListenSocketIP( m_serverLocalAddr, 0, nullptr );
 	if ( m_settings_socket . hListenSock == k_HSteamListenSocket_Invalid ) {
 		m_logger -> error( "Failed to create listen socket" );

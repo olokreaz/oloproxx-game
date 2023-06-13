@@ -18,8 +18,6 @@ const static string logfilename = fmt::format( "logs/{:%Y-%m-%d}.log"
 
 #include <Application/Application.hpp>
 
-void foo( std::initializer_list< uint64 > list ) { fmt::print( "foo: {}\n", list ); }
-
 int main( int argc, char **argv )
 {
 	#ifndef _DEBUG
@@ -42,7 +40,6 @@ int main( int argc, char **argv )
 	CApplication app( &bQuit );
 	app . init( );
 	app . run( );
-
 
 	return 0;
 }

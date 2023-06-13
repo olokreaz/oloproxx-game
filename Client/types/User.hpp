@@ -110,7 +110,6 @@ namespace types
 				spdlog::warn( "User {} already exists", user . name( ) );
 				return;
 			}
-
 			m_users . push_back( user );
 			add_( user );
 			spdlog::info( "Added user {}", user . name( ) );
