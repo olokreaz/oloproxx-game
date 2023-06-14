@@ -18,6 +18,7 @@ namespace types
 
 		CSteamID    m_steamID;
 		std::string m_name;
+		std::string m_dName;
 
 	public:
 		explicit CUser( );

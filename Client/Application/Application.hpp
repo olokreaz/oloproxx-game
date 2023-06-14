@@ -12,6 +12,8 @@
 
 #include <Application/Socket/details.hpp>
 
+#include "Discord/Bot/DiscordBot.h"
+
 #include "types/Command.hpp"
 
 #define WHILE while (true)
@@ -38,11 +40,7 @@ protected:
 	void chooseSocketType( );
 	void SteamInit( );
 
-	void CommandHandlerInit( )
-	{
-		types::CCommand::setClient( m_socket . m_client );
-		types::CCommand::setServer( m_socket . m_server );
-	}
+	void CommandHandlerInit( ) { }
 
 	void SocketInit( )
 	{
@@ -71,5 +69,6 @@ public:
 	};
 
 private:
-	socket_t m_socket;
+	std::shared_ptr< CDiscordBot > m_discordBot;
+	socket_t                       m_socket;
 };

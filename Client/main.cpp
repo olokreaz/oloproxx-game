@@ -29,7 +29,7 @@ int main( int argc, char **argv )
 	spdlog::stdout_color_mt( "Steam" );
 	spdlog::stdout_color_mt( "Networking" );
 	spdlog::stdout_color_mt( "Discord Bot" );
-	// spdlog::stdout_color_mt("Discord RRPC" );
+	// spdlog::stdout_color_mt("Discord Rpc" );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 
