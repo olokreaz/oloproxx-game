@@ -11,7 +11,8 @@ using namespace fmt::literals;
 
 #ifndef _DEBUG
 #include <spdlog/sinks/basic_file_sink.h>
-const static string logfilename = fmt::format( "logs/{:%Y-%m-%d}.log"
+const static string logfilename = fmt::format(
+						"logs/{:%Y-%m-%d}.log"
 						, fmt::localtime( std::time( nullptr ) )
 						);
 #endif
@@ -21,17 +22,14 @@ const static string logfilename = fmt::format( "logs/{:%Y-%m-%d}.log"
 int main( int argc, char **argv )
 {
 	#ifndef _DEBUG
-	static inline shared_ptr< spdlog::logger > g_logger = spdlog::basic_logger_mt( "Global"  , logfilename);
-	spdlog::set_default_logger( g_logger );
+	spdlog::set_default_logger( spdlog::basic_logger_mt( "Global"  , logfilename) );
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 	#else
-
-	spdlog::stdout_color_mt( "Global" );
-	set_default_logger( spdlog::get( "Global" ) );
-
+	set_default_logger( spdlog::stdout_color_mt( "Global" ) );
 	spdlog::stdout_color_mt( "Steam" );
 	spdlog::stdout_color_mt( "Networking" );
-
+	spdlog::stdout_color_mt( "Discord Bot" );
+	// spdlog::stdout_color_mt("Discord RRPC" );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 

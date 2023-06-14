@@ -253,6 +253,7 @@
           <LinkCompiled>true</LinkCompiled>
           <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
+        <ClCompile Include="Application\Discord\Bot\DiscordBot.cpp" />
         <ClCompile Include="Application\Socket\Client.cpp" />
         <ClCompile Include="Application\Socket\Server.cpp" />
         <ClCompile Include="main.cpp">
@@ -339,6 +340,7 @@
     <ItemGroup>
       <ClInclude Include="Application\Application.hpp" />
       <ClInclude Include="Application\ApplicationCommand\ApplicationCommand.hpp" />
+      <ClInclude Include="Application\Discord\Bot\DiscordBot.h" />
       <ClInclude Include="Application\Socket\Client.hpp" />
       <ClInclude Include="Application\Socket\details.hpp" />
       <ClInclude Include="Application\Socket\Server.hpp" />
@@ -346,6 +348,9 @@
       <ClInclude Include="types\Handler.hpp" />
       <ClInclude Include="types\Package.hpp" />
       <ClInclude Include="types\User.hpp" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Application\Discord\Rpc\" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
     <ImportGroup Label="ExtensionTargets">
