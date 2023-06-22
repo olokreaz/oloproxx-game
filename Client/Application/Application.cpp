@@ -31,7 +31,6 @@ void CApplication::init( ESocketType eSocketType )
 	} else if ( m_eSocketType == ESocketType::SERVER ) {
 		m_socket . m_server = std::make_shared< CServer >( m_pbQuit );
 		m_socket . m_server -> init( );
-		m_discordBot = std::make_shared< CDiscordBot >( );
 	} else if ( m_eSocketType == ESocketType::ALL ) {
 		m_socket . m_server = std::make_shared< CServer >( m_pbQuit );
 		m_socket . m_client = std::make_shared< CClient >( m_pbQuit );
@@ -52,11 +51,9 @@ result< void > CApplication::run( )
 	if ( m_eSocketType == ESocketType::CLIENT ) m_socket . m_client -> run( );
 	else if ( m_eSocketType == ESocketType::SERVER ) {
 		m_socket . m_server -> run( );
-		m_discordBot -> run( );
 	} else if ( m_eSocketType == ESocketType::ALL ) {
 		m_socket . m_server -> run( );
 		m_socket . m_client -> run( );
-		m_discordBot -> run( );
 	}
 
 	m_pThreadLocalInput = new std::thread( [ & ]( )-> result< void >

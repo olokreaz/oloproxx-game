@@ -12,7 +12,7 @@
 
 #include <Application/Socket/details.hpp>
 
-#include "Discord/Bot/DiscordBot.h"
+
 
 #include "types/Command.hpp"
 
@@ -69,6 +69,5 @@ public:
 	};
 
 private:
-	std::shared_ptr< CDiscordBot > m_discordBot;
 	socket_t                       m_socket;
 };
