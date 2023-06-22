@@ -82,6 +82,7 @@
         <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);$(SolutionDir)\libs\coro\inc</IncludePath>
         <TargetName>$(SolutionName) Launcher - $(Configuration)</TargetName>
         <SourcePath>$(VC_SourcePath);$(SolutionDir)\libs\coro\src</SourcePath>
+        <RunCodeAnalysis>true</RunCodeAnalysis>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
