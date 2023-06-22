@@ -31,14 +31,8 @@ void CApplication::init( ESocketType eSocketType )
 	} else if ( m_eSocketType == ESocketType::SERVER ) {
 		m_socket . m_server = std::make_shared< CServer >( m_pbQuit );
 		m_socket . m_server -> init( );
-	} else if ( m_eSocketType == ESocketType::ALL ) {
-		m_socket . m_server = std::make_shared< CServer >( m_pbQuit );
-		m_socket . m_client = std::make_shared< CClient >( m_pbQuit );
-
-		m_socket . m_server -> init( );
-		m_socket . m_client -> init( );
 	} else if ( m_eSocketType == ESocketType::NONE ) {
-		spdlog::warn( "Socket type is NONE!" );
+		spdlog::info( "Socket type is NONE!" );
 		chooseSocketType( );
 	}
 
@@ -49,12 +43,7 @@ result< void > CApplication::run( )
 {
 	*m_pbQuit = false;
 	if ( m_eSocketType == ESocketType::CLIENT ) m_socket . m_client -> run( );
-	else if ( m_eSocketType == ESocketType::SERVER ) {
-		m_socket . m_server -> run( );
-	} else if ( m_eSocketType == ESocketType::ALL ) {
-		m_socket . m_server -> run( );
-		m_socket . m_client -> run( );
-	}
+	else if ( m_eSocketType == ESocketType::SERVER ) m_socket . m_server -> run( );
 
 	m_pThreadLocalInput = new std::thread( [ & ]( )-> result< void >
 							{
