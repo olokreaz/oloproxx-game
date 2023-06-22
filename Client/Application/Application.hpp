@@ -22,7 +22,6 @@ enum class ESocketType {
 	NONE
 	, CLIENT
 	, SERVER
-	, ALL
 };
 
 class CApplication {
