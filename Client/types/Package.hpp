@@ -1,7 +1,6 @@
 #pragma once
 #include <boost/serialization/access.hpp>
 
-#include <absl/time/time.h>
 
 #include <steam/steamtypes.h>
 
@@ -67,7 +66,6 @@ namespace types
 	template< class T > struct CMessage {
 		CPackage< T > m_package;
 		CUser         m_sender;
-		absl::Time    m_SendingTime;
 	};
 
 	template< class T > using package_t = CPackage< T >;

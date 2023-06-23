@@ -32,7 +32,7 @@ int main( int argc, char **argv )
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 
-	void* ptr = new char[1024];
+
 	
 	bool bQuit = false;
 
