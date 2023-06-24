@@ -28,12 +28,9 @@ int main( int argc, char **argv )
 	set_default_logger( spdlog::stdout_color_mt( "Global" ) );
 	spdlog::stdout_color_mt( "Steam" );
 	spdlog::stdout_color_mt( "Networking" );
-	// spdlog::stdout_color_mt("Discord Rpc" );
 	#endif
 	spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [%n] [%^---%l---%$] [thread %t] %v" );
 
-
-	
 	bool bQuit = false;
 
 	CApplication app( &bQuit );
