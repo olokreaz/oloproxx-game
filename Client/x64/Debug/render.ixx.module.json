@@ -12,13 +12,13 @@
             "provides": [
                 {
                     "logical-name": "Vulkan",
-                    "source-path": "e:\\c++\\oloprox\\client\\modules\\render.ixx",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\render.ixx",
                     "is-interface": true
                 }
             ],
             "requires": [
                 {
-                    "logical-name": "Vulkan:deteils"
+                    "logical-name": "Vulkan.bootstrap"
                 }
             ]
         }

@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>E:\c++\oloprox\build\client Debug.exe</FullPath>
+      <FullPath>E:\c++\oloprox\build\Client Debug.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
