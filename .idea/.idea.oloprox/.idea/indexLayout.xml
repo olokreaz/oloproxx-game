@@ -5,6 +5,8 @@
       <Path>build</Path>
     </attachedFolders>
     <explicitIncludes />
-    <explicitExcludes />
+    <explicitExcludes>
+      <Path>build/assets</Path>
+    </explicitExcludes>
   </component>
 </project>

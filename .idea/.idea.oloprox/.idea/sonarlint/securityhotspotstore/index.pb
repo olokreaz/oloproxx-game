@@ -17,3 +17,7 @@ R
 "build/assets/logo/NAME-DOOPLET.svg,9\7\97936c747b1136702e955954e52c7ad0a05e0117
 X
 (build/assets/logo/NAME-DOOPLET-color.svg,e\9\e912f6f29b45e58e941ed14c8323566cda2c691c
+E
+client/Client.vcxproj,b\d\bd34015be7131705e7f039eb2763a11c453a729a
+H
+client/modules/types.ixx,6\8\68529347fd8d0df8aa6a3fd9aef1985c8d0fba11

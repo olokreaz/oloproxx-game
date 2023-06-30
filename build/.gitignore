@@ -19,4 +19,7 @@ logs
 *.out
 *.app
 
+assets/shaders/*.glsl
+assets/shaders/*.exe
+
 !steam_api64.dll
