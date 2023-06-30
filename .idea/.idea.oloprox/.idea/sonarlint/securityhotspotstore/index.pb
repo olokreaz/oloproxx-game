@@ -1,6 +1,4 @@
 
-;
-oloprox.sln,6\a\6a8c1083518d1ce568e5f8fa0544d80ee2d83634
 ]
 -build/assets/logo/LOGO-NAME-DOOPLET-COLOR.svg,9\6\96544510890785140799586989e74d9befac9b2f
 b
@@ -19,5 +17,3 @@ X
 (build/assets/logo/NAME-DOOPLET-color.svg,e\9\e912f6f29b45e58e941ed14c8323566cda2c691c
 E
 client/Client.vcxproj,b\d\bd34015be7131705e7f039eb2763a11c453a729a
-H
-client/modules/types.ixx,6\8\68529347fd8d0df8aa6a3fd9aef1985c8d0fba11

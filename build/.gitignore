@@ -23,5 +23,5 @@ logs
 assets/shaders/*.exe
 assets/shaders/*.spv
 
-!assets/shaders/CompileShader.exe
 !steam_api64.dll
+!/assets/shaders/CompileShader.exe
