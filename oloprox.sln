@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "client\Client.vcxproj", "{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{78705677-9E2A-4ACC-A6FD-41554D60C111}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CompileShader", "CompileShader\CompileShader.vcxproj", "{62320737-FB20-4782-8F3B-EE06FF279653}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -18,5 +22,16 @@ Global
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|Win32.Build.0 = Release|Win32
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.ActiveCfg = Release|x64
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.Build.0 = Release|x64
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Debug|Win32.ActiveCfg = Debug|Win32
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Debug|Win32.Build.0 = Debug|Win32
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Debug|x64.ActiveCfg = Debug|x64
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Debug|x64.Build.0 = Debug|x64
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Release|Win32.ActiveCfg = Release|Win32
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Release|Win32.Build.0 = Release|Win32
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Release|x64.ActiveCfg = Release|x64
+		{62320737-FB20-4782-8F3B-EE06FF279653}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62320737-FB20-4782-8F3B-EE06FF279653} = {78705677-9E2A-4ACC-A6FD-41554D60C111}
 	EndGlobalSection
 EndGlobal
