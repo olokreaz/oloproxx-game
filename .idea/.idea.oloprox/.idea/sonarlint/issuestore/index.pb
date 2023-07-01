@@ -17,3 +17,9 @@ X
 (build/assets/logo/NAME-DOOPLET-color.svg,e\9\e912f6f29b45e58e941ed14c8323566cda2c691c
 E
 client/Client.vcxproj,b\d\bd34015be7131705e7f039eb2763a11c453a729a
+Y
+)client/modules/Vulkan/Render.boostrap.ixx,c\7\c7dca4b9b1e8473df07a3118a54361b472dc2d01
+C
+client/src/main.cpp,5\d\5dc33946397dded4427316b97d3a1e1d5f957dd8
+@
+build/.gitignore,8\a\8a88f468935af797120fa3373ac4f1e71a597855
