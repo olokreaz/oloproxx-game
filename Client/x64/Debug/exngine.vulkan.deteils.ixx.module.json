@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\exngine.vulkan.deteils.ixx.obj",
+            "outputs": [
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\vc143.pdb",
+                "x64\\Debug\\",
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\exngine.vulkan.deteils.ixx.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "engine.vulkan.deteils",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\exngine.vulkan.deteils.ixx",
+                    "is-interface": true
+                }
+            ],
+            "requires": [
+                {
+                    "logical-name": "types"
+                }
+            ]
+        }
+    ]
+}
