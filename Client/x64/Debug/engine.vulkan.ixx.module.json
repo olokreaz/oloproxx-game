@@ -24,7 +24,7 @@
                     "logical-name": "vulkan.bootstrap"
                 },
                 {
-                    "logical-name": "vulkan.deteils"
+                    "logical-name": "engine.vulkan.deteils"
                 }
             ]
         }

@@ -1,7 +1,9 @@
 E:\c++\oloprox\client\impl\Render.cpp;E:\c++\oloprox\client\x64\Debug\Render.obj
+E:\c++\oloprox\client\modules\Application.ixx;E:\c++\oloprox\client\x64\Debug\Application.ixx.obj
 E:\c++\oloprox\client\modules\types.ixx;E:\c++\oloprox\client\x64\Debug\types.ixx.obj
 E:\c++\oloprox\client\modules\Vulkan\Render.boostrap.ixx;E:\c++\oloprox\client\x64\Debug\Render.boostrap.ixx.obj
-E:\c++\oloprox\client\modules\Vulkan\Render.ixx;E:\c++\oloprox\client\x64\Debug\Render.ixx.obj
+E:\c++\oloprox\client\modules\Vulkan\engine.vulkan.ixx;E:\c++\oloprox\client\x64\Debug\engine.vulkan.ixx.obj
+E:\c++\oloprox\client\modules\Vulkan\exngine.vulkan.deteils.ixx;E:\c++\oloprox\client\x64\Debug\exngine.vulkan.deteils.ixx.obj
 E:\c++\oloprox\client\src\main.cpp;E:\c++\oloprox\client\x64\Debug\main.obj
 E:\Programm Files\Visual Studio\Commynity\VC\Tools\MSVC\14.36.32532\modules\std.ixx;E:\c++\oloprox\client\x64\Debug\std.ixx.obj
 E:\Programm Files\Visual Studio\Commynity\VC\Tools\MSVC\14.36.32532\modules\std.compat.ixx;E:\c++\oloprox\client\x64\Debug\std.compat.ixx.obj

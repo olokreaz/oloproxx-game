@@ -11,14 +11,20 @@
             ],
             "provides": [
                 {
-                    "logical-name": "Vulkan",
+                    "logical-name": "engine.vulkan",
                     "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\render.ixx",
                     "is-interface": true
                 }
             ],
             "requires": [
                 {
-                    "logical-name": "Vulkan.bootstrap"
+                    "logical-name": "types"
+                },
+                {
+                    "logical-name": "vulkan.bootstrap"
+                },
+                {
+                    "logical-name": "vulkan.deteils"
                 }
             ]
         }

@@ -1,18 +1,18 @@
 ﻿module;
 #include <filesystem>
-#include <format>
 #include <fstream>
 #include <string>
 #include <vector>
-#include <boost/dll.hpp>
+#include <fmt/core.h>
+#include <vulkan/vulkan.h>
 
 #define NODISCARD [[nodiscard]]
-export module vulkan.deteils;
+export module engine.vulkan.deteils;
 import types;
 
-export namespace deteils
+namespace utils
 {
-	NODISCARD std::vector< uint8_t > readFile( const std::string &path )
+	export NODISCARD std::vector< uint8_t > readFile( const std::string &path )
 	{
 		std::ifstream ifs( path, std::ios::ate | std::ios::binary );
 
@@ -26,5 +26,20 @@ export namespace deteils
 		ifs . close( );
 
 		return buffer;
+	}
+
+	export NODISCARD VkShaderModule createShaderModule( const std::vector< uint8 > &code, VkDevice device )
+	{
+		VkShaderModuleCreateInfo createInfo { };
+		createInfo . sType    = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		createInfo . codeSize = code . size( );
+		createInfo . pCode    = reinterpret_cast< const uint32_t * >( code . data( ) );
+
+		VkShaderModule shaderModule;
+		if ( vkCreateShaderModule( device, &createInfo, nullptr, &shaderModule ) != VK_SUCCESS )
+			throw
+					std::runtime_error( "failed to create shader module!" );
+
+		return shaderModule;
 	}
 }

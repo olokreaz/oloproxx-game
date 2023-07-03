@@ -1,13 +1,12 @@
 ﻿#include <compare>
-import Vulkan;
+#include <exception>
+#include <iostream>
+import engine.vulkan;
 
 int main( int, char ** )
 {
-	// 
-
-	Vulkan::VulkanRenderer renderer;
-	renderer . initialize( );
-	renderer . run( );
+	Renderer renderer;
+	try { renderer . run( ); } catch ( std::exception &e ) { std::cerr << e . what( ) << std::endl; }
 
 	return 0;
 }

@@ -144,8 +144,8 @@
                 "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\Render.boostrap.ixx.ifc"
             },
             {
-                "Name": "vulkan.deteils",
-                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\vulkan.deteils.ixx.ifc"
+                "Name": "engine.vulkan.deteils",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\exngine.vulkan.deteils.ixx.ifc"
             }
         ],
         "ImportedHeaderUnits": []

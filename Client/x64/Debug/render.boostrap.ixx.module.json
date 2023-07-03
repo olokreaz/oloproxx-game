@@ -11,7 +11,7 @@
             ],
             "provides": [
                 {
-                    "logical-name": "Vulkan.bootstrap",
+                    "logical-name": "vulkan.bootstrap",
                     "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\render.boostrap.ixx",
                     "is-interface": true
                 }
