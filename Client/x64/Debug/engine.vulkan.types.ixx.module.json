@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\engine.vulkan.types.ixx.obj",
+            "outputs": [
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\vc143.pdb",
+                "x64\\Debug\\",
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.types.ixx.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "engine.vulkan.types",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\engine.vulkan.types.ixx",
+                    "is-interface": true
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

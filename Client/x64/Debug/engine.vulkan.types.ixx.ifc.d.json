@@ -1,0 +1,10 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\c++\\oloprox\\client\\modules\\vulkan\\engine.vulkan.types.ixx",
+        "ProvidedModule": "engine.vulkan.types",
+        "Includes": [],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
