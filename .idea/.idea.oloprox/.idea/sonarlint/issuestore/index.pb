@@ -15,9 +15,9 @@ R
 "build/assets/logo/NAME-DOOPLET.svg,9\7\97936c747b1136702e955954e52c7ad0a05e0117
 X
 (build/assets/logo/NAME-DOOPLET-color.svg,e\9\e912f6f29b45e58e941ed14c8323566cda2c691c
-E
-client/Client.vcxproj,b\d\bd34015be7131705e7f039eb2763a11c453a729a
+@
+build/.gitignore,8\a\8a88f468935af797120fa3373ac4f1e71a597855
+F
+client/shader.frag.spv,8\3\83719892077b6e3af75b9a62038852437d36c556
 F
 client/impl/Render.cpp,f\2\f215aab91ad5af81ca8f32c9b8897107523fd520
-N
-client/modules/Application.ixx,0\c\0cb8b552ffdf2becc40a004a195fcc9b05adf223

@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\engine.render-deteils.ixx.obj",
+            "outputs": [
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\vc143.pdb",
+                "x64\\Debug\\",
+                "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.render-deteils.ixx.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "engine.render:deteils",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\renderer\\engine.render-deteils.ixx",
+                    "is-interface": true
+                }
+            ],
+            "requires": []
+        }
+    ]
+}

@@ -18,13 +18,13 @@
             ],
             "requires": [
                 {
-                    "logical-name": "types"
-                },
-                {
-                    "logical-name": "vulkan.bootstrap"
+                    "logical-name": "engine.vulkan.types"
                 },
                 {
                     "logical-name": "engine.vulkan.deteils"
+                },
+                {
+                    "logical-name": "types"
                 }
             ]
         }

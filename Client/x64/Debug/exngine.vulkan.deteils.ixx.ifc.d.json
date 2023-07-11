@@ -149,8 +149,10 @@
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\iomanip",
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\list",
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\fstream",
-            "e:\\vcpkg\\installed\\x64-windows\\include\\fmt\\core.h",
-            "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\string_view",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glfw\\glfw3.h",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\gl\\gl.h",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\shared\\winapifamily.h",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\shared\\winpackagefamily.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vulkan.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vk_platform.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vulkan_core.h",
@@ -161,8 +163,28 @@
         ],
         "ImportedModules": [
             {
+                "Name": "engine.vulkan.deteils:create",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.deteils-create.ixx.ifc"
+            },
+            {
+                "Name": "system",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\system.ixx.ifc"
+            },
+            {
+                "Name": "engine.vulkan.deteils:cfq",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.deteils-cfq.ixx.ifc"
+            },
+            {
+                "Name": "engine.vulkan.types",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.types.ixx.ifc"
+            },
+            {
                 "Name": "types",
                 "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\types.ixx.ifc"
+            },
+            {
+                "Name": "engine.vulkan.deteils:ext",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.deteils-ext.ixx.ifc"
             }
         ],
         "ImportedHeaderUnits": []

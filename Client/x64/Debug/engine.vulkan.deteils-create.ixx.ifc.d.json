@@ -149,10 +149,37 @@
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\iomanip",
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\list",
             "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\fstream",
+            "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\set",
+            "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\xtree",
+            "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\xnode_handle.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\glfw\\glfw3.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\gl\\gl.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\shared\\winapifamily.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\shared\\winpackagefamily.h",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\vec2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_bool2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\type_vec2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\qualifier.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\setup.hpp",
+            "e:\\programm files\\visual studio\\commynity\\vc\\tools\\msvc\\14.36.32532\\include\\cassert",
+            "c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\assert.h",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\simd\\platform.h",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\type_vec2.inl",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\compute_vector_relational.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\setup.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_bool2_precision.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_float2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_float2_precision.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_double2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_double2_precision.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_int2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_int2_sized.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\scalar_int_sized.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\setup.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_uint2.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\vector_uint2_sized.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\ext\\scalar_uint_sized.hpp",
+            "e:\\vcpkg\\installed\\x64-windows\\include\\glm\\detail\\setup.hpp",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vulkan.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vk_platform.h",
             "e:\\vcpkg\\installed\\x64-windows\\include\\vulkan\\vulkan_core.h",
@@ -164,15 +191,19 @@
         "ImportedModules": [
             {
                 "Name": "engine.vulkan.deteils:ext",
-                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\Render.boostrap.ixx.ifc"
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.deteils-ext.ixx.ifc"
             },
             {
-                "Name": "types",
-                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\types.ixx.ifc"
+                "Name": "engine.vulkan.deteils:cfq",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.deteils-cfq.ixx.ifc"
             },
             {
                 "Name": "engine.vulkan.types",
                 "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\engine.vulkan.types.ixx.ifc"
+            },
+            {
+                "Name": "types",
+                "BMI": "E:\\c++\\oloprox\\client\\x64\\Debug\\types.ixx.ifc"
             },
             {
                 "Name": "system",

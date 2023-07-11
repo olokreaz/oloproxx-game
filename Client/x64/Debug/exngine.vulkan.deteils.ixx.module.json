@@ -18,6 +18,15 @@
             ],
             "requires": [
                 {
+                    "logical-name": "engine.vulkan.deteils:create"
+                },
+                {
+                    "logical-name": "engine.vulkan.deteils:cfq"
+                },
+                {
+                    "logical-name": "engine.vulkan.types"
+                },
+                {
                     "logical-name": "types"
                 }
             ]

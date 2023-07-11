@@ -16,7 +16,11 @@
                     "is-interface": true
                 }
             ],
-            "requires": []
+            "requires": [
+                {
+                    "logical-name": "types"
+                }
+            ]
         }
     ]
 }

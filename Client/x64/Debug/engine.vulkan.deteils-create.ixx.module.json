@@ -21,6 +21,9 @@
                     "logical-name": "engine.vulkan.deteils:ext"
                 },
                 {
+                    "logical-name": "engine.vulkan.deteils:cfq"
+                },
+                {
                     "logical-name": "types"
                 },
                 {

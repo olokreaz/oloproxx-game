@@ -12,11 +12,18 @@
             "provides": [
                 {
                     "logical-name": "Application",
-                    "source-path": "e:\\c++\\oloprox\\client\\modules\\application.ixx",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\application\\application.ixx",
                     "is-interface": true
                 }
             ],
-            "requires": []
+            "requires": [
+                {
+                    "logical-name": "system"
+                },
+                {
+                    "logical-name": "engine.render"
+                }
+            ]
         }
     ]
 }

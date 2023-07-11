@@ -1,12 +1,14 @@
-﻿#include <compare>
-#include <exception>
-#include <iostream>
-import engine.vulkan;
+﻿#include <GLFW/glfw3.h>
+#include <spdlog/spdlog.h>
 
-int main( int, char ** )
-{
-	Renderer renderer;
-	try { renderer . run( ); } catch ( std::exception &e ) { std::cerr << e . what( ) << std::endl; }
+#include <fmt/format.h>
+#include <vulkan/vulkan.hpp>
+import Application;
+import system;
+import types;
+
+int main( int, char ** ) {
+	sys::Console::INIT( );
 
 	return 0;
 }

@@ -11,16 +11,12 @@
             ],
             "provides": [
                 {
-                    "logical-name": "vulkan.bootstrap",
+                    "logical-name": "engine.vulkan.deteils:ext",
                     "source-path": "e:\\c++\\oloprox\\client\\modules\\vulkan\\render.boostrap.ixx",
                     "is-interface": true
                 }
             ],
-            "requires": [
-                {
-                    "logical-name": "types"
-                }
-            ]
+            "requires": []
         }
     ]
 }
