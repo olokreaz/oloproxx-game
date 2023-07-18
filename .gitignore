@@ -18,6 +18,8 @@
 **/*.exe
 **/*.out
 **/*.app
+**/*.foz
+**/*.spv
 
 !**/vulkan-1.lib
 !**/steam_api64.lib
