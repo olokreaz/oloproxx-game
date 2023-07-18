@@ -19,5 +19,17 @@ X
 build/.gitignore,8\a\8a88f468935af797120fa3373ac4f1e71a597855
 F
 client/shader.frag.spv,8\3\83719892077b6e3af75b9a62038852437d36c556
+E
+client/Client.vcxproj,b\d\bd34015be7131705e7f039eb2763a11c453a729a
+U
+%build/assets/shaders/shaders_hash.txt,2\b\2b01b164db24e8d4edee159bac3159adaaae097f
+H
+client/modules/types.ixx,6\8\68529347fd8d0df8aa6a3fd9aef1985c8d0fba11
+I
+client/modules/system.ixx,f\e\fe787d313ec15ddbabdf997b48620fe6e60bb1ac
+J
+client/impl/utils-impl.cpp,6\8\6809fb09fbc1a634fbb7fe675078cffe270eba30
 F
 client/impl/Render.cpp,f\2\f215aab91ad5af81ca8f32c9b8897107523fd520
+Z
+*client/modules/Application/Application.ixx,1\8\1801483dc1d918d7255d0ba488a1d9e4ac478679

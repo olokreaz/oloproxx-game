@@ -4,10 +4,11 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <boost/process.hpp>
+#include <fmt/format.h>
 #include <openssl/evp.h>
 
-std::string getSHA256( const std::string &path )
-{
+std::string getSHA256( const std::string &path ) {
 	std::ifstream file( path );
 	if ( !file . is_open( ) ) return "";
 
@@ -34,19 +35,30 @@ std::string getSHA256( const std::string &path )
 	return ss . str( );
 }
 
-void updateHashFile( const std::map< std::string, std::string > &shadersHash )
-{
+void updateHashFile( const std::map< std::string, std::string > &shadersHash ) {
 	std::ofstream out( "shaders_hash.txt" );
 	if ( !out ) {
 		std::cerr << "Couldn't open hash file for writing." << std::endl;
 		return;
 	}
 
-	for ( const auto &[ file, hash ]: shadersHash ) out << file << " " << hash << std::endl;
+	for ( const auto &[ file, hash ] : shadersHash ) out << file << " " << hash << std::endl;
 }
 
-int main( )
-{
+std::string exec( char *cmd ) {
+	char        buffer[ 128 ];
+	std::string result = "";
+	FILE *      pipe   = _popen( cmd, "r" );
+	if ( !pipe ) throw std::runtime_error( "popen() failed!" );
+	try { while ( fgets( buffer, sizeof buffer, pipe ) != NULL ) result += buffer; } catch ( ... ) {
+		_pclose( pipe );
+		throw;
+	}
+	_pclose( pipe );
+	return result;
+}
+
+int main( ) {
 	std::string                          shaderDirectory = ".";  // Путь к директории со шейдерами
 	std::map< std::string, std::string > shadersHash;
 
@@ -63,16 +75,37 @@ int main( )
 
 	bool updated = false;
 
-	for ( const auto &entry: std::filesystem::directory_iterator( shaderDirectory ) )
-		if ( entry . path( ) . extension( ) == ".glsl" ) {
+	for ( const std::filesystem::directory_entry &entry : std::filesystem::directory_iterator( shaderDirectory ) )
+		if ( entry . path( ) . extension( ) == ".glsl" || entry . path( ) . extension( ) == ".hlsl" ) {
 			std::string newHash = getSHA256( entry . path( ) . generic_string( ) );
 			if ( shadersHash[ entry . path( ) . generic_string( ) ] != newHash ) {
 				updated                                            = true;
 				shadersHash[ entry . path( ) . generic_string( ) ] = newHash;
 				std::string output                                 = entry . path( ) . stem( ) . generic_string( ) + ".spv";
-				std::string command                                = "glslangValidator -V " + entry . path( ) . generic_string( )
-											+ " --target-env vulkan1.3 -o " + output;
-				std::system( command . c_str( ) );
+
+				std::string shaderType = ( entry . path( ) . extension( ) == ".hlsl" ? "HLSL" : "GLSL" );
+				std::string command    =
+						fmt::format(
+							"glslangValidator -D --language {language} -V {path} --target-env vulkan1.3 -o {output}",
+							fmt::arg( "language", shaderType ),
+							fmt::arg( "path", entry . path( ) . generic_string( ) ),
+							fmt::arg( "output", output ) );
+
+				// Использование Boost.Process для запуска команды и перехвата вывода
+				boost::process::ipstream pipe;
+				boost::process::child    c( command, boost::process::std_out > pipe );
+
+				std::string line;
+				while ( pipe && std::getline( pipe, line ) && !line . empty( ) )
+					if ( line . find( "ERROR:" ) != std::string::npos ) {
+						std::ofstream errorFile( "errors.txt", std::ios_base::app );
+						if ( errorFile . is_open( ) ) {
+							errorFile << line << std::endl;
+							errorFile . close( );
+						}
+					}
+
+				c . wait( );
 			}
 		}
 

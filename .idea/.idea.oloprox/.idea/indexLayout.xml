@@ -3,6 +3,7 @@
   <component name="UserContentModel">
     <attachedFolders>
       <Path>build</Path>
+      <Path>build/assets/shaders</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes>
