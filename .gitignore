@@ -4,6 +4,7 @@
 **/*.o
 **/*.obj
 **/*.pdb
+**/*.idb
 **/*.gch
 **/*.pch
 **/*.so
@@ -18,7 +19,18 @@
 **/*.exe
 **/*.out
 **/*.app
+**/*.foz
+**/*.ifc
+**/*.spv
+**/*.json
+**/*.tlog
+**/*.log
+**/*.xml
 
+vulkaninfo.txt
+
+!**/lib
+!.idea
 !**/vulkan-1.lib
 !**/steam_api64.lib
 !**/steam_api64.dll
