@@ -12,7 +12,7 @@
             "provides": [
                 {
                     "logical-name": "engine.render:deteils",
-                    "source-path": "e:\\c++\\oloprox\\client\\modules\\renderer\\engine.render-deteils.ixx",
+                    "source-path": "e:\\c++\\oloprox\\client\\modules\\engine\\engine.render-deteils.ixx",
                     "is-interface": true
                 }
             ],

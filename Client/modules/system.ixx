@@ -7,13 +7,8 @@
 #include <source_location>
 #include <vector>
 #include <windows.h>
-
-#include <GLFW/glfw3native.h>
-#include <GLFW/glfw3native.h>
-
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <spdlog/pattern_formatter-inl.h>
 #include <spdlog/spdlog.h>
 export module system;
 
@@ -33,11 +28,15 @@ namespace sys {
 		return buffer;
 	}
 
-	enum status_console {
-		eHide = 0 ,
-		eShow ,
+	export enum class EWindowStatus {
+		eHide ,
+		eShow
 	};
-	export struct Console {
+
+	export class Console {
+		Console() = delete;
+	public:
+		
 		static void INIT( ) {
 			const std::source_location src = std::source_location::current( );
 			if ( !m_hConsole ) m_hConsole = ::GetConsoleWindow( );
@@ -49,30 +48,32 @@ namespace sys {
 							);
 		}
 
-		static void Show( ) {
-			::ShowWindow( m_hConsole, SW_SHOW );
-			spdlog::info( "Show Console" );
+		static void setConsoleTittle( const std::string &tittle ) {
+			::SetConsoleTitleA( tittle . c_str( ) );
+			spdlog::info( "Set Console Tittle: {}", tittle );
 		}
 
-		static VOID Show( HWND hWindow ) {
-			::ShowWindow( hWindow, SW_SHOW );
-			spdlog::info( "Show Window: {}", hWindow -> unused );
+		static void setLogLevel( spdlog::level::level_enum level ) {
+			spdlog::set_level( level );
+			spdlog::info( "Set Log Level: {}", std::to_underlying( level ) );
 		}
 
-		static void Hide( ) {
-			::ShowWindow( m_hConsole, SW_HIDE );
-			spdlog::info( "Hide Console" );
-		}
+		auto static setStatus( EWindowStatus status, HWND hwnd = nullptr ) {
+			int  command = ( status == EWindowStatus::eShow ) ? SW_SHOW : SW_HIDE;
+			HWND window  = hwnd ? hwnd : m_hConsole;
 
-		static void Hide( HWND hWindow ) {
-			::ShowWindow( hWindow, SW_HIDE );
-			spdlog::info( "Hide Window: {}", hWindow -> unused );
+			::ShowWindow( window, command );
+
+			if ( window == m_hConsole ) {
+				m_status = status;
+				spdlog::info( "{} Console", status == EWindowStatus::eShow ? "Show" : "Hide" );
+			} else spdlog::info( "{} Window: {}", status == EWindowStatus::eShow ? "Show" : "Hide", hwnd ? hwnd -> unused : 0 );
 		}
 
 		auto static getState( ) { return m_status; }
 
 	private:
-		static enum status_console m_status;
-		inline static HWND         m_hConsole;
+		inline static EWindowStatus m_status;
+		inline static HWND   m_hConsole;
 	};
 }

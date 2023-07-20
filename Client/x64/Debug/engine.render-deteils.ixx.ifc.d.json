@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\c++\\oloprox\\client\\modules\\renderer\\engine.render-deteils.ixx",
+        "Source": "e:\\c++\\oloprox\\client\\modules\\engine\\engine.render-deteils.ixx",
         "ProvidedModule": "engine.render:deteils",
         "Includes": [
             "e:\\vcpkg\\installed\\x64-windows\\include\\glfw\\glfw3.h",

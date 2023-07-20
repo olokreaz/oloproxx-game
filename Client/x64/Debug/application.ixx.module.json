@@ -18,10 +18,16 @@
             ],
             "requires": [
                 {
+                    "logical-name": "engine.render"
+                },
+                {
+                    "logical-name": "engine.core"
+                },
+                {
                     "logical-name": "system"
                 },
                 {
-                    "logical-name": "engine.render"
+                    "logical-name": "types"
                 }
             ]
         }
