@@ -29,8 +29,8 @@
 
 vulkaninfo.txt
 
+.idea
 !**/lib
-!.idea
 !**/vulkan-1.lib
 !**/steam_api64.lib
 !**/steam_api64.dll
