@@ -4,6 +4,7 @@
 **/*.o
 **/*.obj
 **/*.pdb
+**/*.pd
 **/*.idb
 **/*.gch
 **/*.pch
@@ -25,11 +26,13 @@
 **/*.json
 **/*.tlog
 **/*.log
-**/*.xml
 
-vulkaninfo.txt
 
 .idea
+x64
+**/x64
+
+vulkaninfo.txt
 !**/lib
 !**/vulkan-1.lib
 !**/steam_api64.lib

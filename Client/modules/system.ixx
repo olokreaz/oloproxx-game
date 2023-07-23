@@ -2,19 +2,35 @@
 
 #define NODISCARD [[nodiscard]]
 #define EXPORT export NODISCARD
-#include <filesystem>
+
 #include <fstream>
 #include <source_location>
 #include <vector>
-#include <windows.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <spdlog/spdlog.h>
+#include <spdlog/spdlog.h>leedverk
+
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <stdexcept>
+#include <string>
+
+#include <boost/filesystem.hpp>
+#include <boost/process.hpp>
+#include <boost/filesystem/string_file.hpp>
+
+#include <glslang/Public/ShaderLang.h>
+#include <vulkan/vulkan.hpp>
+
+
 export module system;
 
+namespace fs = boost::filesystem;
+
 namespace sys {
-	EXPORT std::vector< uint8_t > readFile( const std::filesystem::path &path ) {
-		std::ifstream ifs( path, std::ios::ate | std::ios::binary );
+	EXPORT std::vector< uint8_t > readFile( const fs::path &path ) {
+		std::ifstream ifs( path . c_str( ), std::ios::ate | std::ios::binary );
 
 		if ( !ifs . is_open( ) ) throw std::runtime_error( "failed to open " + path . string( ) );
 
@@ -34,9 +50,9 @@ namespace sys {
 	};
 
 	export class Console {
-		Console() = delete;
+		Console( ) = delete;
+
 	public:
-		
 		static void INIT( ) {
 			const std::source_location src = std::source_location::current( );
 			if ( !m_hConsole ) m_hConsole = ::GetConsoleWindow( );
@@ -74,6 +90,101 @@ namespace sys {
 
 	private:
 		inline static EWindowStatus m_status;
-		inline static HWND   m_hConsole;
+		inline static HWND          m_hConsole;
 	};
+
+	std::vector<uint32_t> CompileGLSLToSPIRV(const std::string& shaderCode) {
+		// Создаём временный файл для исходного кода shader
+		fs::path glslPath = fs::temp_directory_path() / fs::unique_path();
+		std::ofstream(glslPath.string()) << shaderCode;
+
+		// Генерируем имя для выходного файла SPIR-V
+		fs::path spvPath = fs::temp_directory_path() / fs::unique_path();
+
+		// Выполняем компиляцию с помощью glslc из Vulkan SDK
+		auto command = fmt::format("glslc -fshader-stage=vert {} -o {}", glslPath.string(), spvPath.string());
+		boost::process::child process(
+		  command,
+		  boost::process::std_out > boost::process::null
+		);
+		process.wait();
+
+		// Получаем код возврата
+		int result = process.exit_code();
+		if(result != 0) {
+			spdlog::error("GLSL compilation failed");
+			throw std::runtime_error("GLSL compilation failed");
+		}
+
+		// Читаем скомпилированный SPIR-V из временного файла
+		std::ifstream           spvFile(spvPath.string(), std::ios::binary);
+		std::vector<uint32_t> spirv(
+		    (std::istreambuf_iterator<char>(spvFile)),
+		    std::istreambuf_iterator<char>());
+
+		return spirv;
+	}
+
+	std::vector< uint32_t > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" ) {
+		// Генерируем имена временных файлов
+		fs::path hlslPath = fs::temp_directory_path( ) / fs::unique_path( );
+		fs::path spvPath  = fs::temp_directory_path( ) / fs::unique_path( );
+		
+		// Записываем исходный код во временный файл
+		std::ofstream( hlslPath . string( ) ) << shaderCode;
+
+		// Вызываем dxc для компиляции в SPIR-V
+		auto command = fmt::format("dxc -T ps_6_0 -E {} -spirv {} -Fo {}", entryPoint, hlslPath.string(), spvPath.string());
+		boost::process::child process(
+		    command,
+		    boost::process::std_out > boost::process::null
+		);
+		process . wait( );
+
+		// Получить код возврата
+		int result = process . exit_code( );
+		if ( result != 0 ) {
+			spdlog::error( "Failed to compile HLSL shader" );
+			throw std::runtime_error( "Failed to compile HLSL shader" );
+		}
+
+		// Читаем скомпилированный SPIR-V из временного файла
+		std::ifstream           spvFile( spvPath . string( ), std::ios::binary );
+		std::vector< uint32_t > spirv(
+						( std::istreambuf_iterator< char >( spvFile ) ),
+						std::istreambuf_iterator< char >( ) );
+
+		return spirv;
+
+	}
+
+	std::vector<uint32_t> CompileShaderToSPIRV(const std::string& shaderCodeOrPath, const std::string& shaderTypeOrExtension, const std::string& entryPoint = "main",
+						    bool isPath = false) {
+		std::string shaderType = shaderTypeOrExtension;
+		std::string shaderCode;
+		if (isPath) {
+			boost::filesystem::path p(shaderCodeOrPath);
+			shaderType = p.extension().string().substr(1); // remove .
+
+			// Use boost::filesystem::ifstream instead
+			boost::filesystem::ifstream inFile(p, std::ios::in | std::ios::binary);
+			if (!inFile) {
+				spdlog::error("Failed to load shader file: {}", shaderCodeOrPath);
+				throw std::runtime_error("Failed to load shader file: " + shaderCodeOrPath);
+			}
+
+			shaderCode = { (std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>() };
+			inFile.close();
+		} else {
+			shaderCode = shaderCodeOrPath;
+		}
+
+		if (shaderType == "glsl") return CompileGLSLToSPIRV(shaderCode);
+		else if (shaderType == "hlsl") return CompileHLSLToSPIRV(shaderCode, entryPoint);
+		else {
+			spdlog::error("Unknown shader type: {}", shaderType);
+			throw std::runtime_error("Unknown shader type: " + shaderType);
+			
+		}
+	}
 }
