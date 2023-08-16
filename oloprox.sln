@@ -2,10 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oloprox", "oloprox\oloprox.vcxproj", "{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TEST", "TEST", "{A19E9AFE-D027-4161-BA6E-9074BA253588}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineTest", "EngineTest\EngineTest.vcxproj", "{3816DD18-5F70-421F-B98E-B5CCAC8A1756}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,16 +18,7 @@ Global
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|Win32.Build.0 = Release|Win32
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.ActiveCfg = Release|x64
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.Build.0 = Release|x64
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Debug|Win32.Build.0 = Debug|Win32
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Debug|x64.ActiveCfg = Debug|x64
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Debug|x64.Build.0 = Debug|x64
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Release|Win32.ActiveCfg = Release|Win32
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Release|Win32.Build.0 = Release|Win32
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Release|x64.ActiveCfg = Release|x64
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3816DD18-5F70-421F-B98E-B5CCAC8A1756} = {A19E9AFE-D027-4161-BA6E-9074BA253588}
 	EndGlobalSection
 EndGlobal
