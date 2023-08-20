@@ -1,0 +1,7 @@
+source: "e:\\c++\\oloprox\\build"
+destination: "C:\\Program Files\\oloprox"
+debug: true
+ignore:
+  extentions: [ ".pdb" ]
+  dirs: [ "" ]
+  files: [ "" ]
