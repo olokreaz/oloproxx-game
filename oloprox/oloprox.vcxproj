@@ -115,6 +115,7 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <BuildStlModules>true</BuildStlModules>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
@@ -157,6 +158,7 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <BuildStlModules>true</BuildStlModules>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>

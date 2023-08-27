@@ -113,6 +113,7 @@
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <BuildStlModules>true</BuildStlModules>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
@@ -153,6 +154,7 @@
             <LanguageStandard>stdcpplatest</LanguageStandard>
             <LanguageStandard_C>stdc17</LanguageStandard_C>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <BuildStlModules>true</BuildStlModules>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
@@ -166,7 +168,7 @@
         <ClCompile Include="main.cpp"/>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="config.yml" />
+        <Content Include="config.yml"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

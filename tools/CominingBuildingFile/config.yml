@@ -1,6 +1,6 @@
-source: "e:\\c++\\oloprox\\build"
+source: "E:\\c++\\oloprox\\build"
 destination: "C:\\Program Files\\oloprox"
-debug: true
+bin: 0
 ignore:
   extentions: [ ".pdb" ]
   dirs: [ "" ]
