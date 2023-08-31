@@ -33,3 +33,9 @@ D
 oloprox/src/main.cpp,1\4\14a32b0ae5b92b9de1cb5eb114a9ff052f6d1646
 S
 #oloprox/modules/Core/core.Itype.ixx,3\0\302f1acc61aee3342c43b451f38b637c2e8ea528
+S
+#tools/CominingBuildingFile/main.cpp,2\5\25799abfd79f66b60f2ad12f0e596d8c7af4d06d
+U
+%tools/CominingBuildingFile/config.yml,e\0\e0a6aa97b7c83568bcd2e2e2c30a84519339bfd6
+V
+&tools/CominingBuildingFile/deteils.hpp,5\f\5fb3c87ca34d64eb3db3f9e8927327b7a8436967

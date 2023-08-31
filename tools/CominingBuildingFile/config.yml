@@ -1,7 +1,4 @@
 source: "E:\\c++\\oloprox\\build"
 destination: "C:\\Program Files\\oloprox"
 bin: 0
-ignore:
-  extentions: [ ".pdb" ]
-  dirs: [ "" ]
-  files: [ "" ]
+ignore: [ ".pbd" ]
