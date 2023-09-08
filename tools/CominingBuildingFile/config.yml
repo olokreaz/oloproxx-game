@@ -1,4 +1,7 @@
 source: "E:\\c++\\oloprox\\build"
 destination: "C:\\Program Files\\oloprox"
-bin: 0
+bin:
+  name: "oloprox"
+  type: "debug"
+  source: "E:\\c++\\oloprox\\build\\bin"
 ignore: [ ".pbd" ]

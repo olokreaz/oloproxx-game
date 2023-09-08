@@ -37,5 +37,5 @@ S
 #tools/CominingBuildingFile/main.cpp,2\5\25799abfd79f66b60f2ad12f0e596d8c7af4d06d
 U
 %tools/CominingBuildingFile/config.yml,e\0\e0a6aa97b7c83568bcd2e2e2c30a84519339bfd6
-V
-&tools/CominingBuildingFile/deteils.hpp,5\f\5fb3c87ca34d64eb3db3f9e8927327b7a8436967
+g
+7tools/CominingBuildingFile/CominingBuildingFile.vcxproj,8\9\89ace2b1e29eb430f310bddb3963649642f1c98e
