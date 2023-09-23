@@ -1,7 +1,12 @@
 source: "E:\\c++\\oloprox\\build"
 destination: "C:\\Program Files\\oloprox"
-bin:
-  name: "oloprox"
-  type: "debug"
-  source: "E:\\c++\\oloprox\\build\\bin"
+
+copy_to:
+  - from: "bin"
+    to: ""
+  - from: "assets"
+    to: "assets"
+  - from: "shaders"
+    to: "assets\\shaders"
+
 ignore: [ ".pbd" ]
