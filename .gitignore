@@ -32,6 +32,8 @@
 x64
 **/x64
 
+.idea/.idea.oloprox/.idea/sonarlint/**.*
+
 vulkaninfo.txt
 !**/lib
 !**/vulkan-1.lib

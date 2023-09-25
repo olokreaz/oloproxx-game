@@ -11,6 +11,9 @@
 #include <cryptopp/hex.h>
 #include <cryptopp/sha.h>
 #include <yaml-cpp/yaml.h>
+
+#include "IHandelr.hpp"
+
 namespace fs = std::filesystem;
 
 using namespace fmt::literals;
@@ -31,6 +34,7 @@ struct Config
 		ignore      = configYaml[ "ignore" ] . as< std::vector< std::string > >( );
 	}
 };
+Config g_config;
 
 std::string calculateSHA256( const fs::path &filePath )
 {
@@ -52,13 +56,29 @@ std::string calculateSHA256( const fs::path &filePath )
 	return digest;
 }
 
+class BinaryHandler : public help::IObserver
+{
+protected:
+	void _onRemove( const fs::path &path ) override {}
+	bool _filter( fs::path &path ) override { return path . string( ) . find( ( g_config . source / "bin" ) . string( ) ) == std::string::npos; }
+	void _update_context( fs::path &path ) override {}
+};
+
 int main( int, char ** )
 {
+
 	try
 	{
-		Config config;
-		config . load( "config.yaml" );
-	} catch ( const std::exception &e ) { }
+		g_config . load( "config.yml" );
+
+		efsw::FileWatcher              fw;
+		help::Handler< BinaryHandler > handler;
+
+		spdlog::get( "observer<BinaryHandler>" ) -> set_level( spdlog::level::trace );
+
+		fw . addWatch( ( g_config . source / "bin" ) . string( ), &handler, true );
+
+	} catch ( const std::exception &ex ) { spdlog::error( "{}", ex . what( ) ); }
 
 	return 0;
 }
