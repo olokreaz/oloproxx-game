@@ -16,8 +16,6 @@ R
 X
 (build/assets/logo/NAME-DOOPLET-color.svg,e\9\e912f6f29b45e58e941ed14c8323566cda2c691c
 U
-%build/assets/shaders/shaders_hash.txt,2\b\2b01b164db24e8d4edee159bac3159adaaae097f
-U
 %build/assets/shaders/shader.vert.glsl,8\3\83b55987afcbd0e2ba442fe6cc2972e79ca17010
 U
 %build/assets/shaders/shader.frag.glsl,e\2\e27913da009a9411a7c8b0aa43b550a28c7bd9c1
@@ -39,3 +37,5 @@ U
 %tools/CominingBuildingFile/config.yml,e\0\e0a6aa97b7c83568bcd2e2e2c30a84519339bfd6
 g
 7tools/CominingBuildingFile/CominingBuildingFile.vcxproj,8\9\89ace2b1e29eb430f310bddb3963649642f1c98e
+W
+'tools/CominingBuildingFile/IHandelr.hpp,e\2\e2a02f39465613beac0403e00ee1b0601637be08

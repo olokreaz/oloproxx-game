@@ -1,12 +1,11 @@
 source: "E:\\c++\\oloprox\\build"
 destination: "C:\\Program Files\\oloprox"
 
-copy_to:
-  - from: "bin"
-    to: ""
-  - from: "assets"
-    to: "assets"
-  - from: "shaders"
-    to: "assets\\shaders"
+copy_src_to_dst: # relative path
+  - src: "**/*.spv"
+    dst: "data/shader/"
+  - src: "path/to/bin_dir"
+  - dst: "root/app"
 
-ignore: [ ".pbd" ]
+
+ignore: [ "*.pbd", "**/user*_\\d.data", "C:\\...\\path\\to_file" ]

@@ -166,6 +166,7 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="main.cpp"/>
+        <ClCompile Include="yaml-utils.cpp"/>
     </ItemGroup>
     <ItemGroup>
         <Content Include="config.yml"/>
