@@ -14,6 +14,31 @@ namespace help
 {
 	namespace fs = std::filesystem;
 
+	struct PathFormTo
+	{
+		fs::path src;
+		fs::path dst;
+	};
+
+	struct Config
+	{
+		fs::path                                       source;
+		fs::path                                       destination;
+		std::unordered_map< std::string, std::string > modified_files;
+		std::vector< std::string >                     ignore;
+
+		void load( fs::path path )
+		{
+			YAML::Node configYaml = YAML::LoadFile( path . string( ) );
+
+			source      = configYaml[ "source" ] . as< std::string >( );
+			destination = configYaml[ "destination" ] . as< std::string >( );
+			ignore      = configYaml[ "ignore" ] . as< std::vector< std::string > >( );
+
+			for ( auto &i : configYaml[ "copy_src_to_dst" ] . as< std::vector< help::PathFormTo > >( ) ) modified_files . emplace( );
+		}
+	};
+
 	template< class T > constexpr auto get_Log_name( )
 	{
 		return fmt::format(
@@ -72,54 +97,38 @@ namespace help
 		}
 	};
 
-	class FileCopier
+	class DirectoryWrapper
 	{
-		std::string                source;
-		std::string                destination;
-		std::vector< std::string > ignore;
+		static inline auto _log = spdlog::stderr_color_st( help::get_Log_name< DirectoryWrapper >( ) );
+		fs::path           m_path;
 
 	public:
-		FileCopier(
-				const std::string &                                   src,
-				const std::string &                                   dst,
-				const std::vector< std::string > &                    ign,
-				const std::unordered_map< std::string, std::string > &specifire
-				) : source( src ),
-				destination( dst ),
-				ignore( ign ) { }
-
-		void copy( ) { copy_directory( fs::path( source ), fs::path( destination ) ); }
-
-	private:
-		void copy_file( const fs::path &src, const fs::path &dst ) { fs::copy( src, dst, fs::copy_options::overwrite_existing ); }
-
-		void copy_directory( const fs::path &src, const fs::path &dst )
+		explicit DirectoryWrapper( fs::path &&path ) : m_path { std::move( path ) }
 		{
-			fs::create_directories( dst );
-			for ( auto &item : fs::directory_iterator( src ) )
+			if ( !fs::is_directory( m_path ) )
 			{
-				fs::path next = dst / item . path( ) . filename( );
-				if ( fs::is_directory( item . status( ) ) ) { if ( !validate_path( item . path( ) ) ) copy_directory( item . path( ), next ); } else if (
-					fs::is_regular_file( item . status( ) ) )
-					if ( !validate_path( item . path( ) ) ) copy_file( item . path( ), next );
+				m_path = m_path . parent_path( );
+				_log -> debug( "path {}, path changed to {}", m_path . string( ), m_path . parent_path( ) . string( ) );
 			}
-		}
-
-		bool validate_path( const fs::path &path )
-		{
-			std::string pathStr = path . string( );
-			for ( const auto &pattern : ignore )
-			{
-				boost::regex e( pattern );
-				if ( boost::regex_search( pathStr, e ) ) return true;
-			}
-			return false;
 		}
 	};
 
-	struct PathFormTo
+	class Directory
 	{
-		fs::path src;
-		fs::path dst;
+	public:
+		void deep_copy( const fs::path &src, const fs::path &dst )
+		{
+			if ( !fs::exists( dst ) ) fs::create_directories( dst );
+
+			for ( auto &item : fs::recursive_directory_iterator( src ) )
+			{
+				fs::path relativePathFromSrc = fs::relative( item . path( ), src );
+				fs::path dstItemPath         = dst / relativePathFromSrc;
+
+				if ( fs::is_directory( item . status( ) ) ) fs::create_directories( dstItemPath );
+				else if ( fs::is_regular_file( item . status( ) ) ) fs::copy( item, dstItemPath );
+				// За исключением симлинков и других необычных типов файлов
+			}
+		}
 	};
 }

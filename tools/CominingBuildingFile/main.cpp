@@ -14,34 +14,15 @@
 #include <cryptopp/sha.h>
 #include <yaml-cpp/yaml.h>
 
-#include "IHandelr.hpp"
+#include "utils.hpp"
 
 namespace fs = std::filesystem;
 
 using namespace fmt::literals;
 using namespace std::literals;
 
-struct Config
-{
-	fs::path                                       source;
-	fs::path                                       destination;
-	std::unordered_map< std::string, std::string > modified_files;
-	std::vector< std::string >                     ignore;
-
-	void load( fs::path path )
-	{
-		YAML::Node configYaml = YAML::LoadFile( path . string( ) );
-
-		source      = configYaml[ "source" ] . as< std::string >( );
-		destination = configYaml[ "destination" ] . as< std::string >( );
-		ignore      = configYaml[ "ignore" ] . as< std::vector< std::string > >( );
-
-		for ( auto &i : configYaml[ "copy_src_to_dst" ] . as< std::vector< help::PathFormTo > >( ) ) modified_files . emplace( );
-	}
-};
-
-Config      g_config;
-static bool g_Quit;
+help::Config g_config;
+static bool  g_Quit;
 
 std::string calculateSHA256( const std::filesystem::path &filePath )
 {

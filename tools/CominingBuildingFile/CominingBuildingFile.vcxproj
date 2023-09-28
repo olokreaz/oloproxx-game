@@ -172,7 +172,7 @@
         <Content Include="config.yml"/>
     </ItemGroup>
     <ItemGroup>
-        <ClInclude Include="IHandelr.hpp"/>
+        <ClInclude Include="utils.hpp"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
