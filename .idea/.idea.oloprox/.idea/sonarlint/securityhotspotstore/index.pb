@@ -37,5 +37,3 @@ U
 %tools/CominingBuildingFile/config.yml,e\0\e0a6aa97b7c83568bcd2e2e2c30a84519339bfd6
 g
 7tools/CominingBuildingFile/CominingBuildingFile.vcxproj,8\9\89ace2b1e29eb430f310bddb3963649642f1c98e
-W
-'tools/CominingBuildingFile/IHandelr.hpp,e\2\e2a02f39465613beac0403e00ee1b0601637be08

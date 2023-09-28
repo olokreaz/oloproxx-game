@@ -40,15 +40,15 @@ namespace help
 		}
 	};
 
-	template< class T, const char* Type_Name = "", const char * scope ="" > constexpr auto get_class_name()
+	template< class T > constexpr auto get_class_name(std::string_view Type_Name = "", std::string_view scope = "" )
 	{
-		static_assert(std::string(scope).size() == 2 || std::string(scope).size() == 0);
+		static_assert( std::string( scope ) . size( ) == 2 || std::string( scope ) . size( ) == 0 );
 		return fmt::format(
 				"{type-name}{scope-left}{type}{scope-right}",
-				"type"_a=std::string( typeid( T ) . name( ) ) . substr( 5 ),
-				"type-name"_a=Type_Name,
-				"scope-left"_a=scope[0]
-				"scope-right"_a=scope[1]
+				"type"_a        = std::string( typeid( T ) . name( ) ) . substr( 5 ),
+				"type-name"_a   = Type_Name,
+				"scope-left"_a  = scope[ 0 ],
+				"scope-right"_a = scope[ 1 ]
 				);
 	}
 
@@ -67,7 +67,7 @@ namespace help
 	template< typename T > requires std::derived_from< T, IObserver >
 	class Handler final : public efsw::FileWatchListener , public T
 	{
-		inline static auto s_log = spdlog::stdout_color_mt( get_class_name< T, "observer", "<>" >( ) );
+		inline static auto s_log = spdlog::stdout_color_mt( get_class_name< T>( "observer", "<>"  ) );
 
 	public:
 		void handleFileAction( efsw::WatchID watchid, const std::string &dir, const std::string &filename, efsw::Action action, std::string oldFilename ) override
@@ -102,19 +102,19 @@ namespace help
 		}
 	};
 
+	class FileWrapper { };
 
-
-	class FileWrapper;
-
-	class File {
-		static inline auto _log = spdlog::stdout_color_st( help::get_class_name< FileWrapper, "filesystem", "<>" >( ) );
-		FileWrapper m_file {0}
-	}
+	class File
+	{
+		static inline auto _log = spdlog::stdout_color_st( help::get_class_name< FileWrapper>( "filesystem", "<>"  ) );
+		FileWrapper        m_file;
+	};
 
 	class DirectoryWrapper
 	{
-				static inline auto _log = spdlog::stdout_color_st( help::get_class_name< DirectoryWrapper, "filesystem", "<>" >( ) );
-		fs::path           m_path {0}
+		static inline auto _log = spdlog::stdout_color_st( help::get_class_name< DirectoryWrapper>("filesystem", "<>"  ) );
+		fs::path           m_path;
+
 	public:
 		explicit DirectoryWrapper( fs::path &&path ) : m_path { std::move( path ) }
 		{
@@ -124,24 +124,25 @@ namespace help
 				_log -> debug( "path {}, path changed to {}", m_path . string( ), m_path . parent_path( ) . string( ) );
 			}
 		}
-		DirictotyWrapper(const fs::path& path) {
-			if (!fs::is_dirictory(path)) {
-				m_path = path.parent_path();
+
+		explicit DirectoryWrapper( const fs::path &path )
+		{
+			if ( !fs::is_directory( path ) )
+			{
+				m_path = path . parent_path( );
 				_log -> debug( "path {}, path changed to {}", m_path . string( ), m_path . parent_path( ) . string( ) );
-			}
-			else {
-				m_path  = path;
-			}
+			} else m_path = path;
 		}
 	};
 
 	class Directory
 	{
-		DirictoryWrapper m_dir;
+		DirectoryWrapper m_dir;
+
 		void copy_dir( const fs::path &src, const fs::path &dst )
 		{
 			if ( !fs::exists( dst ) ) fs::create_directories( dst );
-			
+
 			for ( auto &item : fs::recursive_directory_iterator( src ) )
 			{
 				fs::path relativePathFromSrc = fs::relative( item . path( ), src );
@@ -153,14 +154,13 @@ namespace help
 			}
 		}
 
-		void copy_file (const fs::path &src, const fs::path & dst) {
-			if (fs::is_regular_file(src)) 
+		void copy_file( const fs::path &src, const fs::path &dst )
+		{
+			if ( !fs::is_regular_file( src ) ) throw std::runtime_error( "src is not a regular file" );
+			else fs::copy_file( src, dst, fs::copy_options::overwrite_existing );
 		}
+
 	public:
-		void copy(const fs::path dst) {
-			if (fs::is_dirictory(dst))
-				throw std::runtime_error("")
-		}
+		void copy( const fs::path dst ) { if ( fs::is_directory( dst ) ) throw std::runtime_error( "" ); }
 	};
 }
-
