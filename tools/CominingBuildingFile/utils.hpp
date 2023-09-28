@@ -40,7 +40,7 @@ namespace help
 		}
 	};
 
-	template< class T, const char* Type_Name, const char * scope > constexpr auto get_class_name()
+	template< class T, const char* Type_Name = "", const char * scope ="" > constexpr auto get_class_name()
 	{
 		static_assert(std::string(scope).size() == 2 || std::string(scope).size() == 0);
 		return fmt::format(
@@ -67,7 +67,7 @@ namespace help
 	template< typename T > requires std::derived_from< T, IObserver >
 	class Handler final : public efsw::FileWatchListener , public T
 	{
-		inline static auto s_log = spdlog::stdout_color_mt( get_class_name< T >( ) );
+		inline static auto s_log = spdlog::stdout_color_mt( get_class_name< T, "observer", "<>" >( ) );
 
 	public:
 		void handleFileAction( efsw::WatchID watchid, const std::string &dir, const std::string &filename, efsw::Action action, std::string oldFilename ) override
@@ -107,13 +107,13 @@ namespace help
 	class FileWrapper;
 
 	class File {
-		static inline auto _log = spdlog::stderr_color_st( help::get_class_name< File >( ) );
+		static inline auto _log = spdlog::stdout_color_st( help::get_class_name< FileWrapper, "filesystem", "<>" >( ) );
 		FileWrapper m_file {0}
 	}
 
 	class DirectoryWrapper
 	{
-		static inline auto _log = spdlog::stderr_color_st( help::get_class_name< class Directory >( ) );
+				static inline auto _log = spdlog::stdout_color_st( help::get_class_name< DirectoryWrapper, "filesystem", "<>" >( ) );
 		fs::path           m_path {0}
 	public:
 		explicit DirectoryWrapper( fs::path &&path ) : m_path { std::move( path ) }
@@ -138,7 +138,7 @@ namespace help
 	class Directory
 	{
 		DirictoryWrapper m_dir;
-		void deep_copy( const fs::path &src, const fs::path &dst )
+		void copy_dir( const fs::path &src, const fs::path &dst )
 		{
 			if ( !fs::exists( dst ) ) fs::create_directories( dst );
 			
@@ -152,9 +152,15 @@ namespace help
 				// За исключением симлинков и других необычных типов файлов
 			}
 		}
+
+		void copy_file (const fs::path &src, const fs::path & dst) {
+			if (fs::is_regular_file(src)) 
+		}
 	public:
 		void copy(const fs::path dst) {
 			if (fs::is_dirictory(dst))
+				throw std::runtime_error("")
 		}
 	};
 }
+
