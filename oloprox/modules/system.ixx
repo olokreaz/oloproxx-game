@@ -27,6 +27,8 @@
 
 export module system;
 
+import types;
+
 namespace fs = boost::filesystem;
 
 namespace sys
@@ -58,33 +60,32 @@ namespace sys
 		Console( ) = delete;
 
 	public:
-		static void INIT( )
+		static void initialize( )
 		{
 			const std::source_location src = std::source_location::current( );
 			if ( !m_hConsole )
 			{
 				m_hConsole = ::GetConsoleWindow( );
-				spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [thread %t] [---%^%l%$---] [%n] %v");
-				spdlog::set_default_logger( spdlog::stdout_color_mt( "global" ) );
-			}
-			else
-				throw fmt::system_error(
-							errno
-							, "Multiply Init() function, last call: {}:{}"
-							, src . file_name( )
-							, src . function_name( )
-							);
+				spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [thread %t] [---%^%l%$---] <%n>: %v" );
+				spdlog::set_default_logger( _log );
+			} else return;
 		}
 
-		static void regSignal( void ( *pFnc )( int ) )
+	protected:
+		inline static auto _log = spdlog::stdout_color_mt( "global" );
+
+	public:
+		static void regSignal( std::function< void( int32 ) > func )
 		{
-			signal( SIGINT, pFnc );
-			signal( SIGTERM, pFnc );
-			signal( SIGABRT, pFnc );
-			signal( SIGBREAK, pFnc );
+			std::signal( SIGINT, func . target< void( int32 ) >( ) );
+			std::signal( SIGTERM, func . target< void( int32 ) >( ) );
+			std::signal( SIGABRT, func . target< void( int32 ) >( ) );
+			std::signal( SIGBREAK, func . target< void( int32 ) >( ) );
+
+			spdlog::info( "Register Signal Handler: {}", func . target_type( ) . name( ) );
 		}
 
-		static void setConsoleTittle( const std::string &tittle )
+		static void setConsoleTitle( const std::string &tittle )
 		{
 			::SetConsoleTitleA( tittle . c_str( ) );
 			spdlog::info( "Set Console Tittle: {}", tittle );
@@ -93,7 +94,7 @@ namespace sys
 		static void setLogLevel( spdlog::level::level_enum level )
 		{
 			spdlog::set_level( level );
-			spdlog::info( "Set Log Level: {}", std::to_underlying( level ) );
+			spdlog::info( "Set Log Level: {}", std::to_underlying<spdlog::level::level_enum>( level ) );
 		}
 
 		auto static setStatus( EWindowStatus status, HWND hwnd = nullptr )

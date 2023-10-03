@@ -42,7 +42,7 @@ namespace help
 
 	template< class T > constexpr auto get_class_name( std::string_view Type_Name = "", std::string_view scope = "" )
 	{
-		static_assert( scope . size( ) == 0 || scope . size( ) > 2, "scope must be empty or have 2 characters" );
+		assert( scope . size( ) == 0 || scope . size( ) > 2, "scope must be empty or have 2 characters" );
 		return fmt::format(
 				"{type-name}{scope-left}{type}{scope-right}",
 				"type"_a        = std::string( typeid( T ) . name( ) ) . substr( 5 ),

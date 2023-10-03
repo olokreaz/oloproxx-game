@@ -1,4 +1,5 @@
 ﻿#include <filesystem>
+#include <string>
 
 #include <sago/platform_folders.h>
 
@@ -7,21 +8,19 @@
 import system;
 import types;
 
-import core.handler.url;
-
 inline static const std::filesystem::path kAppDataPath = std::filesystem::path( sago::getDataHome( ) ) / ".oloprox";
 
 static bool g_bQuit = false;
 
-int main( int, char ** )
+#define WHILE while (true)
+
+int wmain( int, wchar_t ** )
 {
-	sys::Console::INIT( );
+	sys::Console::initialize( );
 	sys::Console::setLogLevel( spdlog::level::trace );
+	sys::Console::setConsoleTitle( "oloprox - louncher" );
 
-
-
-
-	while(!g_bQuit) {}
+	WHILE { }
 
 	return 0;
 }

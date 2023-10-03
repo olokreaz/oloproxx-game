@@ -10,26 +10,26 @@ export module steam;
 
 namespace steam
 {
-	class CSteamApp
+	class CSteamAppInterface
 	{
-		static std::shared_ptr< CSteamApp > m_pInstance     = nullptr;
-		bool                                m_bIsInitialize = false;
+		inline static std::shared_ptr< CSteamAppInterface > s_pInstance     = nullptr;
+		bool                                                m_bIsInitialize = false;
 
 	protected:
-		static auto _log = spdlog::stdout_color_mt( "steam" );
-		static auto _socket_log = spdlog::stdout_color_mt( "socket" );
+		inline static auto _log = spdlog::stdout_color_mt( "steam" );
+
+		CSteamAppInterface( ) { atexit( []( ) { SteamAPI_Shutdown( ); } ); }
 
 	public:
-		CSteamApp( ) = default;
-
-		static std::shared_ptr< CSteamApp > instance( )
+		static std::shared_ptr< CSteamAppInterface > instance( )
 		{
-			if ( !m_pInstance ) m_pInstance = std::make_shared< CSteamApp >( );
-			return m_pInstance;
+			if ( !s_pInstance ) s_pInstance = std::shared_ptr< CSteamAppInterface >( new CSteamAppInterface );
+			return s_pInstance;
 		}
 
 		void initialize( )
 		{
+			if ( !s_pInstance ) throw std::runtime_error( "CSteamAppInterface not initialized" );
 			if ( !m_bIsInitialize )
 			{
 				if ( !SteamAPI_Init( ) ) throw std::runtime_error( "SteamAPI_Init failed" );
@@ -37,6 +37,6 @@ namespace steam
 			} else spdlog::warn( "SteamAPI_Init already initialized" );
 		}
 
-		~CSteamApp( ) { SteamAPI_Shutdown( ); }
+		~CSteamAppInterface( ) { SteamAPI_Shutdown( ); }
 	};
 }
