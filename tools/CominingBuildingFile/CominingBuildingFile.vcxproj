@@ -166,10 +166,10 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="main.cpp"/>
-        <ClCompile Include="yaml-utils.cpp"/>
+        <ClCompile Include="utils.cpp"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="config.yml"/>
+        <Content Include="config.json"/>
     </ItemGroup>
     <ItemGroup>
         <ClInclude Include="utils.hpp"/>

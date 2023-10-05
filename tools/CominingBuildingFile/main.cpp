@@ -1,18 +1,13 @@
 ﻿#include <csignal>
 #include <filesystem>
-#include <fstream>
-#include <string>
+
 #include <unordered_map>
 #include <vector>
 
 #include <fmt/chrono.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
-
-#include <cryptopp/filters.h>
-#include <cryptopp/hex.h>
-#include <cryptopp/sha.h>
-#include <yaml-cpp/yaml.h>
+#include <nlohmann/json.hpp>
 
 #include "utils.hpp"
 
@@ -23,28 +18,6 @@ using namespace std::literals;
 
 help::Config g_config;
 static bool  g_Quit;
-
-std::string calculateSHA256( const std::filesystem::path &filePath )
-{
-	std::ifstream       file( filePath, std::ios::binary );
-	std::vector< char > buffer( ( std::istreambuf_iterator< char >( file ) ), std::istreambuf_iterator< char >( ) );
-
-	CryptoPP::SHA256 hash;
-
-	CryptoPP::byte digest[ CryptoPP::SHA256::DIGESTSIZE ]; // Создаём массив байт для хранения байт хеша.
-
-	hash . Update( ( const CryptoPP::byte * ) buffer . data( ), buffer . size( ) );
-	hash . Final( digest );
-
-	// String simply containing the digest (not human readable)
-	std::string s( ( const char * ) digest, CryptoPP::SHA256::DIGESTSIZE );
-
-	// Convert to human readable hex
-	std::string            hexDigest;
-	CryptoPP::StringSource ss2( s, true, new CryptoPP::HexEncoder( new CryptoPP::StringSink( hexDigest ) ) );
-
-	return hexDigest;
-}
 
 class BinaryHandler : public help::IObserver
 {
@@ -67,9 +40,8 @@ protected:
 
 void ExitHandler( int c )
 {
-	spdlog::info( "clean cache" );
+	spdlog::info( "Exit App" );
 	g_Quit = true;
-	exit( 0 );
 }
 
 int main( int, char ** )
@@ -79,8 +51,6 @@ int main( int, char ** )
 
 	try
 	{
-		g_config . load( "config.yml" );
-
 		efsw::FileWatcher              fw;
 		help::Handler< BinaryHandler > handler;
 

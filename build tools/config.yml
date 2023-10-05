@@ -1,6 +1,0 @@
-source: "E:\\c++\\oloprox\\build"
-destination: "C:\\Program Files\\oloprox"
-bin:
-  type: "debug"
-  source: "E:\\c++\\oloprox\\build\\bin"
-ignore: [ ".pbd" ]
