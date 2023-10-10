@@ -7,60 +7,56 @@
 #include <fmt/chrono.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
+
 #include <nlohmann/json.hpp>
 
 #include "utils.hpp"
+
+import HandlersImpl;
 
 namespace fs = std::filesystem;
 
 using namespace fmt::literals;
 using namespace std::literals;
 
-help::Config g_config;
-static bool  g_Quit;
+help::Config            g_config;
+static std::stop_source g_StopSource;
 
-class BinaryHandler : public help::IObserver
-{
-protected:
-	void _onRemove( const fs::path &path ) override
-	{
-		const auto relative = fs::relative( path, g_config . source );
-		auto       absolete = g_config . destination / relative;
-
-		std::error_code code;
-		fs::remove( absolete, code );
-
-		if ( code ) spdlog::error( "Error removed, code error: {}, {}", code . value( ), code . message( ) );
-	}
-
-	bool _filter( fs::path &path ) override { return path . string( ) . find( ( g_config . source / "bin" ) . string( ) ) == std::string::npos; }
-
-	void _update_context( fs::path &path ) override { }
-};
-
-void ExitHandler( int c )
+void ExitHandler( int )
 {
 	spdlog::info( "Exit App" );
-	g_Quit = true;
+	g_StopSource . request_stop( );
 }
 
 int main( int, char ** )
 {
+	using std::jthread;
+
 	signal( SIGTERM, ExitHandler );
 	signal( SIGINT, ExitHandler );
 
-	try
-	{
-		efsw::FileWatcher              fw;
-		help::Handler< BinaryHandler > handler;
+	efsw::FileWatcher              fw;
+	help::Handler< BinaryHandler > handler { g_config . ignore };
 
-		spdlog::set_level( spdlog::level::trace );
+	spdlog::set_level( spdlog::level::trace );
 
-		auto wId = fw . addWatch( ( g_config . source ) . string( ), &handler, true );
-		fw . watch( );
+	jthread                                                                   t(
+						[&fw, &handler] ( std::stop_token token )
+						{
+							try
+							{
+								auto wId = fw . addWatch( ( g_config . source ) . string( ), &handler, true );
+								fw . watch( );
 
-		while ( !g_Quit ) std::this_thread::sleep_for( 1s );
-	} catch ( const std::exception &ex ) { spdlog::error( "{}", ex . what( ) ); }
+								while ( !token . stop_requested( ) ) std::this_thread::sleep_for( 1s );
+							} catch ( const std::exception &ex ) { spdlog::error( "{}", ex . what( ) ); }
+						}, g_StopSource . get_token( )
+						);
+
+	fmt::println( "{:~^100}", "+" );
+	fmt::println( "{:~^100}", " Click Ctrl + C for exit to App " );
+	fmt::println( "{:~^100}", "+" );
+	t . join( );
 
 	return 0;
 }

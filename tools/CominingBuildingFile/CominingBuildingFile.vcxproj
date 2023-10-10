@@ -172,6 +172,7 @@
         <Content Include="config.json"/>
     </ItemGroup>
     <ItemGroup>
+        <ClCompile Include="impl.ixx"/>
         <ClInclude Include="utils.hpp"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

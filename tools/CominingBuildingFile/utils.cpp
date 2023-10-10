@@ -13,11 +13,11 @@ namespace json = nlohmann;
 
 void help::Config::load( fs::path path )
 {
-	json::json j           = json::json::parse( std::ifstream( path ) );
-	this -> source         = j[ "global" ][ "source" ] . get< std::string >( );
-	this -> destination    = j[ "global" ][ "destination" ] . get< std::string >( );
-	this -> modified_files = j[ "paths" ] . get< std::unordered_map< std::string, std::string > >( );
-	this -> ignore         = j[ "global" ][ "ignore" ] . get< std::vector< std::string > >( );
+	json::json j          = json::json::parse( std::ifstream( path ) );
+	this -> source        = j[ "global" ][ "source" ] . get< std::string >( );
+	this -> destination   = j[ "global" ][ "destination" ] . get< std::string >( );
+	this -> specific_path = j[ "paths" ] . get< std::unordered_map< std::string, std::string > >( );
+	this -> ignore        = j[ "global" ][ "ignore" ] . get< std::vector< std::string > >( );
 }
 
 std::string help::calculateSha256( const std::filesystem::path &filePath )
