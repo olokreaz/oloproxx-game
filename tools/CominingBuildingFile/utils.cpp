@@ -3,21 +3,33 @@
 #include <filesystem>
 #include <fstream>
 #include <vector>
+
 #include <cryptopp/filters.h>
 #include <cryptopp/hex.h>
 #include <cryptopp/sha.h>
-#include <nlohmann/json.hpp>
+
+#include <libconfig.h++>
 
 namespace fs = std::filesystem;
-namespace json = nlohmann;
 
 void help::Config::load( fs::path path )
 {
-	json::json j          = json::json::parse( std::ifstream( path ) );
-	this -> source        = j[ "global" ][ "source" ] . get< std::string >( );
-	this -> destination   = j[ "global" ][ "destination" ] . get< std::string >( );
-	this -> specific_path = j[ "paths" ] . get< std::unordered_map< std::string, std::string > >( );
-	this -> ignore        = j[ "global" ][ "ignore" ] . get< std::vector< std::string > >( );
+	namespace lc = libconfig;
+
+	try
+	{
+	lc::Config config;
+	config . readFile( path . string( ) );
+
+	const lc::Setting &root =config . getRoot( );
+
+	this->source = (const char*)root[ "global" ][ "source" ];
+	} catch (const lc::ParseException &e )
+	{
+		spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e.getFile(  ), e.getLine(  ) );
+	}
+
+
 }
 
 std::string help::calculateSha256( const std::filesystem::path &filePath )

@@ -1,0 +1,14 @@
+global =
+{
+source = "E:\\c++\\oloprox\\build",
+destination = "C:\\Program Files\\oloprox"
+};
+
+paths = (
+	{
+		pattern = "**/*.spv";
+		path = "/shader";
+	},
+);
+
+ignore = [ ".*\\.pdb" ];

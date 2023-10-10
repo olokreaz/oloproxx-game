@@ -3,6 +3,7 @@
 #include <ranges>
 #include <string>
 
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -49,7 +50,7 @@ namespace help
 
 	class IObserver
 	{
-	public:
+	protected:
 		IObserver( const fs::path _root, const fs::path _dist )
 		{
 			/* Create file Descriptor */
@@ -60,7 +61,7 @@ namespace help
 			_treeDist = _dirDist . readTree( );
 		}
 
-	protected:
+	public:
 		cppfs::FileHandle _dirRoot = cppfs::fs::open( g_config . source . string( ) );
 		cppfs::FileHandle _dirDist = cppfs::fs::open( g_config . destination . string( ) );
 
@@ -76,9 +77,9 @@ namespace help
 	};
 
 	template< typename T > requires std::derived_from< T, IObserver >
-	class Handler final : public efsw::FileWatchListener , public T
+	class Handler final : public efsw::FileWatchListener
 	{
-		inline static auto s_log = spdlog::stdout_color_mt( std::string( typeid( Handler ) . name( ) ) . substr( 5 ) );
+		inline static auto s_log = spdlog::stdout_color_mt( std::string( typeid( T ) . name( ) ) . substr( 5 ) );
 
 		std::vector< pcrecpp::RE > m_ignore;
 
@@ -87,19 +88,22 @@ namespace help
 			return !std::ranges::any_of( m_ignore, [&path] ( pcrecpp::RE &item ) { return item . FullMatch( path . string( ) ); } );
 		}
 
+	protected:
+		std::unique_ptr< IObserver > _obsrv = T::create( );
+
 	public:
 		Handler( ) = default;
 
 		Handler( std::vector< std::string > &ignore )
 		{
-			m_ignore . resize( ignore . size( ) );
-			for ( auto &item : ignore ) m_ignore . emplace_back( item );
+			m_ignore . reserve( ignore . size( ) );
+			for ( auto &item : ignore ) m_ignore . push_back( pcrecpp::RE( item ) );
 		}
 
 		Handler( std::vector< std::string > &&ignore )
 		{
-			m_ignore . resize( ignore . size( ) );
-			for ( auto &item : ignore ) m_ignore . emplace_back( std::move( item ) );
+			m_ignore . reserve( ignore . size( ) );
+			for ( auto &item : ignore ) m_ignore . push_back( pcrecpp::RE( std::move( item ) ) );
 		}
 
 		void handleFileAction(
@@ -107,47 +111,51 @@ namespace help
 				efsw::Action  action, std::string         oldFilename
 				) override
 		{
-			auto diff = this -> _treeRoot -> createDiff( *this -> _treeDist );
+			auto diff = _obsrv -> _treeRoot -> createDiff( *_obsrv -> _treeDist );
 
 			for ( auto &item : diff -> changes( ) )
 			{
 				fs::path path = item . path( );
 
-				this -> _update( path );
+				_obsrv -> _update( path );
 
-				if ( PathValidator( path ) || !this -> _filter( path ) ) return;
+				if ( PathValidator( path ) ) return;
+
+				using Operation = cppfs::Change::Operation;
 
 				std::string action_str { };
 				switch ( item . operation( ) )
 				{
-						using cppfs::Change::Operation;
 					case Operation::CopyFile:
 					{
-						this -> _CopyFile( path );
+						_obsrv -> _CopyFile( path, path );
 						action_str = "Copy File";
+						break;
 					}
-					break;
 					case Operation::CopyDir:
 					{
-						this -> _CopyDir( path );
+						_obsrv -> _CopyDir( path, path );
 						action_str = "Copy Directory";
+						break;
 					}
-					break;
 					case Operation::RemoveFile:
 					{
-						this -> _RemoveFile( path );
+						_obsrv -> _RemoveFile( path, path );
 						action_str = "Remove File";
+						break;
 					}
-					break;
 					case Operation::RemoveDir:
 					{
-						this -> _RemoveDir( path );
+						_obsrv -> _RemoveDir( path, path );
 						action_str = "Remove Directory";
-					}
-					break;
-					case Operation::None:
-					default: action_str = "Nono";
 						break;
+					}
+					case Operation::None:
+					default:
+					{
+						action_str = "Nono";
+						break;
+					}
 				}
 
 				s_log -> trace( "{} {}", path, action_str );

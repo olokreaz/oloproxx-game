@@ -169,7 +169,7 @@
         <ClCompile Include="utils.cpp"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="config.json"/>
+        <Content Include="config.local"/>
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="impl.ixx"/>

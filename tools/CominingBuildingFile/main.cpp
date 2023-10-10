@@ -8,8 +8,6 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include <nlohmann/json.hpp>
-
 #include "utils.hpp"
 
 import HandlersImpl;
@@ -19,8 +17,8 @@ namespace fs = std::filesystem;
 using namespace fmt::literals;
 using namespace std::literals;
 
-help::Config            g_config;
-static std::stop_source g_StopSource;
+static inline help::Config g_config;
+static std::stop_source    g_StopSource;
 
 void ExitHandler( int )
 {
@@ -35,23 +33,30 @@ int main( int, char ** )
 	signal( SIGTERM, ExitHandler );
 	signal( SIGINT, ExitHandler );
 
+	g_config . load( "config.local" );
+
 	efsw::FileWatcher              fw;
 	help::Handler< BinaryHandler > handler { g_config . ignore };
 
+	std::string source = g_config . source . string( );
+
 	spdlog::set_level( spdlog::level::trace );
 
-	jthread                                                                   t(
-						[&fw, &handler] ( std::stop_token token )
-						{
-							try
-							{
-								auto wId = fw . addWatch( ( g_config . source ) . string( ), &handler, true );
-								fw . watch( );
+	jthread t(
+		[&fw, &handler,&source]
+( std::stop_token token )
+		{
+			try
+			{
+				auto wId = fw . addWatch( ( g_config . source ) . string( ), &handler, true );
+				fw . watch( );
 
-								while ( !token . stop_requested( ) ) std::this_thread::sleep_for( 1s );
-							} catch ( const std::exception &ex ) { spdlog::error( "{}", ex . what( ) ); }
-						}, g_StopSource . get_token( )
-						);
+				spdlog::info( "Start watch: {} : {}", g_config . source . string( ), ( int ) wId );
+
+				while ( !token . stop_requested( ) ) std::this_thread::sleep_for( 1s );
+			} catch ( const std::exception &ex ) { spdlog::error( "{}", ex . what( ) ); }
+		}, g_StopSource . get_token( )
+		);
 
 	fmt::println( "{:~^100}", "+" );
 	fmt::println( "{:~^100}", " Click Ctrl + C for exit to App " );
