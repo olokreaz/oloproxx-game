@@ -18,18 +18,23 @@ void help::Config::load( fs::path path )
 
 	try
 	{
-	lc::Config config;
-	config . readFile( path . string( ) );
+		lc::Config config;
+		config . readFile( path . string( ) );
 
-	const lc::Setting &root =config . getRoot( );
+		const lc::Setting &root = config . getRoot( );
 
-	this->source = (const char*)root[ "global" ][ "source" ];
-	} catch (const lc::ParseException &e )
-	{
-		spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e.getFile(  ), e.getLine(  ) );
-	}
+		std::string src  = root[ "global" ][ "source" ];
+		std::string dest = root[ "global" ][ "destination" ];
 
+		this -> source      = src;
+		this -> destination = dest;
 
+		this -> specific_path . reserve( root[ "paths" ] . getLength( ) );
+		for ( auto &pair : root[ "paths" ] ) this -> specific_path . insert( { pair[ "patter" ], pair[ "destination" ] } );
+
+		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
+		for ( auto &pair : root[ "ignore" ] ) this -> ignore . push_back( pair );
+	} catch ( const lc::ParseException &e ) { spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) ); }
 }
 
 std::string help::calculateSha256( const std::filesystem::path &filePath )

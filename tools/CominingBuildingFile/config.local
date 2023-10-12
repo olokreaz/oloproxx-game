@@ -7,8 +7,8 @@ destination = "C:\\Program Files\\oloprox"
 paths = (
 	{
 		pattern = "**/*.spv";
-		path = "/shader";
+		destination = "/shader";
 	},
 );
 
-ignore = [ ".*\\.pdb" ];
+ignore = ( ".*\\.pdb" );
