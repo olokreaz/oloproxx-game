@@ -20,9 +20,9 @@
     </ItemGroup>
     <PropertyGroup Label="Globals">
         <VCProjectVersion>15.0</VCProjectVersion>
-        <ProjectGuid>{89496A55-605A-42C2-9125-11DDB59C5245}</ProjectGuid>
+        <ProjectGuid>{6E21AFF5-4271-4561-8910-5FFD6C2C9167}</ProjectGuid>
         <Keyword>Win32Proj</Keyword>
-        <RootNamespace>CominingBuildingFile</RootNamespace>
+        <RootNamespace>discord_bot</RootNamespace>
         <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
@@ -78,14 +78,16 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <LinkIncremental>true</LinkIncremental>
-        <OutDir>$(SolutionDir)\build tools\</OutDir>
+        <OutDir>$(SolutionDir)\build\bin\</OutDir>
+        <TargetName>oloprox - $(ProjectName) - $(Configuration)</TargetName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
-        <OutDir>$(SolutionDir)\build tools\</OutDir>
+        <OutDir>$(SolutionDir)\build\bin\</OutDir>
+        <TargetName>oloprox - $(ProjectName) - $(Configuration)</TargetName>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <ClCompile>
@@ -112,13 +114,15 @@
             <ConformanceMode>true</ConformanceMode>
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
+            <LanguageStandard_C>stdc17</LanguageStandard_C>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <EnableModules>false</EnableModules>
             <BuildStlModules>true</BuildStlModules>
+            <DisableSpecificWarnings>4996</DisableSpecificWarnings>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
-            <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,25 +158,19 @@
             <LanguageStandard>stdcpplatest</LanguageStandard>
             <LanguageStandard_C>stdc17</LanguageStandard_C>
             <MultiProcessorCompilation>true</MultiProcessorCompilation>
+            <EnableModules>false</EnableModules>
             <BuildStlModules>true</BuildStlModules>
+            <DisableSpecificWarnings>4996</DisableSpecificWarnings>
         </ClCompile>
         <Link>
             <SubSystem>Console</SubSystem>
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
-            <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="main.cpp"/>
-        <ClCompile Include="utils.cpp"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="config.local"/>
-    </ItemGroup>
-    <ItemGroup>
-        <ClInclude Include="utils.hpp"/>
+        <ClCompile Include="discord_bot.cpp"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

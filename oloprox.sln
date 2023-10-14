@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{05398648
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CominingBuildingFile", "tools\CominingBuildingFile\CominingBuildingFile.vcxproj", "{89496A55-605A-42C2-9125-11DDB59C5245}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "discord-bot", "discord-bot\discord-bot.vcxproj", "{6E21AFF5-4271-4561-8910-5FFD6C2C9167}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -29,6 +31,13 @@ Global
 		{89496A55-605A-42C2-9125-11DDB59C5245}.Release|Win32.Build.0 = Release|Win32
 		{89496A55-605A-42C2-9125-11DDB59C5245}.Release|x64.ActiveCfg = Release|x64
 		{89496A55-605A-42C2-9125-11DDB59C5245}.Release|x64.Build.0 = Release|x64
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Debug|Win32.Build.0 = Debug|Win32
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Debug|x64.ActiveCfg = Debug|x64
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|Win32.ActiveCfg = Release|Win32
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|Win32.Build.0 = Release|Win32
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|x64.ActiveCfg = Release|x64
+		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{89496A55-605A-42C2-9125-11DDB59C5245} = {05398648-54D8-4F8A-BAEF-69C66D1334EA}
