@@ -3,18 +3,23 @@
 #include <ranges>
 #include <string>
 
+#include <fmt/chrono.h>
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <cppfs/Diff.h>
 #include <cppfs/FileHandle.h>
+#include <cppfs/FilePath.h>
 #include <cppfs/Tree.h>
 #include <cppfs/fs.h>
 
 #include <efsw/efsw.hpp>
 
 #include <pcrecpp.h>
+
+using namespace fmt::literals;
+using namespace std::chrono_literals;
 
 namespace fs = std::filesystem;
 
@@ -50,6 +55,8 @@ namespace help
 
 	class IObserver
 	{
+		std::shared_ptr< std::vector< std::string > > m_pIgnore;
+
 	protected:
 		IObserver( const fs::path _root, const fs::path _dist )
 		{
@@ -61,105 +68,86 @@ namespace help
 			_treeDist = _dirDist . readTree( );
 		}
 
+		cppfs::FileHandle _dirRoot { };
+		cppfs::FileHandle _dirDist { };
+
+		std::unique_ptr< cppfs::Tree > _treeRoot { };
+		std::unique_ptr< cppfs::Tree > _treeDist { };
+
 	public:
-		cppfs::FileHandle _dirRoot = cppfs::fs::open( g_config . source . string( ) );
-		cppfs::FileHandle _dirDist = cppfs::fs::open( g_config . destination . string( ) );
-
-		std::unique_ptr< cppfs::Tree > _treeRoot = _dirRoot . readTree( );
-		std::unique_ptr< cppfs::Tree > _treeDist = _dirRoot . readTree( );
-
 		virtual void _CopyFile( const fs::path &src, const fs::path &dst ) = 0;
 		virtual void _CopyDir( const fs::path &src, const fs::path &dst ) = 0;
 		virtual void _RemoveFile( const fs::path &src, const fs::path &dst ) = 0;
 		virtual void _RemoveDir( const fs::path &src, const fs::path &dst ) = 0;
 
-		virtual void _update( fs::path &path ) { }
+		virtual void _update( fs::path &path ) {}
+
+		const std::shared_ptr< std::vector< std::string > > get_ignoire( ) const { return m_pIgnore; }
+
+		std::unique_ptr< cppfs::Diff > _ctx( ) { return this -> _treeRoot -> createDiff( *this -> _treeDist ); }
 	};
 
-	template< typename T > requires std::derived_from< T, IObserver >
-	class Handler final : public efsw::FileWatchListener
+	class CWorker final
 	{
-		inline static auto s_log = spdlog::stdout_color_mt( std::string( typeid( T ) . name( ) ) . substr( 5 ) );
+		using ptr = std::unique_ptr< IObserver >;
+		std::vector< ptr > m_observers;
 
-		std::vector< pcrecpp::RE > m_ignore;
-
-		bool PathValidator( fs::path &path )
-		{
-			return !std::ranges::any_of( m_ignore, [&path] ( pcrecpp::RE &item ) { return item . FullMatch( path . string( ) ); } );
-		}
+		void _update( ) {}
 
 	protected:
-		std::unique_ptr< IObserver > _obsrv = T::create( );
+		cppfs::FileHandle _dirRoot { };
+		cppfs::FileHandle _dirDist { };
+
+		std::unique_ptr< cppfs::Tree > _treeRoot { };
+		std::unique_ptr< cppfs::Tree > _treeDist { };
 
 	public:
-		Handler( ) = default;
-
-		Handler( std::vector< std::string > &ignore )
+		CWorker( const std::filesystem::path src, const std::filesystem::path dist )
 		{
-			m_ignore . reserve( ignore . size( ) );
-			for ( auto &item : ignore ) m_ignore . push_back( pcrecpp::RE( item ) );
-		}
-
-		Handler( std::vector< std::string > &&ignore )
-		{
-			m_ignore . reserve( ignore . size( ) );
-			for ( auto &item : ignore ) m_ignore . push_back( pcrecpp::RE( std::move( item ) ) );
-		}
-
-		void handleFileAction(
-				efsw::WatchID watchid, const std::string &dir, const std::string &filename,
-				efsw::Action  action, std::string         oldFilename
-				) override
-		{
-			auto diff = _obsrv -> _treeRoot -> createDiff( *_obsrv -> _treeDist );
-
-			for ( auto &item : diff -> changes( ) )
+			if ( fs::is_directory( src ) || fs::exists( src ) || fs::is_directory( dist ) )
 			{
-				fs::path path = item . path( );
-
-				_obsrv -> _update( path );
-
-				if ( PathValidator( path ) ) return;
-
-				using Operation = cppfs::Change::Operation;
-
-				std::string action_str { };
-				switch ( item . operation( ) )
-				{
-					case Operation::CopyFile:
-					{
-						_obsrv -> _CopyFile( path, path );
-						action_str = "Copy File";
-						break;
-					}
-					case Operation::CopyDir:
-					{
-						_obsrv -> _CopyDir( path, path );
-						action_str = "Copy Directory";
-						break;
-					}
-					case Operation::RemoveFile:
-					{
-						_obsrv -> _RemoveFile( path, path );
-						action_str = "Remove File";
-						break;
-					}
-					case Operation::RemoveDir:
-					{
-						_obsrv -> _RemoveDir( path, path );
-						action_str = "Remove Directory";
-						break;
-					}
-					case Operation::None:
-					default:
-					{
-						action_str = "Nono";
-						break;
-					}
-				}
-
-				s_log -> trace( "{} {}", path, action_str );
+				spdlog::error( "Source or destination is not directory" );
+				throw std::runtime_error( "Source or destination is not directory" );
 			}
+
+			_dirRoot = cppfs::fs::open( src . string( ) );
+			_dirDist = cppfs::fs::open( dist . string( ) );
+
+			_treeRoot = _dirRoot . readTree( );
+			_treeDist = _dirDist . readTree( );
+		}
+
+		~CWorker( ) = default;
+
+		template< class T > requires std::derived_from< T, IObserver >
+		size_t register_handler( )
+		{
+			this -> m_observers . push_back( T::create( ) );
+			return this -> m_observers . size( );
+		}
+
+		void remove_handler( size_t id ) { if ( id > 0 && id <= m_observers . size( ) ) this -> m_observers . erase( this -> m_observers . begin( ) + ( id - 1 ) ); }
+
+		void run( std::jthread &thread )
+		{
+			thread = std::jthread(
+						[this] ( std::stop_token token )
+						{
+							while ( true )
+							{
+								if ( !token . stop_requested( ) ) return;
+
+								if (
+									const auto diff = this -> _treeRoot -> createDiff( *this -> _treeDist ); ( diff -> changes( ) . size( )
+										> 1 )
+									|| diff -> changes( ) . size( ) == 1 && fs::path( diff -> changes( )[ 0 ] . path( ) ) .
+									extension( )
+									== ".exe" || fs::path( diff -> changes( )[ 0 ] . path( ) ) . extension( ) == ".dll" ) {}
+
+								std::this_thread::sleep_for( 100ms );
+							}
+						}
+						);
 		}
 	};
 }

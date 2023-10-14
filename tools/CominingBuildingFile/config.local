@@ -8,7 +8,7 @@ paths = (
 	{
 		pattern = "**/*.spv";
 		destination = "/shader";
-	},
+	}
 );
 
 ignore = ( ".*\\.pdb" );

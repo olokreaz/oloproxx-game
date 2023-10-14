@@ -11,10 +11,12 @@
 #include <libconfig.h++>
 
 namespace fs = std::filesystem;
+namespace lc = libconfig;
 
 void help::Config::load( fs::path path )
 {
-	namespace lc = libconfig;
+	// utf8 ru
+	std::locale::global( std::locale( "ru_RU.UTF-8" ) );
 
 	try
 	{
@@ -23,17 +25,23 @@ void help::Config::load( fs::path path )
 
 		const lc::Setting &root = config . getRoot( );
 
-		std::string src  = root[ "global" ][ "source" ];
-		std::string dest = root[ "global" ][ "destination" ];
+		{
+			std::string src  = root[ "global" ][ "source" ];
+			std::string dest = root[ "global" ][ "destination" ];
 
-		this -> source      = src;
-		this -> destination = dest;
+			this -> source      = src;
+			this -> destination = dest;
+		}
 
 		this -> specific_path . reserve( root[ "paths" ] . getLength( ) );
-		for ( auto &pair : root[ "paths" ] ) this -> specific_path . insert( { pair[ "patter" ], pair[ "destination" ] } );
+		for ( size_t i = 0; i < root[ "paths" ] . getLength( ); ++i )
+		{
+			const auto &pair = root[ "paths" ][ i ];
+			this -> specific_path . insert( { pair[ "pattern" ], pair[ "destination" ] } );
+		}
 
 		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
-		for ( auto &pair : root[ "ignore" ] ) this -> ignore . push_back( pair );
+		for ( size_t i = 0; i < root[ "ignore" ] . getLength( ); ++i ) this -> ignore . push_back( root[ "ignore" ][ i ] );
 	} catch ( const lc::ParseException &e ) { spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) ); }
 }
 
