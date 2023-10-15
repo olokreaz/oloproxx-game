@@ -27,12 +27,6 @@ namespace help
 	namespace fs = std::filesystem;
 	using namespace fmt::literals;
 
-	struct PathFormTo
-	{
-		fs::path src;
-		fs::path dst;
-	};
-
 	struct Config
 	{
 		fs::path                                                                                  source;
