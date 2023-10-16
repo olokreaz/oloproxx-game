@@ -166,6 +166,7 @@
     </ItemDefinitionGroup>
     <ItemGroup>
         <ClCompile Include="main.cpp"/>
+        <ClCompile Include="pages.ixx"/>
         <ClCompile Include="utils.cpp"/>
     </ItemGroup>
     <ItemGroup>

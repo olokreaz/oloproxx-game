@@ -1,6 +1,7 @@
 ﻿#include <csignal>
 #include <filesystem>
 
+#include <ranges>
 #include <unordered_map>
 #include <vector>
 
@@ -8,8 +9,10 @@
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <fmt/xchar.h>
 
 #include <spdlog/spdlog.h>
+#include <spdlog/sinks/daily_file_sink.h>
 
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/receiver.hpp>
@@ -24,7 +27,7 @@ namespace fs = std::filesystem;
 using namespace fmt::literals;
 using namespace std::literals;
 
-using namespace ftxui;
+import pages;
 
 static inline help::Config g_config;
 
@@ -52,74 +55,87 @@ std::vector< std::wstring > ListDirectory( const std::wstring &path )
 
 int main( int, char ** )
 {
+	using namespace ftxui;
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
 
 	g_config . load( "config.local" );
 
+	auto sink = std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 );
+
+	auto logger = std::make_shared< spdlog::logger >( "global", sink );
+
+	spdlog::set_default_logger( logger );
+
+	spdlog::flush_every( 5s );
+	spdlog::flush_on( spdlog::level::level_enum::warn );
+
 	spdlog::set_level( spdlog::level::trace );
 
 	spdlog::set_pattern( "[ %Y:%m:%d - %H:%M:%S:%F ] [ %l ] [ %t ] <%n> %v" );
 
-	auto screen = ScreenInteractive::TerminalOutput( );
+	auto screen = ux::ScreenInteractive::TerminalOutput( );
 
-	// Данные
-	std::wstring                sourcePath        = L"sourcePath";
-	std::vector< std::wstring > sourcePathContent = ListDirectory( sourcePath );
-	std::wstring                destPath          = L"destPath";
+	int                        slected_left_menu_info = 0;
+	std::vector< std::string > left_menu_keys         = ( g_config . specific_path | std::views::keys ) | std::ranges::to< std::vector< std::string > >( );
+	auto                       left_menu_info         = Menu( &left_menu_keys, &slected_left_menu_info, ux::MenuOption::VerticalAnimated( ) );
 
-	// Создаем компоненты
-	auto sourceInput = Input(  , L"Source", InputOption::Default(  ) );
-	auto sourceList  = Container::Vertical( { } );
-	for ( const auto &entry : sourcePathContent )
-	{
-		auto cb = Checkbox( entry, nullptr, CheckboxOption::Simple( ) );
-		sourceList -> Add( Container::Horizontal( {cb} ) );
-	}
-	auto destInput = Input( &destPath, L"destPath" );
-	auto copyBtn   = Button( L"Copy", [&]( ) { CopyDirectory( sourcePath, destPath ); } );
+	int                        slected_right_menu_info = 0;
+	std::vector< std::string > right_menu_keys         = ( g_config . specific_path | std::views::values ) | std::ranges::to< std::vector< std::string > >( );
+	auto                       right_menu_info         = Menu(
+								&right_menu_keys, &slected_right_menu_info, ux::MenuOption(
+															{ .on_change = [&] { spdlog::info( "right_menu_selected: {}", right_menu_keys[ slected_right_menu_info ] ); },
+															.on_enter = [&]
+															{
+																spdlog::info(
+																		"Called select {}",
+																		right_menu_keys[
+																			slected_right_menu_info ]
+																	);
+															} }
+															)
+								);
 
-	auto sourceContainer = Container::Vertical( { sourceInput, sourceList } );
-	auto destContainer   = Container::Vertical( { destInput, copyBtn } );
+	auto left_phs = ux::Container::Vertical(
+						{ Renderer(
+							[&left_menu_info]( ) -> Element
+							{
+								return vbox(
+									{
+											text( L"source" ) | center | color( Color::HotPink3 ),
+											ux::separator( ) | color( Color::HotPink3 ),
+											left_menu_info -> Render( ) | color( Color::HotPink3 )
+									}
+									) | flex;
+							}
+							) }
+						);
+	auto right_phs = ux::Container::Vertical(
+						{ Renderer(
+							[&right_menu_info]( )-> Element
+							{
+								return vbox(
+									{
+											text( L"destination" ) | center | color( Color::HotPink3 ),
+											ux::separator( ) | color( Color::HotPink3 ),
+											right_menu_info -> Render( ) | color( Color::HotPink3 )
+									}
+									) | flex;
+							}
+							) }
+						);
 
-	// Укладываем все вместе
-	auto layout = Container::Horizontal(
-					{
-							sourceContainer,
-							separator( ),
-							destContainer,
-					}
-					);
-
-	// Создаем рендерер
-	auto render = Renderer(
-				layout, [&]( )
-				{
-					return vbox(
+	auto info_group = ux::Container::Horizontal(
 						{
-								vbox(
-									{
-											text( L"Source directory:" ),
-											sourceInput -> Render( ),
-											separator( ),
-											sourceList -> Render( ) | frame | flex_grow,
-									}
-								) | border,
-								separator( ),
-								vbox(
-									{
-											text( L"Destination directory:" ),
-											destInput -> Render( ),
-											separator( ),
-											hcenter( copyBtn -> Render( ) )
-									}
-								) | border
+								ui::window( L"Left Paths", left_phs ),
+								ux::Renderer( [] { return ux::separator( ); } ),
+								ui::window( L"Right Paths", right_phs ),
 						}
 						);
-				}
-				);
 
-	screen . Loop( render );
+	auto window = ui::window( L"oloprox", ux::Container::Vertical( { info_group } ) );
+
+	screen . Loop( window );
 
 	return 0;
 }

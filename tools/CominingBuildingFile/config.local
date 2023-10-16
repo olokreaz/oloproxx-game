@@ -6,8 +6,13 @@ destination = "C:\\Program Files\\oloprox"
 
 paths = (
 	{
-		pattern = "**/*.spv";
+		pattern = "**/shader/*.spv";
 		destination = "/shader";
+	},
+	{
+		pattern = "**/packs/*";
+		destination = "/data/packs";
+
 	}
 );
 
