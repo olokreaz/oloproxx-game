@@ -1,6 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer /&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=71c0838a_002Daa92_002D42e5_002D88a5_002Daf3fa21d9888/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="egnien_gravity" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=71c0838a_002Daa92_002D42e5_002D88a5_002Daf3fa21d9888/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="egnien_gravity" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;GTest::3816DD18-5F70-421F-B98E-B5CCAC8A1756::Windows,Version=v10.0.22621::Engine.egnien_gravity&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;

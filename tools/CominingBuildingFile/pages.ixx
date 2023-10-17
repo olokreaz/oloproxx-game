@@ -24,9 +24,9 @@ export namespace ui
 				[&name,&cmp]
 				{
 					return ux::window(
-						text( name . data( ) ) | bold | ux::color( Color::HotPink ) | center,
-						cmp -> Render( ) ) | color( Color::HotPink
-							);
+							text( name . data( ) ) | bold | ux::color( Color::HotPink ) | borderDouble | center,
+							cmp -> Render( )
+							) | color( LinearGradient( ) . Angle( 25 ) . Stop( Color::DeepPink2 ) . Stop( Color::DeepSkyBlue2 ) );
 				}
 				);
 	}
