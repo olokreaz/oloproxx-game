@@ -26,11 +26,13 @@
 **/*.json
 **/*.tlog
 **/*.log
-
+**/*.txt
+**/*.pb
 
 .idea
 x64
 **/x64
+**/logs
 
 .idea/.idea.oloprox/.idea/sonarlint/**.*
 

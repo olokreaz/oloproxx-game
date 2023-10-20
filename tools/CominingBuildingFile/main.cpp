@@ -1,4 +1,5 @@
-﻿#include <csignal>
+﻿#include <complex.h>
+#include <csignal>
 #include <filesystem>
 
 #include <ranges>
@@ -13,44 +14,36 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
-#include <ftxui/component/component.hpp>
-#include <ftxui/component/receiver.hpp>
-#include <ftxui/component/screen_interactive.hpp>
-#include <ftxui/dom/elements.hpp>
-#include <ftxui/screen/screen.hpp>
+#include <efsw/efsw.hpp>
 
-#include "utils.hpp"
+#include "Configer.hpp"
+#include "FileSynchronizer.hpp"
 
 namespace fs = std::filesystem;
 
 using namespace fmt::literals;
 using namespace std::literals;
 
-import pages;
+void ExitHandler( int ) { std::this_thread::sleep_for( 2s ); }
 
-static inline help::Config g_config;
+bool g_bQuit = false;
 
-static inline std::stop_source g_stop_source;
-
-void ExitHandler( int )
+int wmain( int, wchar_t ** )
 {
-	g_stop_source . request_stop( );
-	std::this_thread::sleep_for( 2s );
-	spdlog::info( "call stop token" );
-}
-
-int main( int, char ** )
-{
-	using namespace ftxui;
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
 
-	g_config . load( "config.local" );
+	std::shared_ptr< help::Config > config = std::make_shared< help::Config >( );
 
-	auto sink = std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 );
+	config -> load( L"config.local" );
 
-	auto logger = std::make_shared< spdlog::logger >( "global", sink );
+	auto file_sink = std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 );
+
+	auto logger = std::make_shared< spdlog::logger >( "global", file_sink );
+
+	spdlog::register_logger( logger );
 
 	spdlog::set_default_logger( logger );
 
@@ -61,32 +54,15 @@ int main( int, char ** )
 
 	spdlog::set_pattern( "[ %Y:%m:%d - %H:%M:%S:%F ] [ %l ] [ %t ] <%n> %v" );
 
-	auto screen = ux::ScreenInteractive::Fullscreen( );
+	efsw::FileWatcher watcher;
+	CFileSynchronizer synchronizer( config );
 
-	bool show = false;
-	auto btn  = ux::Button( L"Start", [&show] { show = !show; }, ux::ButtonOption::Animated( Color::Black, Color::HotPink2, Color::Black, Color::DeepSkyBlue1 ) );
+	watcher . addWatch( config -> source . string( ), &synchronizer, true );
 
-	auto modl = ux::Modal( Renderer( [] { return text( L"\"Ctrl+C\" что-бы выйти из приложения" ) | center | borderDouble; } ), &show );
+	watcher . watch( );
 
-	btn = Renderer(
-			btn, [&btn]
-			{
-				return vbox
-						(
-						{
-								btn -> Render( )
-						}
-						) | color( LinearGradient( ) . Angle( 25 ) . Stop( Color::DeepPink2 ) . Stop( Color::DeepSkyBlue2 ) );
-			}
-			);
+	while ( !g_bQuit ) std::this_thread::sleep_for( 1s );
 
-	auto txt = Renderer( [] { return text( L"oloprox" ) | bold | color( Color::HotPink ) | center; } );
-
-	auto Layout = ux::Container::Vertical( { btn, txt | modl } );
-
-	auto window = ui::window( L"oloprox", Layout );
-
-	screen . Loop( window );
-
+	config -> save( );
 	return 0;
 }

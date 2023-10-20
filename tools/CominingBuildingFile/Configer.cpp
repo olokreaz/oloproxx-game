@@ -1,4 +1,4 @@
-﻿#include "utils.hpp"
+﻿#include "Configer.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -15,15 +15,13 @@ namespace lc = libconfig;
 
 void help::Config::load( fs::path path )
 {
-	// utf8 ru
-	std::locale::global( std::locale( "ru_RU.UTF-8" ) );
+	this -> m_config_path = path;
 
 	try
 	{
-		lc::Config config;
-		config . readFile( path . string( ) );
+		m_config . readFile( path . string( ) );
 
-		const lc::Setting &root = config . getRoot( );
+		const lc::Setting &root = m_config . getRoot( );
 
 		{
 			std::string src  = root[ "global" ][ "source" ];
@@ -33,16 +31,35 @@ void help::Config::load( fs::path path )
 			this -> destination = dest;
 		}
 
-		this -> specific_path . reserve( root[ "paths" ] . getLength( ) );
+		this -> special . reserve( root[ "paths" ] . getLength( ) );
 		for ( size_t i = 0; i < root[ "paths" ] . getLength( ); ++i )
 		{
 			const auto &pair = root[ "paths" ][ i ];
-			this -> specific_path . insert( { pair[ "pattern" ], pair[ "destination" ] } );
+			this -> special . insert( { pair[ "pattern" ], pair[ "destination" ] } );
 		}
 
 		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
 		for ( size_t i = 0; i < root[ "ignore" ] . getLength( ); ++i ) this -> ignore . push_back( root[ "ignore" ][ i ] );
 	} catch ( const lc::ParseException &e ) { spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) ); }
+}
+
+void help::Config::save( fs::path path )
+{
+	lc::Config cfg;
+	auto &     root                   = cfg . getRoot( );
+	root[ "global" ][ "source" ]      = this -> source . string( );
+	root[ "global" ][ "destination" ] = this -> destination . string( );
+
+	for ( auto &i : this -> special )
+	{
+		auto &pair            = root[ "paths" ] . add( lc::Setting::TypeGroup );
+		pair[ "pattern" ]     = i . first;
+		pair[ "destination" ] = i . second;
+	}
+
+	for ( auto &i : this -> ignore ) root[ "ignore" ] . add( lc::Setting::TypeString ) = i;
+
+	cfg . writeFile( path . string( ) );
 }
 
 std::string help::calculateSha256( const std::filesystem::path &filePath )
