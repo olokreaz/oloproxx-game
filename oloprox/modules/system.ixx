@@ -5,7 +5,6 @@
 
 #include <csignal>
 #include <fstream>
-#include <source_location>
 #include <vector>
 #include <fmt/core.h>
 #include <fmt/format.h>
@@ -15,7 +14,6 @@
 #include <stdexcept>
 #include <string>
 
-#include <boost/filesystem.hpp>
 #include <boost/process.hpp>
 #include <boost/filesystem/string_file.hpp>
 
@@ -39,7 +37,7 @@ namespace sys
 
 		if ( !ifs . is_open( ) ) throw std::runtime_error( "failed to open " + path . string( ) );
 
-		std::streamsize        fileSize = ifs . tellg( );
+		const std::streamsize  fileSize = ifs . tellg( );
 		std::vector< uint8_t > buffer( fileSize );
 
 		ifs . seekg( 0 );
@@ -62,13 +60,12 @@ namespace sys
 	public:
 		static void initialize( )
 		{
-			const std::source_location src = std::source_location::current( );
 			if ( !m_hConsole )
 			{
 				m_hConsole = ::GetConsoleWindow( );
 				spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [thread %t] [---%^%l%$---] <%n>: %v" );
 				spdlog::set_default_logger( _log );
-			} else return;
+			}
 		}
 
 	protected:
@@ -91,18 +88,18 @@ namespace sys
 			spdlog::info( "Set Console Tittle: {}", tittle );
 		}
 
-		static void setLogLevel( spdlog::level::level_enum level )
+		static void setLogLevel( const spdlog::level::level_enum level )
 		{
 			spdlog::set_level( level );
-			spdlog::info( "Set Log Level: {}", std::to_underlying<spdlog::level::level_enum>( level ) );
+			spdlog::info( "Set Log Level: {}", std::to_underlying< spdlog::level::level_enum >( level ) );
 		}
 
-		auto static setStatus( EWindowStatus status, HWND hwnd = nullptr )
+		auto static setStatus( const EWindowStatus status, HWND hwnd = nullptr )
 		{
-			int  command = ( status == EWindowStatus::eShow ) ? SW_SHOW : SW_HIDE;
-			HWND window  = hwnd ? hwnd : m_hConsole;
+			const int  command = ( status == EWindowStatus::eShow ) ? SW_SHOW : SW_HIDE;
+			const HWND window  = hwnd ? hwnd : m_hConsole;
 
-			::ShowWindow( window, command );
+			ShowWindow( window, command );
 
 			if ( window == m_hConsole )
 			{
@@ -121,11 +118,11 @@ namespace sys
 	std::vector< uint32_t > CompileGLSLToSPIRV( const std::string &shaderCode )
 	{
 		// Создаём временный файл для исходного кода shader
-		fs::path glslPath = fs::temp_directory_path( ) / fs::unique_path( );
+		const fs::path glslPath = fs::temp_directory_path( ) / fs::unique_path( );
 		std::ofstream( glslPath . string( ) ) << shaderCode;
 
 		// Генерируем имя для выходного файла SPIR-V
-		fs::path spvPath = fs::temp_directory_path( ) / fs::unique_path( );
+		const fs::path spvPath = fs::temp_directory_path( ) / fs::unique_path( );
 
 		// Выполняем компиляцию с помощью glslc из Vulkan SDK
 		auto                  command = fmt::format( "glslc -fshader-stage=vert {} -o {}", glslPath . string( ), spvPath . string( ) );
@@ -136,7 +133,7 @@ namespace sys
 		process . wait( );
 
 		// Получаем код возврата
-		int result = process . exit_code( );
+		const int result = process . exit_code( );
 		if ( result != 0 )
 		{
 			spdlog::error( "GLSL compilation failed" );
@@ -146,7 +143,7 @@ namespace sys
 		// Читаем скомпилированный SPIR-V из временного файла
 		std::ifstream           spvFile( spvPath . string( ), std::ios::binary );
 		std::vector< uint32_t > spirv(
-						( std::istreambuf_iterator< char >( spvFile ) ),
+						( std::istreambuf_iterator( spvFile ) ),
 						std::istreambuf_iterator< char >( )
 						);
 
@@ -156,8 +153,8 @@ namespace sys
 	std::vector< uint32_t > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" )
 	{
 		// Генерируем имена временных файлов
-		fs::path hlslPath = fs::temp_directory_path( ) / fs::unique_path( );
-		fs::path spvPath  = fs::temp_directory_path( ) / fs::unique_path( );
+		const fs::path hlslPath = fs::temp_directory_path( ) / fs::unique_path( );
+		const fs::path spvPath  = fs::temp_directory_path( ) / fs::unique_path( );
 
 		// Записываем исходный код во временный файл
 		std::ofstream( hlslPath . string( ) ) << shaderCode;
@@ -171,7 +168,7 @@ namespace sys
 		process . wait( );
 
 		// Получить код возврата
-		int result = process . exit_code( );
+		const int result = process . exit_code( );
 		if ( result != 0 )
 		{
 			spdlog::error( "Failed to compile HLSL shader" );
@@ -181,7 +178,7 @@ namespace sys
 		// Читаем скомпилированный SPIR-V из временного файла
 		std::ifstream           spvFile( spvPath . string( ), std::ios::binary );
 		std::vector< uint32_t > spirv(
-						( std::istreambuf_iterator< char >( spvFile ) ),
+						( std::istreambuf_iterator( spvFile ) ),
 						std::istreambuf_iterator< char >( )
 						);
 
@@ -190,14 +187,14 @@ namespace sys
 
 	std::vector< uint32_t > CompileShaderToSPIRV(
 			const std::string &shaderCodeOrPath, const std::string &shaderTypeOrExtension, const std::string &entryPoint = "main",
-			bool               isPath                                                                                    = false
+			const bool         isPath                                                                                    = false
 			)
 	{
 		std::string shaderType = shaderTypeOrExtension;
 		std::string shaderCode;
 		if ( isPath )
 		{
-			boost::filesystem::path p( shaderCodeOrPath );
+			const boost::filesystem::path p( shaderCodeOrPath );
 			shaderType = p . extension( ) . string( ) . substr( 1 ); // remove .
 
 			// Use boost::filesystem::ifstream instead
@@ -208,7 +205,7 @@ namespace sys
 				throw std::runtime_error( "Failed to load shader file: " + shaderCodeOrPath );
 			}
 
-			shaderCode = { ( std::istreambuf_iterator< char >( inFile ) ), std::istreambuf_iterator< char >( ) };
+			shaderCode = { std::istreambuf_iterator( inFile ), std::istreambuf_iterator< char >( ) };
 			inFile . close( );
 		} else shaderCode = shaderCodeOrPath;
 

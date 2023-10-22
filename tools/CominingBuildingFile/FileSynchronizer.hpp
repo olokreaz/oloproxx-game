@@ -8,7 +8,7 @@
 
 class CFileSynchronizer final : public efsw::FileWatchListener
 {
-	const std::shared_ptr< help::Config > m_pConfig;
+	std::shared_ptr< help::Config > m_pConfig;
 	std::shared_ptr< spdlog::logger >     m_logger = utils::create_logger( "CFileSynchronizer" );
 
 	bool                         validate( const fs::path &path ) const;

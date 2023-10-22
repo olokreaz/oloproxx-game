@@ -171,8 +171,6 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="modules\Core\core.Itype.ixx"/>
-        <ClCompile Include="modules\Core\core.handler.url.ixx"/>
         <ClCompile Include="modules\steam.ixx"/>
         <ClCompile Include="modules\system.ixx"/>
         <ClCompile Include="modules\types.ixx"/>

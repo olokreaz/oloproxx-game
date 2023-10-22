@@ -18,7 +18,7 @@ namespace steam
 	protected:
 		inline static auto _log = spdlog::stdout_color_mt( "steam" );
 
-		CSteamAppInterface( ) { atexit( []( ) { SteamAPI_Shutdown( ); } ); }
+		CSteamAppInterface( ) { atexit( [] { SteamAPI_Shutdown( ); } ); }
 
 	public:
 		static std::shared_ptr< CSteamAppInterface > instance( )
@@ -27,8 +27,9 @@ namespace steam
 			return s_pInstance;
 		}
 
-		void initialize( )
+		const void initialize( )
 		{
+			spdlog::debug( "" );
 			if ( !s_pInstance ) throw std::runtime_error( "CSteamAppInterface not initialized" );
 			if ( !m_bIsInitialize )
 			{
