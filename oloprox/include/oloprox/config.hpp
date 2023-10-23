@@ -1,0 +1,6 @@
+﻿#pragma once
+
+#define OLOPROX_VERSION "0.1.0"
+#define OLOPROX_VERSION_MAJOR 0
+#define OLOPROX_VERSION_MINOR 1
+#define OLOPROX_VERSION_PATCH 0

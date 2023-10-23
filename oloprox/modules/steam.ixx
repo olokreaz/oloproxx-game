@@ -27,17 +27,19 @@ namespace steam
 			return s_pInstance;
 		}
 
-		const void initialize( )
+		void initialize( ) const
 		{
-			spdlog::debug( "" );
-			if ( !s_pInstance ) throw std::runtime_error( "CSteamAppInterface not initialized" );
+			_log -> debug( "start proccess initialize" );
+			if ( !s_pInstance ) throw std::runtime_error( "not initialized" );
 			if ( !m_bIsInitialize )
-			{
-				if ( !SteamAPI_Init( ) ) throw std::runtime_error( "SteamAPI_Init failed" );
-				spdlog::info( "SteamAPI_Init success" );
-			} else spdlog::warn( "SteamAPI_Init already initialized" );
+				if ( !SteamAPI_Init( ) )
+				{
+					_log -> critical( "SteamAPI_Init failed" );
+					exit( 0x01 );
+				}
+			_log -> info( "successed initialize" );
 		}
 
-		~CSteamAppInterface( ) { SteamAPI_Shutdown( ); }
+		~CSteamAppInterface( ) const { SteamAPI_Shutdown( ); }
 	};
 }

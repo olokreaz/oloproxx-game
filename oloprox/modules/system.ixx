@@ -5,17 +5,19 @@
 
 #include <csignal>
 #include <fstream>
+#include <fstream>
+#include <stdexcept>
+#include <string>
 #include <vector>
+
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include <fstream>
-#include <stdexcept>
-#include <string>
-
+#include <iostream>
+#include <boost/filesystem.hpp>
 #include <boost/process.hpp>
-#include <boost/filesystem/string_file.hpp>
+#include <boost/iostreams/device/mapped_file.hpp>
 
 #include <glslang/Public/ShaderLang.h>
 
@@ -31,20 +33,26 @@ namespace fs = boost::filesystem;
 
 namespace sys
 {
-	EXPORT std::vector< uint8_t > readFile( const fs::path &path )
+	EXPORT std::vector< uint8 > readFile( const fs::path &path )
 	{
-		std::ifstream ifs( path . c_str( ), std::ios::ate | std::ios::binary );
+		boost::iostreams::mapped_file_source file;
+		file . open( path );
 
-		if ( !ifs . is_open( ) ) throw std::runtime_error( "failed to open " + path . string( ) );
+		if ( file . is_open( ) )
+		{
+			std::string ctx( file . data( ), file . size( ) );
+			file . close( );
 
-		const std::streamsize  fileSize = ifs . tellg( );
-		std::vector< uint8_t > buffer( fileSize );
+			std::vector< uint8 > result;
+			result . resize( file . size( ) );
+			result . assign( file . data( ), file . data( ) + file . size( ) );
 
-		ifs . seekg( 0 );
-		ifs . read( reinterpret_cast< char * >( buffer . data( ) ), fileSize );
-		ifs . close( );
+			spdlog::info( "Read file: {}", path . string( ) );
+			return result;
+		}
 
-		return buffer;
+		spdlog::warn( "Error opening file" );
+		throw std::underflow_error( "Error opening file" );
 	}
 
 	export enum class EWindowStatus
@@ -62,9 +70,9 @@ namespace sys
 		{
 			if ( !m_hConsole )
 			{
-				m_hConsole = ::GetConsoleWindow( );
+				m_hConsole = GetConsoleWindow( );
 				spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [thread %t] [---%^%l%$---] <%n>: %v" );
-				spdlog::set_default_logger( _log );
+				set_default_logger( _log );
 			}
 		}
 
@@ -84,7 +92,7 @@ namespace sys
 
 		static void setConsoleTitle( const std::string &tittle )
 		{
-			::SetConsoleTitleA( tittle . c_str( ) );
+			SetConsoleTitleA( tittle . c_str( ) );
 			spdlog::info( "Set Console Tittle: {}", tittle );
 		}
 
@@ -94,9 +102,9 @@ namespace sys
 			spdlog::info( "Set Log Level: {}", std::to_underlying< spdlog::level::level_enum >( level ) );
 		}
 
-		auto static setStatus( const EWindowStatus status, HWND hwnd = nullptr )
+		auto static setStatus( const EWindowStatus status, const HWND hwnd = nullptr )
 		{
-			const int  command = ( status == EWindowStatus::eShow ) ? SW_SHOW : SW_HIDE;
+			const int  command = status == EWindowStatus::eShow ? SW_SHOW : SW_HIDE;
 			const HWND window  = hwnd ? hwnd : m_hConsole;
 
 			ShowWindow( window, command );
@@ -133,8 +141,7 @@ namespace sys
 		process . wait( );
 
 		// Получаем код возврата
-		const int result = process . exit_code( );
-		if ( result != 0 )
+		if ( const int result = process . exit_code( ); result != 0 )
 		{
 			spdlog::error( "GLSL compilation failed" );
 			throw std::runtime_error( "GLSL compilation failed" );
@@ -168,8 +175,7 @@ namespace sys
 		process . wait( );
 
 		// Получить код возврата
-		const int result = process . exit_code( );
-		if ( result != 0 )
+		if ( const int result = process . exit_code( ); result != 0 )
 		{
 			spdlog::error( "Failed to compile HLSL shader" );
 			throw std::runtime_error( "Failed to compile HLSL shader" );
@@ -210,11 +216,8 @@ namespace sys
 		} else shaderCode = shaderCodeOrPath;
 
 		if ( shaderType == "glsl" ) return CompileGLSLToSPIRV( shaderCode );
-		else if ( shaderType == "hlsl" ) return CompileHLSLToSPIRV( shaderCode, entryPoint );
-		else
-		{
-			spdlog::error( "Unknown shader type: {}", shaderType );
-			throw std::runtime_error( "Unknown shader type: " + shaderType );
-		}
+		if ( shaderType == "hlsl" ) return CompileHLSLToSPIRV( shaderCode, entryPoint );
+		spdlog::error( "Unknown shader type: {}", shaderType );
+		throw std::runtime_error( "Unknown shader type: " + shaderType );
 	}
 }

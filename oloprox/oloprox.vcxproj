@@ -80,6 +80,7 @@
         <LinkIncremental>true</LinkIncremental>
         <OutDir>$(SolutionDir)\build\bin\</OutDir>
         <TargetName>oloprox - $(Configuration)</TargetName>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
@@ -175,6 +176,9 @@
         <ClCompile Include="modules\system.ixx"/>
         <ClCompile Include="modules\types.ixx"/>
         <ClCompile Include="src\main.cpp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ClInclude Include="include\oloprox\config.hpp"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
