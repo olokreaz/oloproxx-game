@@ -1,8 +1,10 @@
 ﻿#pragma once
-#include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include <cppfs/FileHandle.h>
+#include <cppfs/fs.h>
 
 #include <cryptopp/filters.h>
 #include <cryptopp/hex.h>
@@ -38,8 +40,18 @@ namespace utils
 		return hexDigest;
 	}
 
-	void copy_directory_to( fs::path &src, fs::path &path );
-	void copy_file_to( fs::path &src, fs::path &path );
-	void remove_file( fs::path &path );
-	void remove_directory( fs::path &path );
-}
+	namespace filesystem
+	{
+		void copy_to( const fs::path &src, const fs::path &dest )
+		{
+			auto hSrc  = cppfs::fs::open( src . string( ) );
+			auto hDest = cppfs::fs::open( dest . string( ) );
+			hSrc . isFile( ) ? hSrc . copy( hDest ) : hSrc . copyDirectoryRec( hDest );
+		}
+
+		void remove( const fs::path &path )
+		{
+			auto hSrc = cppfs::fs::open( path . string( ) );
+			hSrc . isFile( ) ? hSrc . remove( ) : hSrc . removeDirectoryRec( );
+		}
+	}}

@@ -21,9 +21,6 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 
-#include <glslang/Public/ShaderLang.h>
-
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
@@ -79,7 +76,9 @@ namespace sys
 			{
 				m_hConsole = GetConsoleWindow( );
 
-				auto logger = std::make_shared< spdlog::logger >( "global", std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 ) );
+				const auto logger = std::make_shared< spdlog::logger >(
+											"global", std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 )
+											);
 				register_logger( logger );
 				set_default_logger( logger );
 
@@ -224,10 +223,10 @@ namespace sys
 			try
 			{
 				// Маппинг файла в память
-				boost::iostreams::mapped_file_source mmap( p . string( ) );
+				const boost::iostreams::mapped_file_source mmap( p . string( ) );
 				// Копирование данных из мемори-маппед файла в std::string
 				shaderCode . assign( mmap . data( ), mmap . size( ) );
-			} catch ( boost::exception &e )
+			} catch ( ... )
 			{
 				spdlog::error( "Failed to load shader file: {}", shaderCodeOrPath );
 				exit( 1 );
@@ -243,6 +242,5 @@ namespace sys
 						spdlog::error( "Unknown shader type: {}", shaderType );
 						return { };
 					}( );
-		// сюда не должны попадать
 	}
 }

@@ -38,13 +38,17 @@ void CFileSynchronizer::_DedaultProcess( const fs::path &src, const fs::path &de
 	switch ( action )
 	{
 		case efsw::Action::Add:
+		case efsw::Action::Modified:
+		case efsw::Action::Moved:
 		{
-			is_directory( src ) ? utils::copy_file_to( src, dest ) : utils::copy_dirictory_to( src, dest );
+			utils::filesystem::copy_to( src, dest );
 			return;
 		}
-		case efsw::Action::Delete: { return; }
-		case efsw::Action::Modified: { return; }
-		case efsw::Action::Moved: { return; }
+		case efsw::Action::Delete:
+		{
+			utils::filesystem::remove( dest );
+			return;
+		}
 	}
 	std::unreachable( );
 }
