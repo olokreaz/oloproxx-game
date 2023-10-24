@@ -6,6 +6,7 @@
 #include <csignal>
 #include <fstream>
 #include <fstream>
+#include <iostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -14,13 +15,16 @@
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 
-#include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/process.hpp>
+#include <boost/filesystem/fstream.hpp>
+#include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 
 #include <glslang/Public/ShaderLang.h>
 
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <vulkan/vulkan.hpp>
@@ -28,6 +32,9 @@
 export module system;
 
 import types;
+
+using namespace fmt::literals;
+using namespace std::literals;
 
 namespace fs = boost::filesystem;
 
@@ -52,7 +59,7 @@ namespace sys
 		}
 
 		spdlog::warn( "Error opening file" );
-		throw std::underflow_error( "Error opening file" );
+		throw fs::filesystem_error( "Error opening file", path, std::error_code( ) );
 	}
 
 	export enum class EWindowStatus
@@ -71,13 +78,22 @@ namespace sys
 			if ( !m_hConsole )
 			{
 				m_hConsole = GetConsoleWindow( );
-				spdlog::set_pattern( "[%Y-%m-%d %H:%M:%S.%e] [thread %t] [---%^%l%$---] <%n>: %v" );
-				set_default_logger( _log );
+
+				auto logger = std::make_shared< spdlog::logger >( "global", std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 ) );
+				register_logger( logger );
+				set_default_logger( logger );
+
+				spdlog::flush_every( 1s );
+				spdlog::flush_on( spdlog::level::level_enum::warn );
+
+				spdlog::set_level( spdlog::level::trace );
+
+				spdlog::set_pattern( "[ %Y:%m:%d - %H:%M:%S:%F ] [ %l ] [ %t ] <%n> %v" );
 			}
 		}
 
 	protected:
-		inline static auto _log = spdlog::stdout_color_mt( "global" );
+		inline static std::shared_ptr< spdlog::logger > _log;
 
 	public:
 		static void regSignal( std::function< void( int32 ) > func )
@@ -123,7 +139,7 @@ namespace sys
 		inline static HWND          m_hConsole;
 	};
 
-	std::vector< uint32_t > CompileGLSLToSPIRV( const std::string &shaderCode )
+	std::vector< uint32 > CompileGLSLToSPIRV( const std::string &shaderCode )
 	{
 		// Создаём временный файл для исходного кода shader
 		const fs::path glslPath = fs::temp_directory_path( ) / fs::unique_path( );
@@ -157,7 +173,7 @@ namespace sys
 		return spirv;
 	}
 
-	std::vector< uint32_t > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" )
+	std::vector< uint32 > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" )
 	{
 		// Генерируем имена временных файлов
 		const fs::path hlslPath = fs::temp_directory_path( ) / fs::unique_path( );
@@ -167,11 +183,13 @@ namespace sys
 		std::ofstream( hlslPath . string( ) ) << shaderCode;
 
 		// Вызываем dxc для компиляции в SPIR-V
+
 		auto                  command = fmt::format( "dxc -T ps_6_0 -E {} -spirv {} -Fo {}", entryPoint, hlslPath . string( ), spvPath . string( ) );
 		boost::process::child process(
 						command,
 						boost::process::std_out > boost::process::null
 						);
+
 		process . wait( );
 
 		// Получить код возврата
@@ -191,33 +209,40 @@ namespace sys
 		return spirv;
 	}
 
-	std::vector< uint32_t > CompileShaderToSPIRV(
-			const std::string &shaderCodeOrPath, const std::string &shaderTypeOrExtension, const std::string &entryPoint = "main",
-			const bool         isPath                                                                                    = false
+	std::vector< uint32 > CompileShaderToSPIRV(
+			const std::string &shaderCodeOrPath, const std::string &shaderTypeOrExtension = "glsl",
+			const std::string &entryPoint                                                 = "main", const bool isPath = false
 			)
 	{
 		std::string shaderType = shaderTypeOrExtension;
 		std::string shaderCode;
+
 		if ( isPath )
 		{
 			const boost::filesystem::path p( shaderCodeOrPath );
-			shaderType = p . extension( ) . string( ) . substr( 1 ); // remove .
-
-			// Use boost::filesystem::ifstream instead
-			boost::filesystem::ifstream inFile( p, std::ios::in | std::ios::binary );
-			if ( !inFile )
+			shaderType = p . extension( ) . string( ) . substr( 1 ); // remove '.'
+			try
+			{
+				// Маппинг файла в память
+				boost::iostreams::mapped_file_source mmap( p . string( ) );
+				// Копирование данных из мемори-маппед файла в std::string
+				shaderCode . assign( mmap . data( ), mmap . size( ) );
+			} catch ( boost::exception &e )
 			{
 				spdlog::error( "Failed to load shader file: {}", shaderCodeOrPath );
-				throw std::runtime_error( "Failed to load shader file: " + shaderCodeOrPath );
+				exit( 1 );
 			}
-
-			shaderCode = { std::istreambuf_iterator( inFile ), std::istreambuf_iterator< char >( ) };
-			inFile . close( );
 		} else shaderCode = shaderCodeOrPath;
 
-		if ( shaderType == "glsl" ) return CompileGLSLToSPIRV( shaderCode );
-		if ( shaderType == "hlsl" ) return CompileHLSLToSPIRV( shaderCode, entryPoint );
-		spdlog::error( "Unknown shader type: {}", shaderType );
-		throw std::runtime_error( "Unknown shader type: " + shaderType );
+		return shaderType == "glsl"
+				? CompileGLSLToSPIRV( shaderCode )
+				: shaderType == "hlsl"
+					? CompileHLSLToSPIRV( shaderCode, entryPoint )
+					: [&shaderType]
+					{
+						spdlog::error( "Unknown shader type: {}", shaderType );
+						return { };
+					}( );
+		// сюда не должны попадать
 	}
 }

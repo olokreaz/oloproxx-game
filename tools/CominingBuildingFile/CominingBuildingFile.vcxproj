@@ -79,7 +79,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <LinkIncremental>true</LinkIncremental>
         <OutDir>$(SolutionDir)\build tools\</OutDir>
-        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\library\include</IncludePath>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
@@ -87,7 +87,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
         <OutDir>$(SolutionDir)\build tools\</OutDir>
-        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)\library\include</IncludePath>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <ClCompile>
@@ -177,9 +177,9 @@
         <Content Include="config.local"/>
     </ItemGroup>
     <ItemGroup>
-        <ClInclude Include="Configer.hpp"/>
-        <ClInclude Include="FileSynchronizer.hpp"/>
-        <ClInclude Include="utils.hpp"/>
+        <ClInclude Include="include\cmt\Configer.hpp"/>
+        <ClInclude Include="include\cmt\FileSynchronizer.hpp"/>
+        <ClInclude Include="include\cmt\utils.hpp"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

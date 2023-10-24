@@ -18,8 +18,8 @@
 
 #include <efsw/efsw.hpp>
 
-#include "Configer.hpp"
-#include "FileSynchronizer.hpp"
+#include <cmt/Configer.hpp>
+#include <cmt/FileSynchronizer.hpp>
 
 namespace fs = std::filesystem;
 
@@ -35,23 +35,16 @@ int wmain( int, wchar_t ** )
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
 
-	std::shared_ptr< help::Config > config = std::make_shared< help::Config >( );
+	std::shared_ptr< help::CConfig > config = std::make_shared< help::CConfig >( );
 
 	config -> load( L"config.local" );
 
-	auto file_sink = std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 );
-
-	auto logger = std::make_shared< spdlog::logger >( "global", file_sink );
-
-	spdlog::register_logger( logger );
-
-	spdlog::set_default_logger( logger );
-
+	auto logger = std::make_shared< spdlog::logger >( "global", std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 ) );
+	register_logger( logger );
+	set_default_logger( logger );
 	spdlog::flush_every( 1s );
 	spdlog::flush_on( spdlog::level::level_enum::warn );
-
 	spdlog::set_level( spdlog::level::trace );
-
 	spdlog::set_pattern( "[ %Y:%m:%d - %H:%M:%S:%F ] [ %l ] [ %t ] <%n> %v" );
 
 	efsw::FileWatcher watcher;

@@ -18,6 +18,12 @@
             <Platform>x64</Platform>
         </ProjectConfiguration>
     </ItemGroup>
+    <ItemGroup>
+        <ClCompile Include="main.cpp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="include\discord-bot\"/>
+    </ItemGroup>
     <PropertyGroup Label="Globals">
         <VCProjectVersion>15.0</VCProjectVersion>
         <ProjectGuid>{6E21AFF5-4271-4561-8910-5FFD6C2C9167}</ProjectGuid>
@@ -80,6 +86,7 @@
         <LinkIncremental>true</LinkIncremental>
         <OutDir>$(SolutionDir)\build\bin\</OutDir>
         <TargetName>oloprox - $(ProjectName) - $(Configuration)</TargetName>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
@@ -88,6 +95,7 @@
         <LinkIncremental>false</LinkIncremental>
         <OutDir>$(SolutionDir)\build\bin\</OutDir>
         <TargetName>oloprox - $(ProjectName) - $(Configuration)</TargetName>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <ClCompile>
@@ -169,9 +177,6 @@
             <GenerateDebugInformation>true</GenerateDebugInformation>
         </Link>
     </ItemDefinitionGroup>
-    <ItemGroup>
-        <ClCompile Include="discord_bot.cpp"/>
-    </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
     </ImportGroup>
