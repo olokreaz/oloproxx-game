@@ -6,14 +6,18 @@ destination = "C:\\Program Files\\oloprox"
 
 paths = (
 	{
+		pattern = "/bin/*";
+		destination = "/";
+	},
+	{
 		pattern = "**/shader/*.spv";
 		destination = "/shader";
 	},
 	{
 		pattern = "**/packs/*";
 		destination = "/data/packs";
+	},
 
-	}
 );
 
 ignore = ( ".*\\.pdb" );

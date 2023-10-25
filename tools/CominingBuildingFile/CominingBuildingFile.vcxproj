@@ -177,6 +177,7 @@
         <Content Include="config.local"/>
     </ItemGroup>
     <ItemGroup>
+        <ClInclude Include="include\cmt\config.hpp"/>
         <ClInclude Include="include\cmt\Configer.hpp"/>
         <ClInclude Include="include\cmt\FileSynchronizer.hpp"/>
         <ClInclude Include="include\cmt\utils.hpp"/>

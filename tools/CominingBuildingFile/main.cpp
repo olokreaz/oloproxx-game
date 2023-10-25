@@ -2,15 +2,9 @@
 #include <csignal>
 #include <filesystem>
 
-#include <ranges>
-#include <unordered_map>
-#include <vector>
-
 #include <fmt/chrono.h>
-#include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <fmt/xchar.h>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
@@ -30,22 +24,34 @@ void ExitHandler( int ) { std::this_thread::sleep_for( 2s ); }
 
 bool g_bQuit = false;
 
+auto operator""arch( const char *str, uint64 len ) {}
+
 int wmain( int, wchar_t ** )
 {
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
 
+	spdlog::set_automatic_registration( true );
+	spdlog::set_level( spdlog::level::trace );
+	spdlog::flush_on( spdlog::level::warn );
+	spdlog::flush_every( 1s );
+	spdlog::set_pattern( APP_LOGGER_PATTERN );
+
 	std::shared_ptr< help::CConfig > config = std::make_shared< help::CConfig >( );
 
-	config -> load( L"config.local" );
+	config -> load( "config.local" );
 
-	auto logger = std::make_shared< spdlog::logger >( "global", std::make_shared< spdlog::sinks::daily_file_sink_mt >( "logs/log.txt", 0, 0 ) );
-	register_logger( logger );
+	spdlog::trace( "Start setup settings logger" );
+
+	auto logger = utils::create_logger( "global" );
+
+	spdlog::trace( "set new default logger {}", logger -> name( ) );
+
 	set_default_logger( logger );
-	spdlog::flush_every( 1s );
-	spdlog::flush_on( spdlog::level::level_enum::warn );
-	spdlog::set_level( spdlog::level::trace );
-	spdlog::set_pattern( "[ %Y:%m:%d - %H:%M:%S:%F ] [ %l ] [ %t ] <%n> %v" );
+
+	spdlog::trace( "finished setted new default logger" );
+
+	spdlog::info( "Strart Work Application" );
 
 	efsw::FileWatcher watcher;
 	CFileSynchronizer synchronizer( config );

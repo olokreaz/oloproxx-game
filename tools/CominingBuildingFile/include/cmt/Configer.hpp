@@ -6,7 +6,7 @@
 #include <boost/functional/hash.hpp>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-import types;
+#include <steam/steamtypes.h>
 
 namespace lc = libconfig;
 
@@ -38,6 +38,7 @@ namespace help
 		}
 
 	private:
+		uint64     m_hash;
 		lc::Config m_config;
 		fs::path   m_config_path;
 	};

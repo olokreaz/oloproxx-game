@@ -22,35 +22,17 @@ bool CFileSynchronizer::validate( const fs::path &path ) const
 
 std::optional< std::string > CFileSynchronizer::checkForSpecialPath( const fs::path &path ) const
 {
-	for ( const auto &pattern : m_pConfig -> special | std::views::keys ) if ( glob::fnmatch( path, pattern ) ) return pattern;
-	return std::nullopt;
-}
+	for ( const auto &key : m_pConfig -> special | std::views::keys )
+		if (
+			glob::fnmatch(
+					path, fs::path( key ) . is_relative( )
+							? ( m_pConfig -> source / key ) . string( )
+							: key
+					)
+		)
+			return key;
 
-void CFileSynchronizer::_SpecificProcess( const fs::path &src, const fs::path &dest, const efsw::Action &action )
-{
-	/* TODO */
-}
-
-void CFileSynchronizer::_DedaultProcess( const fs::path &src, const fs::path &dest, const efsw::Action &action )
-{
-	std::error_code ec;
-
-	switch ( action )
-	{
-		case efsw::Action::Add:
-		case efsw::Action::Modified:
-		case efsw::Action::Moved:
-		{
-			utils::filesystem::copy_to( src, dest );
-			return;
-		}
-		case efsw::Action::Delete:
-		{
-			utils::filesystem::remove( dest );
-			return;
-		}
-	}
-	std::unreachable( );
+	return { };
 }
 
 void CFileSynchronizer::handleFileAction( efsw::WatchID watchid, const std::string &dir, const std::string &filename, efsw::Action action, std::string oldFilename )
@@ -59,16 +41,31 @@ void CFileSynchronizer::handleFileAction( efsw::WatchID watchid, const std::stri
 
 	std::string sAction = "неизвестное действие";
 
+	fmt::println( "call {}", __FUNCTION__ );
+
 	if ( !validate( path ) ) return;
+	const std::optional< std::string > pattern = checkForSpecialPath( path );
 
 	const auto relative = fs::relative( path, m_pConfig -> source );
 	const auto source   = m_pConfig -> source / relative;
-	auto       dest     = m_pConfig -> destination / relative;
+	const auto dest     = m_pConfig -> destination / ( pattern ? m_pConfig -> special[ *pattern ] : relative );
 
-	const std::optional< std::string > pattern = checkForSpecialPath( path );
+	this -> m_logger -> debug( "{} {}", fmt::underlying( action ), path );
 
-	if ( pattern ) dest = m_pConfig -> destination / m_pConfig -> special[ *pattern ];
-	const bool bIsSpecific = ( bool ) pattern;
-
-	bIsSpecific ? this -> _SpecificProcess( source, dest, action ) : this -> _DedaultProcess( source, dest, action );
+	switch ( action )
+	{
+		case efsw::Action::Add:
+		case efsw::Action::Modified:
+		case efsw::Action::Moved:
+		{
+			utils::ufs::copy_to( path, dest );
+			return;
+		}
+		case efsw::Action::Delete:
+		{
+			utils::ufs::remove( dest );
+			return;
+		}
+	}
+	std::unreachable( );
 }

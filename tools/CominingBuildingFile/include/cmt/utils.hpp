@@ -11,14 +11,33 @@
 #include <cryptopp/sha.h>
 
 #include <spdlog/spdlog.h>
+#include <spdlog/sinks/daily_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+#include <cmt/config.hpp>
 
 namespace utils
 {
 	namespace fs = std::filesystem;
 
-	inline std::shared_ptr< spdlog::logger > create_logger( std::string_view name )
+	inline std::shared_ptr< spdlog::logger > create_logger( std::string name )
 	{
-		return std::make_shared< spdlog::logger >( name . data( ), spdlog::default_logger( ) -> sinks( ) . begin( ), spdlog::default_logger( ) -> sinks( ) . end( ) );
+		using namespace std::chrono_literals;
+		static auto siDialy  = std::make_shared< spdlog::sinks::daily_file_sink_mt >( ( fs::current_path( ) / APP_LOG_DIR / "log.txt" ) . string( ), 0, 0 );
+		static auto siStdout = std::make_shared< spdlog::sinks::stdout_color_sink_mt >( );
+
+		auto logger = std::make_shared< spdlog::logger >( name );
+
+		logger -> sinks( ) . clear( );
+		logger -> sinks( ) . push_back( siStdout );
+		logger -> sinks( ) . push_back( siDialy );
+
+		logger -> flush_on( spdlog::level::warn );
+		logger -> set_pattern( APP_LOGGER_PATTERN );
+
+		logger -> trace( "logger created" );
+
+		return logger;
 	}
 
 	inline std::string calculateSha256( const fs::path &filePath )
@@ -40,18 +59,20 @@ namespace utils
 		return hexDigest;
 	}
 
-	namespace filesystem
+	namespace ufs
 	{
-		void copy_to( const fs::path &src, const fs::path &dest )
+		static void copy_to( const fs::path &src, const fs::path &dest )
 		{
 			auto hSrc  = cppfs::fs::open( src . string( ) );
 			auto hDest = cppfs::fs::open( dest . string( ) );
-			hSrc . isFile( ) ? hSrc . copy( hDest ) : hSrc . copyDirectoryRec( hDest );
+			if ( hSrc . isFile( ) ) hSrc . copy( hDest );
+			else hSrc . copyDirectoryRec( hDest );
 		}
 
-		void remove( const fs::path &path )
+		static void remove( const fs::path &path )
 		{
 			auto hSrc = cppfs::fs::open( path . string( ) );
-			hSrc . isFile( ) ? hSrc . remove( ) : hSrc . removeDirectoryRec( );
+			if ( hSrc . isFile( ) ) hSrc . remove( );
+			else hSrc . removeDirectoryRec( );
 		}
 	}}

@@ -29,14 +29,10 @@ g
 7tools/CominingBuildingFile/CominingBuildingFile.vcxproj,8\9\89ace2b1e29eb430f310bddb3963649642f1c98e
 W
 'tools/CominingBuildingFile/config.local,2\f\2f55a72b6d7b650728c5310102bb90db13f83e3f
-T
-$tools/CominingBuildingFile/utils.hpp,4\f\4f1e55c9096e3a4203cc14ccdec2030ede3d4617
 W
 'tools/CominingBuildingFile/Configer.cpp,1\d\1d6242b24fa04a0e2067d55cf8cd274308f0fa50
 W
 'tools/CominingBuildingFile/Configer.hpp,e\1\e1f47e1935abb29dab803f9cd417010c4ed284d5
-_
-/tools/CominingBuildingFile/FileSynchronizer.hpp,f\4\f404f18a1e6bb0d49ef6ec502877438129b7f2ad
 _
 /tools/CominingBuildingFile/FileSynchronizer.cpp,3\9\39605e006057ed3f8a0b110a12bc1e1b7727a510
 G
@@ -51,3 +47,13 @@ R
 "oloprox/modules/oloprox/system.ixx,b\c\bcd85fff2c670571be4cc11027527d0299955c89
 D
 discord-bot/main.cpp,3\5\35613d3d89f42df525f917d8cd224dd24fc680f8
+O
+discord-bot/discord-bot.vcxproj,8\1\81ccebb60f25f175c911975a636f3986b68edcb4
+c
+3tools/CominingBuildingFile/include/cmt/Configer.hpp,7\5\75f687f1b5fc3d291e5012774a39c23323ffe33b
+k
+;tools/CominingBuildingFile/include/cmt/FileSynchronizer.hpp,b\f\bf83feff65e3a897c174bc2ec1792b4e49157b5b
+`
+0tools/CominingBuildingFile/include/cmt/utils.hpp,0\e\0eac56c3054ec01a581fb9312623dc0357bf8a80
+a
+1tools/CominingBuildingFile/include/cmt/config.hpp,5\8\5848bec6161bd6d410beaf0bf76b6fb932c52849
