@@ -28,8 +28,6 @@ S
 g
 7tools/CominingBuildingFile/CominingBuildingFile.vcxproj,8\9\89ace2b1e29eb430f310bddb3963649642f1c98e
 W
-'tools/CominingBuildingFile/config.local,2\f\2f55a72b6d7b650728c5310102bb90db13f83e3f
-W
 'tools/CominingBuildingFile/Configer.cpp,1\d\1d6242b24fa04a0e2067d55cf8cd274308f0fa50
 W
 'tools/CominingBuildingFile/Configer.hpp,e\1\e1f47e1935abb29dab803f9cd417010c4ed284d5
@@ -55,5 +53,7 @@ k
 ;tools/CominingBuildingFile/include/cmt/FileSynchronizer.hpp,b\f\bf83feff65e3a897c174bc2ec1792b4e49157b5b
 `
 0tools/CominingBuildingFile/include/cmt/utils.hpp,0\e\0eac56c3054ec01a581fb9312623dc0357bf8a80
-a
-1tools/CominingBuildingFile/include/cmt/config.hpp,5\8\5848bec6161bd6d410beaf0bf76b6fb932c52849
+H
+build tools/config.local,4\1\41ab14fb1fe5d6a745d24b3dd96814fc41b147a8
+j
+:tools/CominingBuildingFile/module/app.commiting.config.ixx,d\2\d269ead3bb91c193691f2dc79aaaf764c4f46ff4

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <fstream>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -14,49 +15,46 @@
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#include <cmt/config.hpp>
+import app.commiting.config;
 
 namespace utils
 {
 	namespace fs = std::filesystem;
 
 	/** @brief Создает и настраивает логгер с указанным именем.
-  * Логгер записывает логи одновременно в файл каждый день и в stdout.
-  * Также при создании логгера добавляется trace сообщение.
-  *
-  * @param name Имя создаваемого логгера.
-  * @return Разделяемый указатель на созданный логгер.
-  */
+	* Логгер записывает логи одновременно в файл каждый день и в stdout.
+	* Также при создании логгера добавляется trace сообщение.
+	*
+	* @param name Имя создаваемого логгера.
+	* @return Разделяемый указатель на созданный логгер.
+	*/
 	inline std::shared_ptr< spdlog::logger > create_logger( std::string name )
 	{
 		using namespace std::chrono_literals;
 
-		// Создаём daily file sink
-		static auto siDialy = std::make_shared< spdlog::sinks::daily_file_sink_mt >( ( fs::current_path( ) / APP_LOG_DIR / "log.txt" ) . string( ), 0, 0 );
-		// Создаём stdout color sink
+		static auto siDialy  = std::make_shared< spdlog::sinks::daily_file_sink_mt >( ( fs::current_path( ) / config::kLogs_dir / "log.txt" ) . string( ), 0, 0 );
 		static auto siStdout = std::make_shared< spdlog::sinks::stdout_color_sink_mt >( );
+		static bool bInit    = false;
 
-		// Создаем нового логгера с полученным именем
+		if ( !bInit )
+		{
+			siStdout -> set_color( spdlog::level::trace, FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE );
+			bInit = true;
+		}
+
 		auto logger = std::make_shared< spdlog::logger >( name );
 
-		// Очищаем sinks логгера
 		logger -> sinks( ) . clear( );
-		// Добавляем stdout и daily file sinks в логгер
+
 		logger -> sinks( ) . push_back( siStdout );
 		logger -> sinks( ) . push_back( siDialy );
 
-		// Устанавливаем уровень сообщений, при котором произойдет автоматическое сброса буфера
 		logger -> flush_on( spdlog::level::warn );
-
-		// Устанавливаем паттерн для форматирования сообщений логгера
-		logger -> set_pattern( APP_LOGGER_PATTERN );
-
+		logger -> set_pattern( config::kLogger_pattern );
 		logger -> set_level( spdlog::get_level( ) );
 
-		// Логгер сообщает о своем создании
 		logger -> trace( "logger created" );
 
-		// Возвращаем созданный логгер
 		return logger;
 	}
 
@@ -81,7 +79,7 @@ namespace utils
 
 	namespace ufs
 	{
-		static void create_dirs( std::unordered_map< std::string, std::string > &vPath )
+		static void create_dirs( help::CConfig::specials_t &vPath )
 		{
 			for ( auto &p : vPath | std::ranges::views::values ) if ( !fs::exists( p ) ) fs::create_directories( p );
 		}
@@ -90,6 +88,9 @@ namespace utils
 		{
 			auto hSrc  = cppfs::fs::open( src . string( ) );
 			auto hDest = cppfs::fs::open( dest . string( ) );
+
+			if ( !hDest . exists( ) ) hDest . createDirectory( );
+
 			if ( hSrc . isFile( ) ) hSrc . copy( hDest );
 			else hSrc . copyDirectoryRec( hDest );
 		}

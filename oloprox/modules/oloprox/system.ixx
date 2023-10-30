@@ -56,7 +56,7 @@ namespace sys
 		}
 
 		spdlog::warn( "Error opening file" );
-		throw fs::filesystem_error( "Error opening file", path, std::error_code( ) );
+		throw fs::filesystem_error( "Error opening file", path . string( ), std::error_code( ) );
 	}
 
 	export enum class EWindowStatus

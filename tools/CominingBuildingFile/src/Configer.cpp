@@ -1,22 +1,28 @@
-﻿#include <cmt/Configer.hpp>
+﻿#include <app/Configer.hpp>
 
 #include <filesystem>
 #include <fstream>
 #include <vector>
 
 #include <libconfig.h++>
+
+#include <sago/platform_folders.h>
+
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 namespace fs = std::filesystem;
 namespace lc = libconfig;
 
+import app.commiting.config;
+
 void help::CConfig::load( fs::path path )
 {
-	this -> m_config_path = path;
+	this -> m_config_path = config::kAppdata / path;
 
 	try
 	{
-		m_config . readFile( path . string( ) );
+		m_config . readFile( this -> m_config_path . string( ) );
 
 		const lc::Setting &root = m_config . getRoot( );
 
@@ -37,7 +43,21 @@ void help::CConfig::load( fs::path path )
 
 		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
 		for ( int i = 0; i < root[ "ignore" ] . getLength( ); ++i ) this -> ignore . push_back( root[ "ignore" ][ i ] );
-	} catch ( const lc::ParseException &e ) { spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) ); }
+	} catch ( const lc::ParseException &e )
+	{
+		spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) );
+		abort( );
+	}
+	catch ( const lc::FileIOException &e )
+	{
+		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
+		abort( );
+	}
+	catch ( const std::exception &e )
+	{
+		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
+		abort( );
+	}
 
 	m_hash = hash_value( *this );
 }

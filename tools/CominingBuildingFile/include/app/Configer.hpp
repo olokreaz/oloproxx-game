@@ -18,13 +18,23 @@ namespace help
 
 	struct CConfig
 	{
-		fs::path                                       source;
-		fs::path                                       destination;
-		std::unordered_map< std::string, std::string > special;
-		std::vector< std::string >                     ignore;
+		/**
+		 * \brief
+		 * \param key pattern
+		 * \param value destination
+		 */
+		using specials_t = std::unordered_map< std::string, std::string >;
+		using ignores_t = std::vector< std::string >;
+		fs::path   source;
+		fs::path   destination;
+		specials_t special;
+		ignores_t  ignore;
 
+		/** \details относительно папки нахождения exe */
 		void load( fs::path path );
+		/** \details относительно папки нахождения exe */
 		void save( fs::path path );
+		/** \details относительно папки нахождения exe */
 		void save( ) { this -> save( this -> m_config_path ); }
 
 		friend uint64 hash_value( const CConfig &obj )
