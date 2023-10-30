@@ -28,7 +28,7 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 
 	const std::shared_ptr< help::CConfig > m_pConfig;
 
-	std::optional< std::string > try_take_specific_path( fs::path &path )
+	std::optional< std::string > try_take_specific_path( fs::path path )
 	{
 		for ( const auto &[ pattern, dest ] : m_pConfig -> special ) if ( glob::fnmatch( path, pattern ) ) return dest;
 		return std::nullopt;
@@ -38,6 +38,8 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 	{
 		return std::ranges::none_of( m_pConfig -> ignore, [&path] ( const std::string &pattern ) { return glob::fnmatch( path, pattern ); } );
 	}
+
+	fs::path dest_context;
 
 public:
 	CSyncBinaryWatcher( std::shared_ptr< help::CConfig > pCfg ) : m_pConfig { std::move( pCfg ) } {}
