@@ -1,13 +1,12 @@
 ﻿## oloporx
 
 
-...
-
-
-
-## Special Thanks
-
-to [JetBrains](https://www.jetbrains.com/?from=protopuf) for
-its [Open Source License](https://www.jetbrains.com/community/opensource/?from=protopuf) of All Products Pack
-
-![JetBrains Logo](https://www.jetbrains.com/company/brand/img/jetbrains_logo.png)
+# ERROR CODEs
+### all error codes start with `0xff`
+- app 
+  - init | **_0xff000_**
+  - steam | **start with `0xffa`**
+    - steam_init | **_0xffa00_**
+  - RenderEngine | **start with `0xffb`**
+    - shader | **_0xffb01_**
+    - compile_shader | **_0xffb02_**

@@ -12,10 +12,14 @@
 
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 #include <fmt/std.h>
+#include <fmt/xchar.h>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
+
+#include <magic_enum_all.hpp>
 
 #include <app/SyncBinaryWatcher.hpp>
 
@@ -61,8 +65,8 @@ int wmain( int, wchar_t ** )
 
 	spdlog::info( "Strart Application" );
 
-	spdlog::info( "Source: {}", pConfig -> source );
-	spdlog::info( "Destination: {}", pConfig -> destination );
+	spdlog::debug( "Source: {}", pConfig -> source );
+	spdlog::debug( "Destination: {}", pConfig -> destination );
 
 	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Special: {} -> {}", pair . first, pair . second );
 

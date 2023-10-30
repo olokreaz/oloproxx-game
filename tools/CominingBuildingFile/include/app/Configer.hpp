@@ -23,12 +23,10 @@ namespace help
 		 * \param key pattern
 		 * \param value destination
 		 */
-		using specials_t = std::unordered_map< std::string, std::string >;
-		using ignores_t = std::vector< std::string >;
-		fs::path   source;
-		fs::path   destination;
-		specials_t special;
-		ignores_t  ignore;
+		fs::path                                       source;
+		fs::path                                       destination;
+		std::unordered_map< std::string, std::string > special;
+		std::vector< std::string >                     ignore;
 
 		/** \details относительно папки нахождения exe */
 		void load( fs::path path );

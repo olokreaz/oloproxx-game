@@ -39,12 +39,14 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 		return std::ranges::none_of( m_pConfig -> ignore, [&path] ( const std::string &pattern ) { return glob::fnmatch( path, pattern ); } );
 	}
 
-	fs::path dest_context;
+	const fs::path& context( ) const;
+	fs::path        dest_context;
 
 public:
 	CSyncBinaryWatcher( std::shared_ptr< help::CConfig > pCfg ) : m_pConfig { std::move( pCfg ) } {}
 
 protected:
+	void update( cppfs::FileHandle &fh );
 	void onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent event ) override;
 	void onFileCreated( cppfs::FileHandle &fh ) override;
 	void onFileRemoved( cppfs::FileHandle &fh ) override;

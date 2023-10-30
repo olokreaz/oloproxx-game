@@ -79,18 +79,14 @@ namespace utils
 
 	namespace ufs
 	{
-		static void create_dirs( help::CConfig::specials_t &vPath )
-		{
-			for ( auto &p : vPath | std::ranges::views::values ) if ( !fs::exists( p ) ) fs::create_directories( p );
-		}
+		static void create_dirs( std::vector< std::string > &vPath ) { for ( auto &p : vPath ) if ( !fs::exists( p ) ) fs::create_directories( p ); }
 
 		static void copy_to( const fs::path &src, const fs::path &dest )
 		{
 			auto hSrc  = cppfs::fs::open( src . string( ) );
 			auto hDest = cppfs::fs::open( dest . string( ) );
 
-			if ( !hDest . exists( ) ) hDest . createDirectory( );
-
+			if ( !hDest . exists( ) && hDest . isDirectory( ) ) hDest . createDirectory( );
 			if ( hSrc . isFile( ) ) hSrc . copy( hDest );
 			else hSrc . copyDirectoryRec( hDest );
 		}
@@ -98,7 +94,7 @@ namespace utils
 		static void remove( const fs::path &path )
 		{
 			auto hSrc = cppfs::fs::open( path . string( ) );
-			if ( hSrc . isFile( ) ) hSrc . remove( );
-			else hSrc . removeDirectoryRec( );
+			if ( hSrc . isFile( ) && hSrc . exists( ) ) hSrc . remove( );
+			else if ( hSrc . isDirectory( ) && hSrc . exists( ) ) hSrc . removeDirectoryRec( );
 		}
 	}}

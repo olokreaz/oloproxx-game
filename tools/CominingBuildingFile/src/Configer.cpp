@@ -6,8 +6,6 @@
 
 #include <libconfig.h++>
 
-#include <sago/platform_folders.h>
-
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
