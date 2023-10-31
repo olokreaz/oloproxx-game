@@ -81,7 +81,7 @@ namespace utils
 	{
 		static void create_dirs( std::vector< std::string > &vPath ) { for ( auto &p : vPath ) if ( !fs::exists( p ) ) fs::create_directories( p ); }
 
-		static void copy_to( const fs::path &src, const fs::path &dest )
+		static void copy_to( const fs::path src, const fs::path dest )
 		{
 			auto hSrc  = cppfs::fs::open( src . string( ) );
 			auto hDest = cppfs::fs::open( dest . string( ) );

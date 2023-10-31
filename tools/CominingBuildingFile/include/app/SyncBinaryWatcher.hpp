@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <ranges>
 
+#include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
 #include <glob/glob.hpp>

@@ -1,5 +1,6 @@
-﻿#include <magic_enum_all.hpp>
-#include <app/SyncBinaryWatcher.hpp>
+﻿#include <app/SyncBinaryWatcher.hpp>
+
+#include <magic_enum_all.hpp>
 
 const fs::path& CSyncBinaryWatcher::context( ) const { return dest_context; }
 
@@ -33,17 +34,18 @@ void CSyncBinaryWatcher::onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent ev
 
 void CSyncBinaryWatcher::onFileCreated( cppfs::FileHandle &fh )
 {
-	m_logger -> debug( "onFileCreated: {}", fh . path( ) );
+	m_logger -> debug( "onFileCreated"" {}", fh . path( ) );
 	const auto dest = context( );
-	utils::ufs::copy_to( fs::path( fh . path( ) ), dest );
+	utils::ufs::copy_to( fh . path( ), dest );
+	m_logger -> info( "File Coppied {}", dest );
 }
 
 void CSyncBinaryWatcher::onFileRemoved( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileRemoved: {}", fh . path( ) );
-	const auto dest  = context( );
+	const auto dest = context( );
 	utils::ufs::remove( dest );
-	spdlog::info( "Removed {}", dest );
+	m_logger -> info( "Removed {}", dest );
 }
 
 void CSyncBinaryWatcher::onFileModified( cppfs::FileHandle &fh )
@@ -51,10 +53,14 @@ void CSyncBinaryWatcher::onFileModified( cppfs::FileHandle &fh )
 	m_logger -> debug( "onFileModified: {}", fh . path( ) );
 	const auto dest  = context( );
 	auto       hDest = cppfs::fs::open( dest . string( ) );
+	utils::ufs::copy_to( fh . path( ), dest );
+	m_logger -> info( "File Coppied {}", dest );
 }
 
 void CSyncBinaryWatcher::onFileAttrChanged( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileAttrChanged: {}", fh . path( ) );
 	const auto dest = context( );
+	utils::ufs::copy_to( fh . path( ), dest );
+	m_logger -> info( "File Coppied {}", dest );
 }
