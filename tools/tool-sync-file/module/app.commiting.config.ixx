@@ -4,6 +4,9 @@
 
 #include <sago/platform_folders.h>
 
+#define INIT( name, value ) constexpr auto k##name = value;
+#define INITC( name, value) const auto k##name = value;
+
 export module app.commiting.config;
 
 namespace fs = std::filesystem;

@@ -19,7 +19,7 @@
 #include <cppfs/FunctionalFileEventHandler.h>
 #include <cppfs/FunctionalFileVisitor.h>
 #include <cppfs/Tree.h>
-#include <cppfs/fs.h>
+
 
 namespace fs = std::filesystem;
 

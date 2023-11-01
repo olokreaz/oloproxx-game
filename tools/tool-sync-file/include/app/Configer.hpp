@@ -50,6 +50,4 @@ namespace help
 		lc::Config m_config;
 		fs::path   m_config_path;
 	};
-
-	std::string calculateSha256( const std::filesystem::path &filePath );
 }

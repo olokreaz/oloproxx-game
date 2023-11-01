@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CominingBuildingFile.cpp">
+    <ClCompile Include="tool_sync_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

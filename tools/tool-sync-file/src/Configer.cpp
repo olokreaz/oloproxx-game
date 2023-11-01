@@ -9,9 +9,6 @@
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
-namespace fs = std::filesystem;
-namespace lc = libconfig;
-
 import app.commiting.config;
 
 void help::CConfig::load( fs::path path )
@@ -56,7 +53,6 @@ void help::CConfig::load( fs::path path )
 		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
 		abort( );
 	}
-
 	m_hash = hash_value( *this );
 }
 

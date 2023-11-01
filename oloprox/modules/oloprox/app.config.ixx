@@ -7,7 +7,7 @@
 
 export module config;
 
-#define INIT( name, value ) consteval auto k##name = value;
+#define INIT( name, value ) constexpr auto k##name = value;
 #define INITC( name, value) const auto k##name = value;
 
 namespace config
