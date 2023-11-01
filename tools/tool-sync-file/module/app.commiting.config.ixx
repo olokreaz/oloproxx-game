@@ -18,5 +18,5 @@ export namespace config
 	constexpr auto kGlobal_logger_name = "global";
 	constexpr auto kLogger_pattern     = "[ %Y:%m:%d - %H:%M:%S:%F ] [ pid %P ] [ thread %t ] [ %^==== %l ====%$ ] <%n> %v";
 	constexpr auto kConfig_file_name   = "config.local";
-	const fs::path kAppdata            = std::filesystem::path( sago::getDataHome( ) ) / "oloprox" / "commingFileSychronizer";
+	const fs::path kAppdata            = std::filesystem::path( sago::getDataHome( ) ) / "oloprox" / "tools-sync";
 }

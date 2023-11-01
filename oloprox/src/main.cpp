@@ -17,7 +17,5 @@ int wmain( int, wchar_t ** )
 	sys::Console::setLogLevel( spdlog::level::trace );
 	sys::Console::setConsoleTitle( "oloprox - louncher" );
 
-	// WHILE { }
-
 	return 0;
 }

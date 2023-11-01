@@ -18,15 +18,23 @@ namespace help
 
 	struct CConfig
 	{
+		class CSpecial
+		{
+		public:
+			std::string           pattern;
+			std::string           destination;
+			std::optional< bool > bRelease = std::nullopt;
+		};
 		/**
 		 * \brief
 		 * \param key pattern
 		 * \param value destination
 		 */
-		fs::path                                       source;
-		fs::path                                       destination;
-		std::unordered_map< std::string, std::string > special;
-		std::vector< std::string >                     ignore;
+		std::unordered_map< std::string, CSpecial > special;
+
+		fs::path                   source;
+		fs::path                   destination;
+		std::vector< std::string > ignore;
 
 		/** \details относительно папки нахождения exe */
 		void load( fs::path path );

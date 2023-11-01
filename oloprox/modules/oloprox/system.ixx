@@ -240,7 +240,7 @@ namespace sys
 					: [&shaderType]
 					{
 						spdlog::error( "Unknown shader type: {}", shaderType );
-						return { };
+						return std::vector< uint32 >( );
 					}( );
 	}
 }

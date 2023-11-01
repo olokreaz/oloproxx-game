@@ -40,6 +40,6 @@ namespace steam
 			_log -> info( "successed initialize" );
 		}
 
-		~CSteamAppInterface( ) const { SteamAPI_Shutdown( ); }
+		~CSteamAppInterface( ) { SteamAPI_Shutdown( ); }
 	};
 }

@@ -33,7 +33,11 @@ void help::CConfig::load( fs::path path )
 		for ( int i = 0; i < root[ "paths" ] . getLength( ); ++i )
 		{
 			const auto &pair = root[ "paths" ][ i ];
-			this -> special . insert( { pair[ "pattern" ], pair[ "destination" ] } );
+			CSpecial    obj;
+			obj . pattern     =  std::string ( pair[ "pattern" ]);
+			obj . destination = std::string  (pair[ "destination" ]);
+			obj . bRelease    = pair . lookup( "release" ) ? ( bool ) pair[ "release" ] : std::nullopt;
+			this -> special . insert( { pair[ "pattern" ], obj } );
 		}
 
 		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
@@ -63,11 +67,13 @@ void help::CConfig::save( fs::path path )
 	root[ "global" ][ "source" ]      = this -> source . string( );
 	root[ "global" ][ "destination" ] = this -> destination . string( );
 
-	for ( auto &i : this -> special )
+	for ( auto &[ _, obj ] : this -> special )
 	{
-		auto &pair            = root[ "paths" ] . add( lc::Setting::TypeGroup );
-		pair[ "pattern" ]     = i . first;
-		pair[ "destination" ] = i . second;
+		auto &pair                       = root[ "paths" ] . add( lc::Setting::TypeGroup );
+		auto &[ pattern, dest, release ] = obj;
+		pair[ "pattern" ]                = pattern;
+		pair[ "destination" ]            = dest;
+		if ( release ) pair[ "release" ] = *release;
 	}
 
 	for ( auto &i : this -> ignore ) root[ "ignore" ] . add( lc::Setting::TypeString ) = i;

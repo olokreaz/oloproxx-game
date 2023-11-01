@@ -20,7 +20,6 @@
 #include <cppfs/FunctionalFileVisitor.h>
 #include <cppfs/Tree.h>
 
-
 namespace fs = std::filesystem;
 
 class CSyncBinaryWatcher final : public cppfs::FileEventHandler
@@ -31,7 +30,16 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 
 	std::optional< std::string > try_take_specific_path( fs::path path )
 	{
-		for ( const auto &[ pattern, dest ] : m_pConfig -> special ) if ( glob::fnmatch( path, pattern ) ) return dest;
+		for ( const auto &[ pattern, obj ] : m_pConfig -> special )
+			if (
+				#ifdef NDEBUG
+				( obj . bRelease ? *obj . bRelease : true ) &&
+				#else
+				( obj . bRelease ? !( *obj . bRelease ) : true ) &&
+				#endif
+				glob::fnmatch( path, pattern )
+			)
+				return obj . destination;
 		return std::nullopt;
 	}
 
