@@ -24,6 +24,15 @@ namespace help
 			std::string           pattern;
 			std::string           destination;
 			std::optional< bool > bRelease = std::nullopt;
+
+			friend std::size_t hash_value( const CSpecial &obj )
+			{
+				std::size_t seed = 0x2EA94BAB;
+				boost::hash_combine( seed, obj . pattern );
+				boost::hash_combine( seed, obj . destination );
+				boost::hash_combine( seed, obj . bRelease );
+				return seed;
+			}
 		};
 		/**
 		 * \brief

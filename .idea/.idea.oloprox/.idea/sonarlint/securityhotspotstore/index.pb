@@ -55,3 +55,7 @@ Q
 oloprox.sln,6\a\6a8c1083518d1ce568e5f8fa0544d80ee2d83634
 [
 +tools/tool-sync-file/tool-sync-file.vcxproj,2\8\28092aaedc8d2c08c75968b9f94dfbab3ad8ee4f
+D
+oloprox/resource.qrc,2\9\29148b01a375c92897dcb08ee170946e37558e1c
+G
+build/bin Debug/qt.conf,4\6\463b895eaf3063599326ac63587a249f8f81ddbb

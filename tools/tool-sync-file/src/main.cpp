@@ -49,9 +49,7 @@ int wmain( int, wchar_t ** )
 	spdlog::flush_every( 1s );
 	spdlog::set_pattern( config::kLogger_pattern );
 
-	std::shared_ptr< help::CConfig > pConfig = std::make_shared< help::CConfig >( );
 
-	pConfig -> load( config::kConfig_file_name );
 
 	spdlog::trace( "Start setup settings logger" );
 
@@ -65,10 +63,13 @@ int wmain( int, wchar_t ** )
 
 	spdlog::info( "Strart Application" );
 
+	std::shared_ptr< help::CConfig > pConfig = std::make_shared< help::CConfig >( );
+	pConfig -> load( config::kConfig_file_name );
+
 	spdlog::debug( "Source: {}", pConfig -> source );
 	spdlog::debug( "Destination: {}", pConfig -> destination );
 
-	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Special: {} -> {}", pair . first, pair . second );
+	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Special: {} -> {} : {}", pair . first, pair . second . destination, pair . second . bRelease );
 
 	for ( const auto &ignore : pConfig -> ignore ) spdlog::debug( "Ignore: {}", ignore );
 

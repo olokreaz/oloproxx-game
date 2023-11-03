@@ -29,14 +29,16 @@ void help::CConfig::load( fs::path path )
 			this -> destination = dest;
 		}
 
-		this -> special . reserve( root[ "paths" ] . getLength( ) );
-		for ( int i = 0; i < root[ "paths" ] . getLength( ); ++i )
+		this -> special . reserve( root[ "specific" ] . getLength( ) );
+		for ( int i = 0; i < root[ "specific" ] . getLength( ); ++i )
 		{
-			const auto &pair = root[ "paths" ][ i ];
+			const auto &pair = root[ "specific" ][ i ];
 			CSpecial    obj;
-			obj . pattern     =  std::string ( pair[ "pattern" ]);
-			obj . destination = std::string  (pair[ "destination" ]);
-			obj . bRelease    = pair . lookup( "release" ) ? ( bool ) pair[ "release" ] : std::nullopt;
+			obj . pattern     = pair[ "pattern" ] . c_str( );
+			obj . destination = pair[ "destination" ] . c_str( );
+			if ( pair . lookup( "release" ) )
+				obj . bRelease = ( bool ) pair[ "release" ];
+			else obj . bRelease                              = std::nullopt;
 			this -> special . insert( { pair[ "pattern" ], obj } );
 		}
 
@@ -50,6 +52,11 @@ void help::CConfig::load( fs::path path )
 	catch ( const lc::FileIOException &e )
 	{
 		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
+		abort( );
+	}
+	catch ( const lc::SettingException &e )
+	{
+		spdlog::error( "Error in {}: {}, {}", this -> m_config_path, e . getPath(  ), e . what( ) );
 		abort( );
 	}
 	catch ( const std::exception &e )
@@ -69,7 +76,7 @@ void help::CConfig::save( fs::path path )
 
 	for ( auto &[ _, obj ] : this -> special )
 	{
-		auto &pair                       = root[ "paths" ] . add( lc::Setting::TypeGroup );
+		auto &pair                       = root[ "specific" ] . add( lc::Setting::TypeGroup );
 		auto &[ pattern, dest, release ] = obj;
 		pair[ "pattern" ]                = pattern;
 		pair[ "destination" ]            = dest;

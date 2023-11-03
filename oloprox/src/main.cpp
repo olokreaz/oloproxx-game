@@ -1,21 +1,28 @@
 ﻿#include <filesystem>
 
-#include <sago/platform_folders.h>
-
 #include <spdlog/spdlog.h>
 
 import system;
 import types;
 
-inline static const std::filesystem::path kAppDataPath = std::filesystem::path( sago::getDataHome( ) ) / ".oloprox";
-
 static bool g_bQuit = false;
+
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtQml/QtQml>
+#include <QtQml/QQmlApplicationEngine>
 
 int wmain( int, wchar_t ** )
 {
 	sys::Console::initialize( );
 	sys::Console::setLogLevel( spdlog::level::trace );
-	sys::Console::setConsoleTitle( "oloprox - louncher" );
+	sys::Console::setConsoleTitle( "oloprox - terminal" );
 
-	return 0;
+	QApplication app( __argc, __argv );
+
+	app . setApplicationName( "oloprox" );
+
+
+	return app . exec( );
 }
