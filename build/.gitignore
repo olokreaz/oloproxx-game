@@ -19,6 +19,13 @@ logs
 *.out
 *.app
 
+*.qml
+*.qmlc
+*.png
+*.js
+*.jsc
+
+**/qml
 
 assets/shaders/*.exe
 assets/shaders/*.spv

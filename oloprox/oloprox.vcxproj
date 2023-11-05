@@ -78,7 +78,8 @@
             <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;vulkan-1.lib;steam_api64.lib</AdditionalDependencies>
         </Link>
         <PreBuildEvent>
-            <Command></Command>
+            <Command>E:\QT_SDK\5.15.15\msvc2019_64\bin\rcc --name resource -o generate_qrc/generated_resources.cpp resource.qrc</Command>
+            <Message>generate qrc cmponent</Message>
         </PreBuildEvent>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -106,6 +107,7 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
+        <ClCompile Include="generate_qrc\generated_resources.cpp"/>
         <ClCompile Include="modules\oloprox\app.config.ixx"/>
         <ClCompile Include="modules\oloprox\steam.ixx">
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -342,10 +344,12 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="include\oloprox\"/>
-        <Folder Include="qml\" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="resource.qrc" />
+        <QtResource Include="resource.qrc"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="qml\ui\main.qml"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
