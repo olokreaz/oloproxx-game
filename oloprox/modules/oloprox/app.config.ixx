@@ -5,28 +5,23 @@
 
 #include <sago/platform_folders.h>
 
-export module config;
+export module app.config;
 
-#define INIT( name, value ) constexpr auto k##name = value;
-#define INITC( name, value) const auto k##name = value;
+#define Declarate( name, value ) constexpr auto k##name = value;
+#define Declare_C( name, value) const auto k##name = value;
 
-namespace config
-{
-	export namespace error_code
+export namespace config { namespace error_code
 	{
 		#include <cerrno>
-		INIT( steam_init, 0xff000 )
-		INIT( shader, 0xff001 )
-		INIT( compile_shader, 0xff002 )
+		Declarate( steam_init, 0xff000 )
+		Declarate( shader, 0xff001 )
+		Declarate( compile_shader, 0xff002 )
 	}
 
-	INIT( Config_Logger_Dir, "logs" )
-	INIT( Global_logger_name, "Global" )
-	INIT( Logger_pattern, "[ %Y:%m:%d - %H:%M:%S:%F ] [ pid %P ] [ thread %t ] [ %^==== %l ====%$ ] <%n> %v" )
+	Declarate( Config_Logger_Dir, "logs" )
+	Declarate( Global_logger_name, "Global" )
+	Declarate( Logger_pattern, "[ %Y:%m:%d - %H:%M:%S:%F ] [ pid %P ] [ thread %t ] [ %^==== %l ====%$ ] <%n> %v" )
 
-	INITC( Appdata, std::filesystem::path( sago::getDataHome( ) ) / "oloprox" );
-	INITC( Config_file_name, kAppdata / "config.local" );
+	Declare_C( Appdata, std::filesystem::path( sago::getDataHome( ) ) / "oloprox" );
+	Declare_C( Config_file_name, kAppdata / "config.local" );
 }
-
-#undef INIT
-#undef INITC

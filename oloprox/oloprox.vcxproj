@@ -51,12 +51,13 @@
         <OutDir>$(SolutionDir)\build\bin $(Configuration)\</OutDir>
         <TargetName>oloprox</TargetName>
         <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
-        <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;E:\vcpkg\installed\x64-windows\include\qt5</ExternalIncludePath>
+        <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;</ExternalIncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
         <OutDir>$(SolutionDir)\build\bin $(Configuration)\</OutDir>
         <TargetName>oloprox</TargetName>
+        <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <ClCompile>
@@ -77,10 +78,6 @@
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;vulkan-1.lib;steam_api64.lib</AdditionalDependencies>
         </Link>
-        <PreBuildEvent>
-            <Command>E:\QT_SDK\5.15.15\msvc2019_64\bin\rcc --name resource -o generate_qrc/generated_resources.cpp resource.qrc</Command>
-            <Message>generate qrc cmponent</Message>
-        </PreBuildEvent>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <ClCompile>
@@ -107,7 +104,6 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="generate_qrc\generated_resources.cpp"/>
         <ClCompile Include="modules\oloprox\app.config.ixx"/>
         <ClCompile Include="modules\oloprox\steam.ixx">
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -344,12 +340,6 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="include\oloprox\"/>
-    </ItemGroup>
-    <ItemGroup>
-        <QtResource Include="resource.qrc"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="qml\ui\main.qml"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
