@@ -57,3 +57,5 @@ Q
 +tools/tool-sync-file/tool-sync-file.vcxproj,2\8\28092aaedc8d2c08c75968b9f94dfbab3ad8ee4f
 G
 build/bin Debug/qt.conf,4\6\463b895eaf3063599326ac63587a249f8f81ddbb
+D
+oloprox/qml/main.qml,7\8\784447b4873c0fec92d31a390fc5fdb5371f0cec

@@ -1,8 +1,6 @@
 ﻿module;
 
 #include <filesystem>
-#include <zip.h>
-
 #include <sago/platform_folders.h>
 
 export module app.config;

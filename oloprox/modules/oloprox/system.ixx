@@ -3,7 +3,6 @@
 #define NODISCARD [[nodiscard]]
 #define EXPORT export NODISCARD
 
-#include <csignal>
 #include <fstream>
 #include <fstream>
 #include <iostream>
@@ -137,7 +136,7 @@ namespace sys
 		inline static HWND          m_hConsole;
 	};
 
-	std::vector< uint32 > CompileGLSLToSPIRV( const std::string &shaderCode )
+	EXPORT std::vector< uint32 > CompileGLSLToSPIRV( const std::string &shaderCode )
 	{
 		// Создаём временный файл для исходного кода shader
 		const fs::path glslPath = fs::temp_directory_path( ) / fs::unique_path( );
@@ -171,7 +170,7 @@ namespace sys
 		return spirv;
 	}
 
-	std::vector< uint32 > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" )
+	EXPORT std::vector< uint32 > CompileHLSLToSPIRV( const std::string &shaderCode, const std::string &entryPoint = "main" )
 	{
 		// Генерируем имена временных файлов
 		const fs::path hlslPath = fs::temp_directory_path( ) / fs::unique_path( );
@@ -207,7 +206,7 @@ namespace sys
 		return spirv;
 	}
 
-	std::vector< uint32 > CompileShaderToSPIRV(
+	EXPORT std::vector< uint32 > CompileShaderToSPIRV(
 			const std::string &shaderCodeOrPath, const std::string &shaderTypeOrExtension = "glsl",
 			const std::string &entryPoint                                                 = "main", const bool isPath = false
 			)
@@ -243,11 +242,9 @@ namespace sys
 					}( );
 	}
 
-	inline std::shared_ptr< spdlog::logger > create_logger( std::string name )
+	export inline std::shared_ptr< spdlog::logger > create_logger( std::string name )
 	{
-		using namespace std::chrono_literals;
-
-		static auto siDialy  = std::make_shared< spdlog::sinks::daily_file_sink_mt >( ( fs::current_path( ) / config::kLogs_dir / "log.txt" ) . string( ), 0, 0 );
+		static auto siDialy  = std::make_shared< spdlog::sinks::daily_file_sink_mt >( ( fs::current_path( ) / config::kConfig_Logger_Dir / "log.txt" ) . string( ), 0, 0 );
 		static auto siStdout = std::make_shared< spdlog::sinks::stdout_color_sink_mt >( );
 		static bool bInit    = false;
 
