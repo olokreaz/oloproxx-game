@@ -55,7 +55,31 @@ Q
 oloprox.sln,6\a\6a8c1083518d1ce568e5f8fa0544d80ee2d83634
 [
 +tools/tool-sync-file/tool-sync-file.vcxproj,2\8\28092aaedc8d2c08c75968b9f94dfbab3ad8ee4f
-G
-build/bin Debug/qt.conf,4\6\463b895eaf3063599326ac63587a249f8f81ddbb
-D
-oloprox/qml/main.qml,7\8\784447b4873c0fec92d31a390fc5fdb5371f0cec
+N
+oloprox/src/modules/system.cpp,7\e\7e62ead30cc48e15248549ba8c9022794991c14a
+I
+oloprox/modules/types.ixx,2\3\23cac7fc67a5a727eac2e76ef78195c0fdb4b0eb
+N
+oloprox/modules/app.config.ixx,1\4\149efd8f955ac8080be33968c153504403d90561
+J
+oloprox/modules/system.ixx,3\c\3cf6a6dc00b58992c60ac786125f50413b52f8bf
+O
+oloprox/src/modules/system.cppm,a\8\a85aa4aa05f57c6b561c688fbf60b7cc05c7bd34
+Q
+!oloprox/modules/system/system.ixx,4\5\4598f516359d4dab7657f838685816e3da0b0612
+V
+&oloprox/src/modules/system/system.cppm,0\0\009271f7c9fba7ac82d17e23393cdedbcfcae1ee
+X
+(oloprox/modules/system/system-logger.ixx,5\c\5c5c20e8343c6061a48169dd8dcb047541785919
+Y
+)oloprox/modules/system/system.console.ixx,d\1\d184a15cce874065706b1ee4ebe17ff84d9cbfcf
+Y
+)oloprox/modules/system/system.logging.ixx,c\a\ca6d0a5c2d15a54d7fb11b0c13dfcd3943c1b07f
+W
+'oloprox/modules/system/system.utils.ixx,4\c\4c6f1f30cfd5da524fc5e55bf3e82589b88b0d41
+W
+'oloprox/modules/system/system.files.ixx,a\e\ae5b8bf681338d19f807a9cb505a00ff3a219015
+X
+(oloprox/modules/system/system.shader.ixx,e\d\edb0402866bdf54489a25c5262f5f9667d849c52
+I
+oloprox/modules/steam.ixx,d\4\d4a3e191acac28328e5310c0a7450a98157bfbab

@@ -22,7 +22,7 @@
         <ClCompile Include="src\SyncBinaryWatcher.cpp"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="C:\Users\olokreZ-op\AppData\Roaming\oloprox\tools-sync\config.local"/>
+        <Content Include="C:\Users\olokreZ-op\AppData\Roaming\oloprox\tools-sync\config.yml"/>
     </ItemGroup>
     <PropertyGroup Label="Globals">
         <VCProjectVersion>15.0</VCProjectVersion>

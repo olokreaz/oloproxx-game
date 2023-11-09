@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <QtWidgets/QApplication>
+
 import system;
 import types;
 
@@ -13,7 +15,9 @@ int wmain( int, wchar_t ** )
 	sys::Console::setLogLevel( spdlog::level::trace );
 	sys::Console::setConsoleTitle( "oloprox - terminal" );
 
-	spdlog::set_default_logger( sys::create_logger( "global" ) );
+	set_default_logger( sys::create_logger( "global" ) );
 
-	return 0;
+	QApplication app( __argc, __argv );
+
+	return app.exec( );
 }
