@@ -1,0 +1,7 @@
+﻿- src: C:\Users\user\Desktop\test\src
+  dest: C:\Users\user\Desktop\test\dest
+  items:
+    - test1
+    - test2
+    - test3
+

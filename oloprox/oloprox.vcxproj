@@ -51,7 +51,7 @@
         <OutDir>$(SolutionDir)\build\bin $(Configuration)\</OutDir>
         <TargetName>oloprox</TargetName>
         <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\include</IncludePath>
-        <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;e:\vcpkg\installed\x64-windows\include\qt6</ExternalIncludePath>
+        <ExternalIncludePath>$(ExternalIncludePath);$(_ZVcpkgCurrentInstalledDir)include;</ExternalIncludePath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
@@ -258,10 +258,10 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
-        <ClCompile Include="modules\system\system.files.ixx"/>
-        <ClCompile Include="modules\system\system.logging.ixx"/>
-        <ClCompile Include="modules\system\system.console.ixx"/>
-        <ClCompile Include="modules\system\system.ixx">
+        <ClCompile Include="modules\system\systems.files.ixx"/>
+        <ClCompile Include="modules\system\systems.logging.ixx"/>
+        <ClCompile Include="modules\system\systems.console.ixx"/>
+        <ClCompile Include="modules\system\systems.ixx">
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
             <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
             <Optimization>Disabled</Optimization>
@@ -338,8 +338,8 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
-        <ClCompile Include="modules\system\system.shader.ixx"/>
-        <ClCompile Include="modules\system\system.utils.ixx"/>
+        <ClCompile Include="modules\system\systems.shader.ixx"/>
+        <ClCompile Include="modules\system\systems.utils.ixx"/>
         <ClCompile Include="modules\types.ixx">
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
             <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -417,11 +417,18 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
+        <ClCompile Include="src\impl\imgui\imgui_impl_vulkan.cpp"/>
         <ClCompile Include="src\main.cpp"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="include\oloprox\"/>
+        <Folder Include="shader\"/>
         <Folder Include="src\modules\system\"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ClInclude Include="include\oloprox\impl\imgui\imgui_impl_vulkan.hpp"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="data\assets\text.txt"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

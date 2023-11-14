@@ -15,75 +15,82 @@ void help::CConfig::load( fs::path path )
 {
 	this -> m_config_path = config::kAppdata / path;
 
-	try
+	if ( !exists( this -> m_config_path ) )
 	{
-		m_config . readFile( this -> m_config_path . string( ) );
+		spdlog::warn( "Config file not found, creating new" );
+		this -> save( );
+		return;
+	}
 
-		const lc::Setting &root = m_config . getRoot( );
+	ryml::Tree root;
 
+	{
+		root = ryml::parse_in_arena( ryml::to_csubstr( this -> m_config_path . string( ) ) );
+		std::string temp;
+		root[ "source" ] >> temp;
+		this -> source = temp;
+		root[ "destination" ] >> temp;
+		this -> destination = temp;
+	}
+	{
+		ryml::ConstNodeRef special = root[ "special" ];
+		for ( auto v : special )
 		{
-			std::string src  = root[ "global" ][ "source" ];
-			std::string dest = root[ "global" ][ "destination" ];
-
-			this -> source      = src;
-			this -> destination = dest;
+			CSpecial temp;
+			v[ "pattern" ] >> temp . pattern;
+			v[ "destination" ] >> temp . destination;
+			if ( v . has_child( "release" ) )
+			{
+				bool bRelease;
+				v[ "release" ] >> bRelease;
+				temp . bRelease = bRelease;
+			} else temp . bRelease = std::nullopt;
+			this -> special[ v . key( ) . str ] = temp;
 		}
-
-		this -> special . reserve( root[ "specific" ] . getLength( ) );
-		for ( int i = 0; i < root[ "specific" ] . getLength( ); ++i )
+	}
+	{
+		std::string        temp;
+		ryml::ConstNodeRef ignore = root[ "ignore" ];
+		for ( auto v : ignore )
 		{
-			const auto &pair = root[ "specific" ][ i ];
-			CSpecial    obj;
-			obj . pattern     = pair[ "pattern" ] . c_str( );
-			obj . destination = pair[ "destination" ] . c_str( );
-			if ( pair . lookup( "release" ) )
-				obj . bRelease = ( bool ) pair[ "release" ];
-			else obj . bRelease                              = std::nullopt;
-			this -> special . insert( { pair[ "pattern" ], obj } );
+			v >> temp;
+			this -> ignore . push_back( temp );
 		}
+	}
 
-		this -> ignore . reserve( root[ "ignore" ] . getLength( ) );
-		for ( int i = 0; i < root[ "ignore" ] . getLength( ); ++i ) this -> ignore . push_back( root[ "ignore" ][ i ] );
-	} catch ( const lc::ParseException &e )
-	{
-		spdlog::error( "Error in config file: {}, {}, {}", e . what( ), e . getFile( ), e . getLine( ) );
-		abort( );
-	}
-	catch ( const lc::FileIOException &e )
-	{
-		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
-		abort( );
-	}
-	catch ( const lc::SettingException &e )
-	{
-		spdlog::error( "Error in {}: {}, {}", this -> m_config_path, e . getPath(  ), e . what( ) );
-		abort( );
-	}
-	catch ( const std::exception &e )
-	{
-		spdlog::error( "Error in {}: {}", this -> m_config_path, e . what( ) );
-		abort( );
-	}
 	m_hash = hash_value( *this );
 }
 
 void help::CConfig::save( fs::path path )
 {
-	lc::Config cfg;
-	auto &     root                   = cfg . getRoot( );
-	root[ "global" ][ "source" ]      = this -> source . string( );
-	root[ "global" ][ "destination" ] = this -> destination . string( );
+	if ( hash_value( *this ) != m_hash ) return;
+	ryml::Tree root;
+	root[ "source" ] << this -> source . string( );
+	root[ "destination" ] << this -> destination . string( );
 
-	for ( auto &[ _, obj ] : this -> special )
 	{
-		auto &pair                       = root[ "specific" ] . add( lc::Setting::TypeGroup );
-		auto &[ pattern, dest, release ] = obj;
-		pair[ "pattern" ]                = pattern;
-		pair[ "destination" ]            = dest;
-		if ( release ) pair[ "release" ] = *release;
+		ryml::NodeRef special_tree = root[ "special" ];
+		for ( auto &[ _, v ] : this -> special )
+		{
+			// Assuming that v is a tuple and you can use structured bindings to bind its parts to pattern, destination, bRelease:
+			auto &[ pattern, destination, bRelease ] = v;
+
+			// add a map to the sequence
+			auto &map = special_tree . append_child( ) << ryml::MAP;
+
+			// populate the map with key-value pairs
+			map << ryml::key( "pattern" ) << pattern;
+			map << ryml::key( "destination" ) << destination;
+			if ( bRelease ) map << ryml::key( "bRelease" ) << bRelease;
+		}
+	}
+	{
+		ryml::NodeRef ignore_tree = root[ "ignore" ];
+		for ( auto &v : this -> ignore )
+		{
+			ignore_tree . append_child( ) << v;
+		}
 	}
 
-	for ( auto &i : this -> ignore ) root[ "ignore" ] . add( lc::Setting::TypeString ) = i;
-
-	cfg . writeFile( path . string( ) );
+	/* TODO */
 }

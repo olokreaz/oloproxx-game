@@ -2,13 +2,19 @@
 #include <filesystem>
 #include <string>
 
-#include <libconfig.h++>
 #include <boost/functional/hash.hpp>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <steam/steamtypes.h>
 
-namespace lc = libconfig;
+#include <ryml/ryml.hpp>
+
+class WrappedPath
+{
+	std::filesystem::path m_path;
+public:
+
+};
 
 namespace help
 {
@@ -34,6 +40,7 @@ namespace help
 				return seed;
 			}
 		};
+
 		/**
 		 * \brief
 		 * \param key pattern
@@ -45,11 +52,11 @@ namespace help
 		fs::path                   destination;
 		std::vector< std::string > ignore;
 
-		/** \details относительно папки нахождения exe */
+		/** \details относительно папки нахождения %appdata% */
 		void load( fs::path path );
-		/** \details относительно папки нахождения exe */
+		/** \details относительно папки нахождения %appdata% */
 		void save( fs::path path );
-		/** \details относительно папки нахождения exe */
+		/** \details относительно папки нахождения %appdata% */
 		void save( ) { this -> save( this -> m_config_path ); }
 
 		friend uint64 hash_value( const CConfig &obj )
@@ -64,7 +71,7 @@ namespace help
 
 	private:
 		uint64     m_hash;
-		lc::Config m_config;
+		ryml::Tree m_root;
 		fs::path   m_config_path;
 	};
 }
