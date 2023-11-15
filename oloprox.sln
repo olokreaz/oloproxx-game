@@ -8,8 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "discord-bot", "discord-bot\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tool-sync-file", "tools\tool-sync-file\tool-sync-file.vcxproj", "{A85775BD-74B7-40AC-AB8A-771A35C846B0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crc", "tools\crc\crc.vcxproj", "{41713E50-2797-496C-9395-3B4AE49F2982}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -18,18 +16,14 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Debug|x64.ActiveCfg = Debug|x64
 		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.ActiveCfg = Release|x64
+		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Debug|x64.Build.0 = Debug|x64
 		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Debug|x64.ActiveCfg = Debug|x64
 		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|x64.ActiveCfg = Release|x64
 		{A85775BD-74B7-40AC-AB8A-771A35C846B0}.Debug|x64.ActiveCfg = Debug|x64
 		{A85775BD-74B7-40AC-AB8A-771A35C846B0}.Release|x64.ActiveCfg = Release|x64
 		{A85775BD-74B7-40AC-AB8A-771A35C846B0}.Release|x64.Build.0 = Release|x64
-		{41713E50-2797-496C-9395-3B4AE49F2982}.Debug|x64.ActiveCfg = Debug|x64
-		{41713E50-2797-496C-9395-3B4AE49F2982}.Debug|x64.Build.0 = Debug|x64
-		{41713E50-2797-496C-9395-3B4AE49F2982}.Release|x64.ActiveCfg = Release|x64
-		{41713E50-2797-496C-9395-3B4AE49F2982}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A85775BD-74B7-40AC-AB8A-771A35C846B0} = {05398648-54D8-4F8A-BAEF-69C66D1334EA}
-		{41713E50-2797-496C-9395-3B4AE49F2982} = {05398648-54D8-4F8A-BAEF-69C66D1334EA}
 	EndGlobalSection
 EndGlobal

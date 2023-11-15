@@ -53,8 +53,6 @@ R
 ,oloprox/src/impl/imgui/imgui_impl_vulkan.cpp,4\8\480b20fcb576c2baa2bf4d2f5e00137aa88adeaf
 h
 8oloprox/include/oloprox/impl/imgui/imgui_impl_vulkan.hpp,e\6\e6a0fb3ad468e7f4fe650d40a29d07e728295315
-C
-oloprox/resource.rc,a\f\af5a7a01486633447d93cda987accabd4b5a4d56
 L
 oloprox/data/assets/text.txt,6\6\669c1f05842775e87f285a362aca726623d987fa
 B
@@ -83,3 +81,13 @@ Z
 *build/data/assets/shaders/shader.vert.glsl,1\6\16a1da38de1a6d16fc15ffe73b85380dfd207d26
 Z
 *build/data/assets/shaders/shader.frag.glsl,4\1\41214ad67cc118f68677e9870548bdd1d7ee6e11
+K
+build/data/bassets/test.txt,2\4\24a1372438cffd1d43207fd79f82c14cb6ed69e1
+T
+$oloprox/include/oloprox/Resource.cpp,e\3\e3807e14cd7ad7c1694271d5daabfb891bde85cb
+R
+"oloprox/include/oloprox/Resource.h,0\d\0defb67a5d26deb728db4f98c8b5dc20f2519931
+T
+$oloprox/include/oloprox/Resource.hpp,8\b\8b7dabe137f000ad6124189099f0c4888fa20c52
+H
+oloprox/src/Resource.cpp,b\6\b64935108753cf021c67d1a21fe638bae53b7813
