@@ -23,45 +23,24 @@ protected:
 	bool                           m_bStorage { false };
 
 public:
-	IData( ) : m_data { } {}
+	IData( );
 
-	IData( std::string &path, std::vector< uint8_t > &data ) : m_path { std::move( path ) },
-								m_data { },
-								m_bStorage { true } { m_data . Data = std::move( data ); }
+	IData( std::string &path, std::vector< uint8_t > &data );
 
-	IData( std::string &path, std::span< uint8_t > data ) : m_path { path },
-								m_data { } { m_data . pData = data; }
+	IData( std::string &path, std::span< uint8_t > data );
 
-	virtual ~IData( ) = default;
+	virtual ~IData( );
 
-	const std::span< uint8_t >& data( ) const { return m_data . pData; }
-	const std::string&          path( ) const { return m_path; }
+	const std::span< uint8_t >& data( ) const;
+	const std::string&          path( ) const;
 
-	IData( const IData &other ) : m_path { other . m_path },
-					m_data { other . m_data },
-					m_bStorage { other . m_bStorage } {}
+	IData( const IData &other );
 
-	IData( IData &&other ) noexcept : m_path { std::move( other . m_path ) },
-					m_data { std::move( other . m_data ) },
-					m_bStorage { std::move( other . m_bStorage ) } {}
+	IData( IData &&other ) noexcept;
 
-	IData& operator=( const IData &other )
-	{
-		if ( this == &other ) return *this;
-		m_path     = other . m_path;
-		m_data     = other . m_data;
-		m_bStorage = other . m_bStorage;
-		return *this;
-	}
+	IData& operator=( const IData &other );
 
-	IData& operator=( IData &&other ) noexcept
-	{
-		if ( this == &other ) return *this;
-		m_path     = std::move( other . m_path );
-		m_data     = std::move( other . m_data );
-		m_bStorage = std::move( other . m_bStorage );
-		return *this;
-	}
+	IData& operator=( IData &&other ) noexcept;
 };
 
 class final CResourceController : public boost::noncopyable
@@ -72,22 +51,12 @@ public:
 	CResourceController( )  = delete;
 	~CResourceController( ) = delete;
 
-	static void registrate( IData &data ) { m_resources[ data . path( ) ] = data; }
+	static void registrate( IData &data );
 };
 
 class CResource final : public IData
 {
-	CResource( std::string_view path )
-	{
-		this -> m_path        = path;
-		this -> m_data . Data = systems::files::readFile( path );
-		this -> m_bStorage    = true;
-	}
+	CResource( std::string_view path );
 
-	CResource( std::string_view path, std::span< uint8 > data )
-	{
-		this -> m_path         = path;
-		this -> m_data . pData = data;
-		this -> m_bStorage     = false;
-	}
+	CResource( std::string_view path, std::span< uint8 > data );
 };
