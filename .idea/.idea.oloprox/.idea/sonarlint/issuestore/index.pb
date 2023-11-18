@@ -79,3 +79,7 @@ T
 $oloprox/include/oloprox/Resource.hpp,8\b\8b7dabe137f000ad6124189099f0c4888fa20c52
 H
 oloprox/src/Resource.cpp,b\6\b64935108753cf021c67d1a21fe638bae53b7813
+R
+"oloprox/src/data/data_test_txt.cpp,6\9\690e57fd139c433c81bb6c2b750e854b0f3695b3
+^
+.oloprox/include/oloprox/data/data_test_txt.hpp,6\3\638982778cae89b48f291726592e10b632c8ea07
