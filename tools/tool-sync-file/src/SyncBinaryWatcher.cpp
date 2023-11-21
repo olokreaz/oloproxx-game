@@ -18,21 +18,18 @@ void CSyncBinaryWatcher::onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent ev
 	m_logger -> info( "{} {}", magic_enum::enum_name( event ), fh . path( ) );
 	update( fh );
 
-	try
+	switch ( event )
 	{
-		switch ( event )
-		{
-			case cppfs::FileCreated: this -> onFileCreated( fh );
-				break;
-			case cppfs::FileRemoved: this -> onFileRemoved( fh );
-				break;
-			case cppfs::FileModified: this -> onFileModified( fh );
-				break;
-			case cppfs::FileAttrChanged: this -> onFileAttrChanged( fh );
-				break;
-			default: spdlog::warn( "can't find Event {{ {} }}", fmt::underlying( event ) );
-		}
-	} catch ( const std::exception &e ) { m_logger -> error( "{}", e . what( ) ); }
+		case cppfs::FileCreated: this -> onFileCreated( fh );
+			break;
+		case cppfs::FileRemoved: this -> onFileRemoved( fh );
+			break;
+		case cppfs::FileModified: this -> onFileModified( fh );
+			break;
+		case cppfs::FileAttrChanged: this -> onFileAttrChanged( fh );
+			break;
+		default: spdlog::warn( "can't find Event {{ {} }}", fmt::underlying( event ) );
+	}
 	dest_context . clear( );
 }
 

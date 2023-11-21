@@ -32,12 +32,10 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 	{
 		for ( const auto &[ pattern, obj ] : m_pConfig -> special )
 			if (
-				#ifdef NDEBUG
-				( obj . bRelease ? *obj . bRelease : true ) &&
-				#else
-				( obj . bRelease ? !( *obj . bRelease ) : true ) &&
-				#endif
-				glob::fnmatch( path, pattern )
+				( obj . bRelease
+					? *obj . bRelease == m_pConfig -> bReleased
+					: true )
+				&& glob::fnmatch( path, fs::path( pattern ) . is_relative( ) ? ( m_pConfig -> source / pattern ) . string( ) : pattern )
 			)
 				return obj . destination;
 		return std::nullopt;

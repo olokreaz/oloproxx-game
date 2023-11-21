@@ -7,14 +7,9 @@
 
 #include <steam/steamtypes.h>
 
-#include <ryml/ryml.hpp>
+#include <yaml-cpp/yaml.h>
 
-class WrappedPath
-{
-	std::filesystem::path m_path;
-public:
-
-};
+namespace yml = YAML;
 
 namespace help
 {
@@ -51,6 +46,7 @@ namespace help
 		fs::path                   source;
 		fs::path                   destination;
 		std::vector< std::string > ignore;
+		bool                       bReleased = false;
 
 		/** \details относительно папки нахождения %appdata% */
 		void load( fs::path path );
@@ -70,8 +66,8 @@ namespace help
 		}
 
 	private:
-		uint64     m_hash;
-		ryml::Tree m_root;
-		fs::path   m_config_path;
+		uint64    m_hash;
+		yml::Node m_root;
+		fs::path  m_config_path;
 	};
 }

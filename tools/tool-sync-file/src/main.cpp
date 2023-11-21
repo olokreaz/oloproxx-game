@@ -21,6 +21,8 @@
 
 #include <magic_enum_all.hpp>
 
+#include <argh.h>
+
 #include <app/SyncBinaryWatcher.hpp>
 
 namespace fs = std::filesystem;
@@ -43,13 +45,13 @@ int wmain( int, wchar_t ** )
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
 
+	argh::parser cmdl( __argv );
+
 	spdlog::set_automatic_registration( true );
 	spdlog::set_level( spdlog::level::trace );
 	spdlog::flush_on( spdlog::level::warn );
 	spdlog::flush_every( 1s );
 	spdlog::set_pattern( config::kLogger_pattern );
-
-
 
 	spdlog::trace( "Start setup settings logger" );
 
@@ -60,17 +62,18 @@ int wmain( int, wchar_t ** )
 	set_default_logger( logger );
 
 	spdlog::trace( "Finished setted new default logger" );
-
 	spdlog::info( "Strart Application" );
 
 	std::shared_ptr< help::CConfig > pConfig = std::make_shared< help::CConfig >( );
+
+	pConfig -> bReleased = cmdl[ { "-d", "--debug" } ] ? false : cmdl[ { "-r", "--release" } ];
+
 	pConfig -> load( config::kConfig_file_name );
 
 	spdlog::debug( "Source: {}", pConfig -> source );
 	spdlog::debug( "Destination: {}", pConfig -> destination );
 
 	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Special: {} -> {} : {}", pair . first, pair . second . destination, pair . second . bRelease );
-
 	for ( const auto &ignore : pConfig -> ignore ) spdlog::debug( "Ignore: {}", ignore );
 
 	cppfs::FileWatcher watcher;

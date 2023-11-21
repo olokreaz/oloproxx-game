@@ -4,8 +4,6 @@
 #include <fstream>
 #include <vector>
 
-#include <libconfig.h++>
-
 #include <fmt/std.h>
 #include <spdlog/spdlog.h>
 
@@ -22,39 +20,37 @@ void help::CConfig::load( fs::path path )
 		return;
 	}
 
-	ryml::Tree root;
+	yml::Node root;
 
 	{
-		root = ryml::parse_in_arena( ryml::to_csubstr( this -> m_config_path . string( ) ) );
-		std::string temp;
-		root[ "source" ] >> temp;
-		this -> source = temp;
-		root[ "destination" ] >> temp;
-		this -> destination = temp;
+		root                = yml::LoadFile( m_config_path . string( ) );
+		this -> source      = root[ "source" ] . as< std::string >( );
+		this -> destination = root[ "destination" ] . as< std::string >( );
 	}
 	{
-		ryml::ConstNodeRef special = root[ "special" ];
+		auto special = root[ "special" ];
 		for ( auto v : special )
 		{
 			CSpecial temp;
-			v[ "pattern" ] >> temp . pattern;
-			v[ "destination" ] >> temp . destination;
-			if ( v . has_child( "release" ) )
+			temp . pattern     = v[ "pattern" ] . as< std::string >( );
+			temp . destination = v[ "destination" ] . as< std::string >( );
+			if ( v[ "release" ] )
 			{
 				bool bRelease;
-				v[ "release" ] >> bRelease;
+				bRelease        = v[ "release" ] . as< bool >( );
 				temp . bRelease = bRelease;
+				if ( temp . bRelease != this -> bReleased ) continue;
 			} else temp . bRelease = std::nullopt;
-			this -> special[ v . key( ) . str ] = temp;
+			this -> special[ temp . pattern ] = temp;
 		}
 	}
 	{
-		std::string        temp;
-		ryml::ConstNodeRef ignore = root[ "ignore" ];
-		for ( auto v : ignore )
+		std::string temp;
+		yml::Node   ignores = root[ "ignore" ];
+		for ( auto v : ignores )
 		{
-			v >> temp;
-			this -> ignore . push_back( temp );
+			temp = v . as< std::string >( );
+			if ( !temp . empty( ) ) this -> ignore . push_back( temp );
 		}
 	}
 
@@ -64,33 +60,24 @@ void help::CConfig::load( fs::path path )
 void help::CConfig::save( fs::path path )
 {
 	if ( hash_value( *this ) != m_hash ) return;
-	ryml::Tree root;
-	root[ "source" ] << this -> source . string( );
-	root[ "destination" ] << this -> destination . string( );
+	yml::Node root;
+	root[ "source" ]      = this -> source . string( );
+	root[ "destination" ] = this -> destination . string( );
 
-	{
-		ryml::NodeRef special_tree = root[ "special" ];
+		yml::Node special_tree = root[ "special" ];
 		for ( auto &[ _, v ] : this -> special )
 		{
 			// Assuming that v is a tuple and you can use structured bindings to bind its parts to pattern, destination, bRelease:
-			auto &[ pattern, destination, bRelease ] = v;
-
+			auto &[ pattern, destination, boptRelease ] = v;
 			// add a map to the sequence
-			auto &map = special_tree . append_child( ) << ryml::MAP;
-
+			yml::Node temp;
 			// populate the map with key-value pairs
-			map << ryml::key( "pattern" ) << pattern;
-			map << ryml::key( "destination" ) << destination;
-			if ( bRelease ) map << ryml::key( "bRelease" ) << bRelease;
-		}
-	}
-	{
-		ryml::NodeRef ignore_tree = root[ "ignore" ];
-		for ( auto &v : this -> ignore )
-		{
-			ignore_tree . append_child( ) << v;
-		}
-	}
+			temp[ "pattern" ]     = pattern;
+			temp[ "destination" ] = destination;
+			if ( boptRelease ) temp[ "release" ] = *boptRelease;
+			special_tree . push_back( temp );
+}
+		yml::Node ignore_tree = root[ "ignore" ];
+		for ( auto &v : this -> ignore ) ignore_tree . push_back( v );
 
-	/* TODO */
 }
