@@ -9,6 +9,9 @@
     <explicitIncludes />
     <explicitExcludes>
       <Path>build/assets</Path>
+      <Path>oloprox/data</Path>
+      <Path>oloprox/src/data</Path>
+      <Path>oloprox/src/data/resource.cpp</Path>
     </explicitExcludes>
   </component>
 </project>

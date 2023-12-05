@@ -1,13 +1,16 @@
-﻿#include <string>
+﻿#include <iostream>
+#include <string>
 #include <vector>
 
 #include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
 
+#include <glm/glm.hpp>
+
 import systems;
 import types;
 
-int wmain( int, wchar_t ** )
+int main( int argc, char **argv )
 {
 	systems::console::Console::initialize( );
 	systems::console::Console::setLogLevel( spdlog::level::trace );

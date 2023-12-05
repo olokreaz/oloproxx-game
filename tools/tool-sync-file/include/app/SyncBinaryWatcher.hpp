@@ -50,10 +50,17 @@ class CSyncBinaryWatcher final : public cppfs::FileEventHandler
 	fs::path        dest_context;
 
 public:
-	CSyncBinaryWatcher( std::shared_ptr< help::CConfig > pCfg ) : m_pConfig { std::move( pCfg ) } {}
+	CSyncBinaryWatcher( std::shared_ptr< help::CConfig > pCfg ) : m_pConfig { std::move( pCfg ) }
+	{
+		for ( auto &item : m_pConfig -> special )
+			if ( exists( m_pConfig -> destination / item . second . destination ) )
+				create_directories(
+						m_pConfig -> destination / item . second . destination
+						);
+	}
 
 protected:
-	void update( cppfs::FileHandle &fh );
+	void update_context( cppfs::FileHandle &fh );
 	void onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent event ) override;
 	void onFileCreated( cppfs::FileHandle &fh ) override;
 	void onFileRemoved( cppfs::FileHandle &fh ) override;

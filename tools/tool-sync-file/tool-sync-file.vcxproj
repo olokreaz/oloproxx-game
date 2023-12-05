@@ -16,7 +16,7 @@
         <ClInclude Include="include\app\utils.hpp"/>
     </ItemGroup>
     <ItemGroup>
-        <ClCompile Include="module\app.commiting.config.ixx"/>
+        <ClCompile Include="module\tools_sync_file.configs.ixx"/>
         <ClCompile Include="src\Configer.cpp"/>
         <ClCompile Include="src\main.cpp"/>
         <ClCompile Include="src\SyncBinaryWatcher.cpp"/>

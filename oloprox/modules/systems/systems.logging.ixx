@@ -20,7 +20,15 @@ namespace systems::logging
 
 		if ( !bInit )
 		{
-			siStdout -> set_color( spdlog::level::trace, FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE );
+			siStdout -> set_color(
+						spdlog::level::trace,
+						FOREGROUND_INTENSITY
+						| FOREGROUND_GREEN
+						| FOREGROUND_BLUE
+						| FOREGROUND_RED
+						| BACKGROUND_BLUE
+						| BACKGROUND_GREEN
+						);
 			bInit = true;
 		}
 

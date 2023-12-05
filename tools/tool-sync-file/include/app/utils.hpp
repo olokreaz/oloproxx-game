@@ -15,7 +15,7 @@
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-import app.commiting.config;
+import tools_sync_file.config;
 
 namespace utils
 {

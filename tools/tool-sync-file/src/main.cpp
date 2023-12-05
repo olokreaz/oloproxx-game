@@ -30,7 +30,7 @@ namespace fs = std::filesystem;
 using namespace fmt::literals;
 using namespace std::literals;
 
-import app.commiting.config;
+import tools_sync_file.config;
 
 bool g_bQuit = false;
 
@@ -40,7 +40,7 @@ void ExitHandler( int )
 	std::this_thread::sleep_for( 2s );
 }
 
-int wmain( int, wchar_t ** )
+int main( int, char ** )
 {
 	std::signal( SIGTERM, ExitHandler );
 	std::signal( SIGINT, ExitHandler );
@@ -68,13 +68,19 @@ int wmain( int, wchar_t ** )
 
 	pConfig -> bReleased = cmdl[ { "-d", "--debug" } ] ? false : cmdl[ { "-r", "--release" } ];
 
+	spdlog::info( "Sync Mode: {}", pConfig -> bReleased ? "debug" : "release" );
+
+	spdlog::info( "Config loading..." );
+
 	pConfig -> load( config::kConfig_file_name );
+
+	spdlog::info( "Config loaded" );
 
 	spdlog::debug( "Source: {}", pConfig -> source );
 	spdlog::debug( "Destination: {}", pConfig -> destination );
 
-	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Special: {} -> {} : {}", pair . first, pair . second . destination, pair . second . bRelease );
-	for ( const auto &ignore : pConfig -> ignore ) spdlog::debug( "Ignore: {}", ignore );
+	for ( const auto &pair : pConfig -> special ) spdlog::debug( "Specialed: {} -> {} : {}", pair . first, pair . second . destination, pair . second . bRelease );
+	for ( const auto &ignore : pConfig -> ignore ) spdlog::debug( "Ignored: {}", ignore );
 
 	cppfs::FileWatcher watcher;
 	CSyncBinaryWatcher syncWatcher( pConfig );

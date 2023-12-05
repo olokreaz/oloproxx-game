@@ -4,11 +4,12 @@
 
 const fs::path& CSyncBinaryWatcher::context( ) const { return dest_context; }
 
-void CSyncBinaryWatcher::update( cppfs::FileHandle &fh )
+void CSyncBinaryWatcher::update_context( cppfs::FileHandle &fh )
 {
 	auto oDest = this -> try_take_specific_path( fh . path( ) );
+	auto rDest = relative( fh . path( ), m_pConfig -> source );
 	if ( oDest ) dest_context = m_pConfig -> destination / *oDest;
-	else dest_context         = m_pConfig -> destination / relative( fh . path( ), m_pConfig -> source );
+	else dest_context         = m_pConfig -> destination / rDest;
 	dest_context = m_pConfig -> destination / ( oDest ? *oDest : relative( fh . path( ), m_pConfig -> source ) );
 }
 
@@ -16,7 +17,7 @@ void CSyncBinaryWatcher::onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent ev
 {
 	if ( !this -> valide_on_ignore( fh . path( ) ) ) return;
 	m_logger -> info( "{} {}", magic_enum::enum_name( event ), fh . path( ) );
-	update( fh );
+	this -> update_context( fh );
 
 	switch ( event )
 	{
@@ -36,7 +37,7 @@ void CSyncBinaryWatcher::onFileEvent( cppfs::FileHandle &fh, cppfs::FileEvent ev
 void CSyncBinaryWatcher::onFileCreated( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileCreated"" {}", fh . path( ) );
-	const auto dest = context( );
+	const auto &dest = context( );
 	utils::ufs::copy_to( fh . path( ), dest );
 	m_logger -> info( "File Coppied {}", dest );
 }
@@ -44,7 +45,7 @@ void CSyncBinaryWatcher::onFileCreated( cppfs::FileHandle &fh )
 void CSyncBinaryWatcher::onFileRemoved( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileRemoved: {}", fh . path( ) );
-	const auto dest = context( );
+	const auto &dest = context( );
 	utils::ufs::remove( dest );
 	m_logger -> info( "Removed {}", dest );
 }
@@ -52,7 +53,7 @@ void CSyncBinaryWatcher::onFileRemoved( cppfs::FileHandle &fh )
 void CSyncBinaryWatcher::onFileModified( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileModified: {}", fh . path( ) );
-	const auto dest  = context( );
+	const auto &dest  = context( );
 	auto       hDest = cppfs::fs::open( dest . string( ) );
 	utils::ufs::copy_to( fh . path( ), dest );
 	m_logger -> info( "File Coppied {}", dest );
@@ -61,7 +62,7 @@ void CSyncBinaryWatcher::onFileModified( cppfs::FileHandle &fh )
 void CSyncBinaryWatcher::onFileAttrChanged( cppfs::FileHandle &fh )
 {
 	m_logger -> debug( "onFileAttrChanged: {}", fh . path( ) );
-	const auto dest = context( );
+	const auto& dest = context( );
 	utils::ufs::copy_to( fh . path( ), dest );
 	m_logger -> info( "File Coppied {}", dest );
 }

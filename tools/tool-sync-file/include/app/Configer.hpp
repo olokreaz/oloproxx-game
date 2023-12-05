@@ -14,7 +14,7 @@ namespace yml = YAML;
 namespace help
 {
 	using namespace fmt::literals;
-	using namespace std::chrono_literals;
+	using namespace std::literals;
 	namespace fs = std::filesystem;
 
 	struct CConfig
