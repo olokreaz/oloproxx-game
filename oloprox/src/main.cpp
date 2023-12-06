@@ -20,3 +20,6 @@ int main( int argc, char **argv )
 
 	return 0;
 }
+
+// dxc -spirv -T {lib} -HV 2021 -I {includes} -Fo {output} {input}
+// glslc --target-env=vulkan1.3 -fshader-stage={stage} -I {includes} -o {output} {input}
