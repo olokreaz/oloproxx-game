@@ -61,8 +61,6 @@ Z
 *build/data/assets/shaders/shader.frag.glsl,4\1\41214ad67cc118f68677e9870548bdd1d7ee6e11
 Y
 )oloprox/modules/systems/systems.files.ixx,5\f\5f19f43c2db95834c61f347337d91f0d87a42318
-C
-oloprox/resoruce.rc,6\7\67c47c85f4f6bf4a57f2fd0d0c5dfd9c0ed64abe
 [
 +oloprox/modules/systems/systems.logging.ixx,c\1\c1d5a8b2a8ff7e5f1c49fec1fd82272c9f1158ef
 Y
@@ -83,3 +81,7 @@ g
 +oloprox/modules/systems/systems.console.ixx,b\6\b6e9cd006592cb1a3f392468140186ffaaccccd4
 S
 #oloprox/modules/systems/systems.ixx,c\7\c76425b87fddc99f6cea4c51ad904e3cc60ad1ac
+K
+oloprox/resourse/shaders.rc,0\b\0b4ff91371d070b253b7848ab3e381fdfc04fbf1
+F
+oloprox/src/impl/t.cpp,0\c\0cf33dcf656b8ecb0af93e5cba5cba646f9a4ab9

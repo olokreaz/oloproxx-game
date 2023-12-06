@@ -425,10 +425,10 @@
         <ClInclude Include="include\oloprox\impl\imgui\imgui_impl_vulkan.hpp"/>
     </ItemGroup>
     <ItemGroup>
-        <ResourceCompile Include="resoruce.rc"/>
+        <Folder Include="data\shader\"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="data\shader\"/>
+        <Content Include="resourse\shaders.rc"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

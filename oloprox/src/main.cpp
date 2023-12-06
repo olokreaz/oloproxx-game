@@ -5,8 +5,6 @@
 #include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
 
-#include <glm/glm.hpp>
-
 import systems;
 import types;
 
@@ -17,6 +15,9 @@ int main( int argc, char **argv )
 	systems::console::Console::setConsoleTitle( "oloprox - terminal" );
 
 	set_default_logger( systems::logging::create_logger( "global" ) );
+
+	systems::shader::
+
 
 	return 0;
 }
