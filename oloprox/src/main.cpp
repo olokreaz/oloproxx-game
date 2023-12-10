@@ -16,11 +16,5 @@ int main( int argc, char **argv )
 
 	set_default_logger( systems::logging::create_logger( "global" ) );
 
-	systems::shader::
-
-
 	return 0;
 }
-
-// dxc -spirv -T {lib} -HV 2021 -I {includes} -Fo {output} {input}
-// glslc --target-env=vulkan1.3 -fshader-stage={stage} -I {includes} -o {output} {input}

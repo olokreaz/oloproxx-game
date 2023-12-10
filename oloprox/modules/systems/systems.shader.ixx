@@ -1,5 +1,4 @@
-﻿
-module;
+﻿module;
 
 #include <fstream>
 

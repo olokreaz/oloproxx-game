@@ -37,12 +37,23 @@ namespace systems::files
 
 	export class CResource
 	{
-		std::span< uint8 >                m_Data;
-		utils::EncodingInfo::EncodingType m_EncodingType = utils::EncodingInfo::EncodingType::UNKNOWN;
+		static std::unordered_map< std::wstring, std::span< uint8 > > cache;
+		std::span< uint8 >                                            m_Data;
+		utils::EncodingInfo::EncodingType                             m_EncodingType = utils::EncodingInfo::EncodingType::UNKNOWN;
 
 	public:
 		CResource( ) = default;
-		CResource( std::wstring_view wsID, bool bText = false ) { m_Data = _LoadResource( wsID, bText ); }
+
+		CResource( const std::wstring wsID, const bool bText = false )
+		{
+			auto it = cache . find( wsID );
+			if ( it != cache . end( ) ) m_Data = it -> second;
+			else
+			{
+				m_Data        = _LoadResource( wsID, bText );
+				cache[ wsID ] = m_Data;
+			}
+		}
 
 		_NODISCARD std::span< uint8 > data( ) const { return m_Data; }
 		_NODISCARD size_t             size( ) const { return m_Data . size( ); }

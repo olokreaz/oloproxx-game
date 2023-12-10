@@ -1,0 +1,4 @@
+﻿#pragma once
+
+#define DXC_COMPILE_FORMAT "dxc -spirv -T {0}_6_7 -Vi -HV 2021 -I {1} -Fo {2}.spv {2}.hlsl"
+#define GLSLC_COMPILE_FORMAT "glslc --target-env=vulkan1.3 -fshader-stage={0} -I {1} -o {2}.spv {2}.glsl"
