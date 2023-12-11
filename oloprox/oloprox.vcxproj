@@ -427,17 +427,18 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
-        <ClCompile Include="src\impl\imgui\imgui_impl_vulkan.cpp"/>
-        <ClCompile Include="src\main.cpp"/>
     </ItemGroup>
     <ItemGroup>
         <ClInclude Include="include\oloprox\config"/>
         <ClInclude Include="include\oloprox\impl\imgui\imgui_impl_vulkan.hpp"/>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="data\shader\"/>
-    </ItemGroup>
-    <ItemGroup>
+        <Content Include="data\shaders\imgui\shader.frag.glsl"/>
+        <Content Include="data\shaders\imgui\shader.frag.spv"/>
+        <Content Include="data\shaders\imgui\shader.vert.glsl"/>
+        <Content Include="data\shaders\imgui\shader.vert.spv"/>
+        <Content Include="data\shaders\shader.frag.glsl"/>
+        <Content Include="data\shaders\shader.vert.glsl"/>
         <Content Include="resourse\shaders.rc"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
