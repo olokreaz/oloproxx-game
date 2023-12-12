@@ -1,173 +1,109 @@
-﻿#include <filesystem>
-#include <fstream>
+﻿#include <shader-compiler/config>
+
 #include <ranges>
-#include <span>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
+#include <boost/filesystem.hpp>
+#include <boost/process.hpp>
+#include <fmt/core.h>
 
 #include <glaze/glaze.hpp>
 
-#include <boost/process.hpp>
-
-#include <glob/glob.hpp>
-
-#include <fmt/core.h>
-#include <fmt/ranges.h>
-
-#include <magic_enum.hpp>
-
-#include <shader-compiler/config>
-
-namespace fs = std::filesystem;
+namespace fs = boost::filesystem;
 namespace bp = boost::process;
-using namespace std::literals;
 
-// format for the shader compile command
-
-std::unordered_map< std::string, std::string > GlslStageToDxcStage = {
-				{ "vert", "vs" },
-				{ "tesc", "hs" },
-				{ "tese", "ds" },
-				{ "geom", "gs" },
-				{ "frag", "ps" },
-				{ "comp", "cs" }
-		};
-
-std::string generateCommand( const std::string &extension, const std::string &shader_stage, const std::string &io_path )
+class ShaderCompilerController
 {
-	std::string cmd;
-	if ( extension == "glsl" ) cmd = fmt::format( GLSLC_COMPILE_FORMAT, shader_stage, "./include/glsl", io_path );
-	else if ( extension == "hlsl" ) cmd = fmt::format( DXC_COMPILE_FORMAT, shader_stage, "./include/hlsl", io_path );
-	return cmd;
-}
-
-void checkCompilationSuccess( size_t hash, const std::string &io_path )
-{
-	auto nhash = fs::last_write_time( fmt::format( "{}.spv", io_path ) ) . time_since_epoch( ) . count( );
-	if ( hash == 0 && nhash != 0 ) fmt::println( "Compile succeeded: {}", io_path );
-	else if ( hash != 0 && hash != nhash ) fmt::println( "Compile succeeded: {}", io_path );
-	else fmt::println( "Compile Failed: {}", io_path );
-}
-
-void compileShader( const fs::path &file )
-{
-	const auto base_path    = file . parent_path( );
-	const auto filename     = file . stem( ) . stem( ) . filename( ) . string( );
-	const auto extension    = file . extension( ) . string( ) . substr( 1 );
-	const auto shader_stage = file . stem( ) . extension( ) . string( ) . substr( 1 );
-	auto       io_path      = fmt::format( "{}/{}.{}", base_path . string( ), filename, shader_stage );
-
-	std::string cmd = generateCommand( extension, shader_stage, io_path );
-	if ( cmd . empty( ) ) return;
-
-	fmt::println( "Command: {}", cmd );
-	size_t hash = fs::exists( fmt::format( "{}.spv", io_path ) )
-				? fs::last_write_time( fmt::format( "{}.spv", io_path ) ) . time_since_epoch( ) . count( )
-				: 0;
-	bp::ipstream out;
-	bp::child    c( cmd, bp::std_out > out );
-	std::string  line;
-	while ( c . running( ) && std::getline( out, line ) && !line . empty( ) ) fmt::println( "{}", line );
-	c . wait( );
-
-	checkCompilationSuccess( hash, io_path );
-}
-
-class CFileDiffer
-{
-	static inline constexpr std::string_view s_filename = "fileTimeStamp.json"sv;
-
-	std::unordered_map< std::string, size_t > m_fileTimeStamps;
-	std::unordered_map< std::string, size_t > m_fileTimeStampsOld;
-	std::vector< std::string >                m_diff;
-
-	fs::path m_path;
-
-	using iterator = std::vector< std::string >::iterator;
-	using const_iterator = std::vector< std::string >::const_iterator;
+	static inline std::unordered_map< std::string, size_t > s_CompiledFiles;
+	static inline std::unordered_map< std::string, size_t > s_CompiledFilesOld;
+	static inline std::unordered_set< std::string >
+	s_changedFiles;
+	static inline fs::path s_directoryPath;
 
 public:
-	CFileDiffer( fs::path path ) : m_path( std::move( path ) )
+	static void generate( const fs::path &directoryPath )
 	{
-		try
-		{
-			createFileTimeStamps( );
-			loadFileTimeStampsData( );
-			createDiff( );
-		} catch ( const std::exception &e ) { handleError( e ); }
+		s_directoryPath = directoryPath;
+
+		auto fillter = [] ( const fs::path &path ) { return is_regular_file( path ) && ( path . extension( ) == ".glsl" || path . extension( ) == ".hlsl" ); };
+
+		for (
+			const auto &entry
+			: fs::recursive_directory_iterator( directoryPath )
+			| std::ranges::views::filter( fillter )
+			| std::ranges::views::transform( [] ( const auto &entry ) { return entry . path( ); } )
+		)
+			s_CompiledFiles[ entry . string( ) ] = fs::last_write_time( entry );
+
+		if ( fs::exists( s_directoryPath / "compiled-files.json" ) )
+			auto _ = glz::read_file_json(
+							s_CompiledFilesOld,
+							( s_directoryPath / "compiled-files.json" ) . string( ),
+							std::string { }
+						);
+
+		// s_CompiledFilesOld == 0
+		s_changedFiles . reserve( s_CompiledFiles . size( ) );
+		if ( s_CompiledFilesOld . empty( ) ) s_changedFiles . insert_range( s_CompiledFiles | std::ranges::views::keys );
+
+		// s_CompiledFilesOld > 0
+		for ( const auto &[ path, hash ] : s_CompiledFiles )
+			if (
+				auto it = s_CompiledFilesOld . find( path ); it == s_CompiledFilesOld . end( )
+				|| s_CompiledFilesOld[ path ] != hash
+			)
+				s_changedFiles . insert( path );
+			else if ( s_CompiledFilesOld[ path ] == hash && !fs::exists( fs::path( path ) . replace_extension( "spv" ) ) ) s_changedFiles . insert( path );
+
+		auto _ = glz::write_file_json(
+						s_CompiledFiles,
+						( s_directoryPath / "compiled-files.json" ) . string( ),
+						std::string { }
+						);
 	}
 
-	~CFileDiffer( ) { try { save( ); } catch ( const std::exception &e ) { handleError( e ); } }
-
-	const std::vector< std::string >& diff( ) const { return m_diff; }
-
-	iterator begin( ) { return m_diff . begin( ); }
-	iterator end( ) { return m_diff . end( ); }
-
-	const_iterator cbegin( ) { return m_diff . cbegin( ); }
-	const_iterator cend( ) { return m_diff . cend( ); }
-
-private:
-	void loadFileTimeStampsData( )
+	static void compile( )
 	{
-		if ( !exists( m_path / s_filename ) )
-		{
-			m_diff . reserve( m_fileTimeStamps . size( ) );
-			return;
-		}
-		load( );
-	}
+		const fs::path outputExtension = ".spv";
 
-	void handleError( const std::exception &e ) { fmt::println( "error: {}", e . what( ) ); }
+		for ( const auto &entry : s_changedFiles | std::ranges::views::transform( [] ( const auto &path ) { return fs::path( path ); } ) )
+			if ( is_regular_file( entry ) && ( entry . extension( ) == ".glsl" || entry . extension( ) == ".hlsl" ) )
+			{
+				fs::path outputPath = entry;
+				outputPath . replace_extension( outputExtension );
 
-	void createDiff( )
-	{
-		if ( !m_fileTimeStampsOld . size( ) )
-		{
-			m_diff . reserve( m_fileTimeStamps . size( ) );
-			return;
-		}
-		for ( const auto &[ filename, timestamp ] : m_fileTimeStamps )
-			for ( const auto &[ filename_o, timestamp_o ] : m_fileTimeStampsOld )
-				if ( filename == filename_o )
-					if ( timestamp != timestamp_o ) m_diff . push_back( filename );
-					else if ( !fs::exists( fs::path( filename ) . stem( ) . string( ) + ".spv" ) ) m_diff . push_back( filename );
-	}
+				std::string command = fmt::format( COMPILE_STRING_FORMAT, outputPath . string( ), entry . string( ) );
 
-	void createFileTimeStamps( )
-	{
-		for ( const auto &file : fs::recursive_directory_iterator( m_path ) )
-		{
-			if ( const auto &ext = file . path( ) . extension( ); ext != ".glsl" && ext != ".hlsl" ) continue;
-			const auto hash = last_write_time( file ) . time_since_epoch( ) . count( );
-			fmt::println( "file: {} hash: {}", file . path( ) . string( ), hash );
-			m_fileTimeStamps[ file . path( ) . string( ) ] = hash;
-		}
-	}
+				fmt::println( "cmd: {}", command );
 
-	void load( )
-	{
-		auto err = glz::read_file( m_fileTimeStampsOld, ( m_path / s_filename ) . string( ), std::string { } );
-		if ( err ) fmt::println( "error: {}", magic_enum::enum_name( err . ec ) );
-		else fmt::println( "loaded: {}", m_fileTimeStampsOld );
-	}
+				bp::ipstream output;
 
-	void save( )
-	{
-		auto err = glz::write_file( m_fileTimeStamps, ( m_path / s_filename ) . string( ), std::string { } );
-		if ( err ) fmt::println( "error: {}", magic_enum::enum_name( err . ec ) );
-		else fmt::println( "saved: {}", m_fileTimeStamps );
+				auto c = bp::child(
+						command,
+						bp::start_dir = entry . parent_path( ),
+						bp::std_out > output
+						);
+
+				std::string line;
+				while ( std::getline( output, line ) ) fmt::print( "{}", line );
+
+				c . wait( );
+				if ( c . exit_code( ) )
+					fmt::println(
+							"An error occurred while compiling shader: {}",
+							entry . string( )
+						);
+			}
 	}
 };
 
-int main( int argc, char **argv )
+int main( int argc, char *argv[ ] )
 {
-	const std::span args( argv, argv + argc );
-	fs::path        rootDir = args . size( ) > 1 ? fs::path( args[ 1 ] ) : fs::current_path( );
-
-	CFileDiffer differ( rootDir );
-
-	for ( auto &p : differ ) compileShader( p );
-
-	return 0;
+	try
+	{
+		if ( argc > 1 ) ShaderCompilerController::generate( argv[ 1 ] );
+		else ShaderCompilerController::generate( fs::current_path( ) );
+		ShaderCompilerController::compile( );
+		fmt::print( "Shader compilation completed successfully!\n" );
+	} catch ( const std::exception &e ) { fmt::print( stderr, "An error occurred: {}\n", e . what( ) ); }
 }
