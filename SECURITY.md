@@ -21,8 +21,8 @@ If you discover a security vulnerability in this project, we encourage you to re
 
 5. **Contact Information:**
    - Email: secure@oloprox.com
-   - Discord: @olokreaz
-   - Discord Server Admins: Mention the technical administrators on the [server](https://discord.gg/EtBzyNDpGq).
+   - Discord: [@olokreaz](https://github.com/olokreaz)
+   - Discord Server Admins: Mention the technical administrators on the [Discord server](https://discord.gg/EtBzyNDpGq).
 
 ## Additional Notes
 
