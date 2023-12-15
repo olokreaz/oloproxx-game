@@ -434,9 +434,7 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="data\shaders\imgui\shader.frag.glsl"/>
-        <Content Include="data\shaders\imgui\shader.frag.spv"/>
         <Content Include="data\shaders\imgui\shader.vert.glsl"/>
-        <Content Include="data\shaders\imgui\shader.vert.spv"/>
         <Content Include="data\shaders\shader.frag.glsl"/>
         <Content Include="data\shaders\shader.vert.glsl"/>
         <Content Include="resourse\shaders.rc"/>

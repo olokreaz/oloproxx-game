@@ -1,3 +1,5 @@
 ﻿#pragma once
 
-#define COMPILE_STRING_FORMAT "glslangValidator -V100 -t -I/include -o {} {}"
+
+constexpr auto kShaderFormantCompileString = "glslangValidator --glsl-version 450 -V100 -R --target-env vulkan1.3 -e name -t -I/include -o {} {}";
+

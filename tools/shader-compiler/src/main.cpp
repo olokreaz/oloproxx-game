@@ -1,4 +1,6 @@
-﻿#include <shader-compiler/config>
+﻿#include <magic_enum.hpp>
+
+#include <shader-compiler/config>
 
 #include <ranges>
 #include <unordered_map>
@@ -14,65 +16,67 @@ namespace bp = boost::process;
 
 class ShaderCompilerController
 {
-	static inline std::unordered_map< std::string, size_t > s_CompiledFiles;
-	static inline std::unordered_map< std::string, size_t > s_CompiledFilesOld;
+	static inline std::unordered_map< std::string, std::pair< size_t, size_t > > s_CompiledFiles;
 	static inline std::unordered_set< std::string >
 	s_changedFiles;
 	static inline fs::path s_directoryPath;
+
+	ShaderCompilerController( ) = delete;
 
 public:
 	static void generate( const fs::path &directoryPath )
 	{
 		s_directoryPath = directoryPath;
 
-		auto fillter = [] ( const fs::path &path ) { return is_regular_file( path ) && ( path . extension( ) == ".glsl" || path . extension( ) == ".hlsl" ); };
+		auto filter = [] ( const fs::path &path ) { return is_regular_file( path ) && ( path . extension( ) == ".glsl" || path . extension( ) == ".hlsl" ); };
 
-		for (
-			const auto &entry
-			: fs::recursive_directory_iterator( directoryPath )
-			| std::ranges::views::filter( fillter )
-			| std::ranges::views::transform( [] ( const auto &entry ) { return entry . path( ); } )
-		)
-			s_CompiledFiles[ entry . string( ) ] = fs::last_write_time( entry );
+		for ( const auto &entry : fs::recursive_directory_iterator( directoryPath )
+			| std::ranges::views::filter( filter )
+			| std::ranges::views::transform( [] ( const auto &entry ) { return entry . path( ); } ) )
+			s_CompiledFiles[ entry . string( ) ] = { last_write_time( entry ), 0 };
 
-		if ( fs::exists( s_directoryPath / "compiled-files.json" ) )
-			auto _ = glz::read_file_json(
-							s_CompiledFilesOld,
-							( s_directoryPath / "compiled-files.json" ) . string( ),
-							std::string { }
-						);
+		try
+		{
+			if ( exists( s_directoryPath / "compiled-files.json" ) )
+			{
+				glz::parse_error parErr = glz::read_file_json(
+										s_CompiledFiles,
+										( s_directoryPath / "compiled-files.json" ) . string( ),
+										std::string { }
+										);
+				if ( parErr != glz::error_code::none ) fmt::print( stderr, "Glaze parse error: {}\n", magic_enum::enum_name( parErr . ec ) );
+				for ( auto &[ path, times ] : s_CompiledFiles )
+				{
+					times . second = times . first;
+					times . first  = fs::last_write_time( path );
+				}
+			}
 
-		// s_CompiledFilesOld == 0
-		s_changedFiles . reserve( s_CompiledFiles . size( ) );
-		if ( s_CompiledFilesOld . empty( ) ) s_changedFiles . insert_range( s_CompiledFiles | std::ranges::views::keys );
+			s_changedFiles . reserve( s_CompiledFiles . size( ) );
+			for ( const auto &[ path, times ] : s_CompiledFiles ) if ( times . first != times . second ) s_changedFiles . insert( path );
 
-		// s_CompiledFilesOld > 0
-		for ( const auto &[ path, hash ] : s_CompiledFiles )
-			if (
-				auto it = s_CompiledFilesOld . find( path ); it == s_CompiledFilesOld . end( )
-				|| s_CompiledFilesOld[ path ] != hash
-			)
-				s_changedFiles . insert( path );
-			else if ( s_CompiledFilesOld[ path ] == hash && !fs::exists( fs::path( path ) . replace_extension( "spv" ) ) ) s_changedFiles . insert( path );
+			glz::write_error wrErr = glz::write_file_json(
+									s_CompiledFiles,
+									( s_directoryPath / "compiled-files.json" ) . string( ),
+									std::string { }
+									);
 
-		auto _ = glz::write_file_json(
-						s_CompiledFiles,
-						( s_directoryPath / "compiled-files.json" ) . string( ),
-						std::string { }
-						);
+			if ( wrErr != glz::error_code::none ) fmt::print( stderr, "Glaze write error: {}\n", magic_enum::enum_name( wrErr . ec ) );
+		} catch ( const std::exception &e ) { fmt::print( stderr, "An error occurred while reading or writing files: {}\n", e . what( ) ); }
 	}
 
 	static void compile( )
 	{
-		const fs::path outputExtension = ".spv";
-
+		using namespace std::string_view_literals;
+		static const std::string_view outputExtension = ".spv"sv;
 		for ( const auto &entry : s_changedFiles | std::ranges::views::transform( [] ( const auto &path ) { return fs::path( path ); } ) )
 			if ( is_regular_file( entry ) && ( entry . extension( ) == ".glsl" || entry . extension( ) == ".hlsl" ) )
 			{
 				fs::path outputPath = entry;
+
 				outputPath . replace_extension( outputExtension );
 
-				std::string command = fmt::format( COMPILE_STRING_FORMAT, outputPath . string( ), entry . string( ) );
+				std::string command = fmt::format( kShaderFormantCompileString, outputPath . string( ), entry . string( ) );
 
 				fmt::println( "cmd: {}", command );
 
@@ -81,13 +85,14 @@ public:
 				auto c = bp::child(
 						command,
 						bp::start_dir = entry . parent_path( ),
-						bp::std_out > output
+						bp::std_out > output,
+						bp::std_err > output
 						);
 
 				std::string line;
 				while ( std::getline( output, line ) ) fmt::print( "{}", line );
-
 				c . wait( );
+
 				if ( c . exit_code( ) )
 					fmt::println(
 							"An error occurred while compiling shader: {}",
@@ -97,7 +102,7 @@ public:
 	}
 };
 
-int main( int argc, char *argv[ ] )
+int main( int argc, char **argv )
 {
 	try
 	{
