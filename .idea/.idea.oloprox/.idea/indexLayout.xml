@@ -2,6 +2,7 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders>
+      <Path>$USER_HOME$/AppData/Roaming/oloprox</Path>
       <Path>build</Path>
       <Path>build tools</Path>
       <Path>build/assets/shaders</Path>

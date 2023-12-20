@@ -9,12 +9,16 @@ import app.config;
 
 namespace systems::logging
 {
-	export std::shared_ptr< spdlog::logger > create_logger( std::string name )
+	export std::shared_ptr< spdlog::logger > create_logger( const std::string_view logger_name, std::string file_name )
 	{
 		static auto siDialy = std::make_shared< spdlog::sinks::daily_file_sink_mt >(
-											( std::filesystem::current_path( ) / config::kConfig_Logger_Dir / "log.txt" ) .
+											( std::filesystem::current_path( ) / config::kConfig_Logger_Dir / fmt::format(
+																					"{}.log",
+																					file_name
+																					) ) .
 											string( ), 0, 0
 											);
+
 		static auto siStdout = std::make_shared< spdlog::sinks::stdout_color_sink_mt >( );
 		static bool bInit    = false;
 
@@ -32,7 +36,7 @@ namespace systems::logging
 			bInit = true;
 		}
 
-		auto logger = std::make_shared< spdlog::logger >( name );
+		auto logger = std::make_shared< spdlog::logger >( logger_name . data( ) );
 
 		logger -> sinks( ) . clear( );
 

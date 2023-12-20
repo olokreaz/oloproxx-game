@@ -10,7 +10,6 @@ export module app.config;
 
 export namespace config { namespace error_code
 	{
-		#include <cerrno>
 		Declarate( steam_init, 0xff000 )
 		Declarate( shader, 0xff001 )
 		Declarate( compile_shader, 0xff002 )

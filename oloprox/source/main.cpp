@@ -5,6 +5,8 @@
 #include <fmt/ranges.h>
 #include <spdlog/spdlog.h>
 
+#include <engine/config.hpp>
+
 import systems;
 import types;
 

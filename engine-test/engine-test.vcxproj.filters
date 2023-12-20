@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="shader_compiler.cpp">
+    <ClCompile Include="engine_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
