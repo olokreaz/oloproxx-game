@@ -1,14 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oloprox", "oloprox\oloprox.vcxproj", "{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "discord-bot", "discord-bot\discord-bot.vcxproj", "{6E21AFF5-4271-4561-8910-5FFD6C2C9167}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "engine", "engine", "{1A93657C-D996-4944-90BA-9396F4456DD1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3EA25F6B-D14C-4EBC-8A11-88357FB0F247}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine-test", "engine-test\engine-test.vcxproj", "{65CABC04-8460-4589-A0C1-A4D35E3930C0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oloprox", "oloprox\oloprox.vcxproj", "{29211825-FE2E-4A23-807B-41CAFCDF173E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,17 +8,9 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Debug|x64.ActiveCfg = Debug|x64
-		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Release|x64.ActiveCfg = Release|x64
-		{992F11A1-97EC-426D-9F6B-45E2ABF4AFEF}.Debug|x64.Build.0 = Debug|x64
-		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Debug|x64.ActiveCfg = Debug|x64
-		{6E21AFF5-4271-4561-8910-5FFD6C2C9167}.Release|x64.ActiveCfg = Release|x64
-		{65CABC04-8460-4589-A0C1-A4D35E3930C0}.Debug|x64.ActiveCfg = Debug|x64
-		{65CABC04-8460-4589-A0C1-A4D35E3930C0}.Release|x64.ActiveCfg = Release|x64
-		{65CABC04-8460-4589-A0C1-A4D35E3930C0}.Release|x64.Build.0 = Release|x64
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3EA25F6B-D14C-4EBC-8A11-88357FB0F247} = {1A93657C-D996-4944-90BA-9396F4456DD1}
-		{65CABC04-8460-4589-A0C1-A4D35E3930C0} = {3EA25F6B-D14C-4EBC-8A11-88357FB0F247}
+		{29211825-FE2E-4A23-807B-41CAFCDF173E}.Debug|x64.ActiveCfg = Debug|x64
+		{29211825-FE2E-4A23-807B-41CAFCDF173E}.Debug|x64.Build.0 = Debug|x64
+		{29211825-FE2E-4A23-807B-41CAFCDF173E}.Release|x64.ActiveCfg = Release|x64
+		{29211825-FE2E-4A23-807B-41CAFCDF173E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 EndGlobal

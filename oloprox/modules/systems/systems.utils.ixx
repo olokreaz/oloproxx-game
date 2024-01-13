@@ -6,14 +6,21 @@
 #include <string>
 #include <unordered_map>
 
+#include <filesystem>
+#include <crossguid/guid.hpp>
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/daily_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+
 export module systems.utils;
+import app.config;
 import types;
 
 using namespace std::literals;
 
 namespace systems::utils
 {
-	export std::string create_guid( );
+	export std::string create_guid( ) { return xg::newGuid( ) . str( ); }
 
 	export struct EncodingInfo
 	{
@@ -75,4 +82,74 @@ namespace systems::utils
 			else return std::array< uint8_t, 0 > { };
 		}
 	};
+
+	export _NODISCARD float Q_rsqrt( float number )
+	{
+		switch ( static_cast< int >( number ) )
+		{
+			case 4: return 0.5f;
+			case 16: return 0.25f;
+			case 64: return 0.125f;
+			case 256: return 0.0625f;
+			case 1024: return 0.03125f;
+			case 2048: return 1 / std::sqrt( 2048 );
+			default: break;
+		}
+
+		float           y;
+		constexpr float threehalfs = 1.5F;
+
+		float x2 = number * 0.5F;
+		y        = number;
+
+		long i = *( long * ) &y;
+		i      = 0x5f3759df - ( i >> 1 );
+
+		y = *( float * ) &i;
+		y = y * ( threehalfs - ( x2 * y * y ) );
+
+		return y;
+	}
+
+	export _NODISCARD void NukeProcess( int code = -1, const int offset = 0xff ) { exit( offset | code ); }
+
+	export template< class _Ty = void > std::shared_ptr< spdlog::logger > create_logger( const std::string_view logger_name, std::string file_name = "application" )
+	{
+		auto siDialy = std::make_shared< spdlog::sinks::daily_file_sink_mt >(
+											( std::filesystem::current_path( ) / config::kConfig_Logger_Dir / fmt::format(
+																					"{}.log",
+																					file_name
+																					) ) .
+											string( ), 0, 0
+										);
+		auto siStdout = std::make_shared< spdlog::sinks::stdout_color_sink_mt >( );
+
+		siStdout -> set_color(
+					spdlog::level::trace,
+					FOREGROUND_INTENSITY
+					| FOREGROUND_GREEN
+					| FOREGROUND_BLUE
+					| FOREGROUND_RED
+					| BACKGROUND_BLUE
+					| BACKGROUND_GREEN
+					);
+
+		std::shared_ptr< spdlog::logger > logger;
+
+		if constexpr ( std::is_same_v< _Ty, void > ) logger = std::make_shared< spdlog::logger >( logger_name . data( ) );
+		else logger = std::make_shared< spdlog::logger >( std::string_view( typeid( _Ty ) . name( ) ) . substr( 6 ) . data( ) );
+
+		logger -> sinks( ) . clear( );
+
+		logger -> sinks( ) . push_back( siStdout );
+		logger -> sinks( ) . push_back( siDialy );
+
+		logger -> flush_on( spdlog::level::warn );
+		logger -> set_pattern( config::kLogger_pattern );
+		logger -> set_level( spdlog::get_level( ) );
+
+		logger -> trace( "logger created" );
+
+		return logger;
+	}
 }

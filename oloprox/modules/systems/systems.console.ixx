@@ -2,13 +2,16 @@
 
 #include <string>
 #include <windows.h>
+
+#include <argh.h>
 #include <sigc++/sigc++.h>
+
 #include <spdlog/spdlog.h>
 
 #include <magic_enum_all.hpp>
 
 export module systems.console;
-import systems.logging;
+import systems.utils;
 import app.config;
 import types;
 
@@ -24,35 +27,30 @@ namespace systems::console
 	{
 		Console( ) = delete;
 
-		inline static std::shared_ptr< spdlog::logger > m_log;
-		inline static sigc::signal< void( uint32 ) >    m_on_exit;
+		inline static std::shared_ptr< spdlog::logger > s_log;
+		static inline argh::parser                             s_args;
+
+		inline static EWindowStatus s_status;
+		inline static HWND          s_hConsole;
 
 	public:
-		static void initialize( )
+		static void initialize( char **av, int ac )
 		{
 			using namespace std::chrono_literals;
-			if ( !m_hConsole )
-			{
-				m_hConsole = GetConsoleWindow( );
+			if ( !s_hConsole ) s_hConsole = GetConsoleWindow( );
 
-				auto logger = logging::create_logger( "console" );
+			auto logger = utils::create_logger( "application" );
 
-				register_logger( logger );
-				set_default_logger( logger );
+			register_logger( logger );
+			set_default_logger( logger );
 
-				spdlog::set_automatic_registration( true );
-				spdlog::set_level( spdlog::level::trace );
-				spdlog::flush_on( spdlog::level::warn );
-				spdlog::flush_every( 1s );
-				spdlog::set_pattern( config::kLogger_pattern );
-			}
-		}
+			spdlog::set_automatic_registration( true );
+			spdlog::set_level( spdlog::level::trace );
+			spdlog::flush_on( spdlog::level::warn );
+			spdlog::flush_every( 1s );
+			spdlog::set_pattern( config::kLogger_pattern );
 
-		static void registrate_handler_for_exit( const sigc::slot< void( uint32 ) > slot ) { m_on_exit . connect( slot ); }
-
-		static void registrate_handler_for_exit( const std::initializer_list< sigc::slot< void( uint32 ) > > slots )
-		{
-			for ( auto &slot : slots ) m_on_exit . connect( slot );
+			s_args . parse( av, ac );
 		}
 
 		static void setConsoleTitle( const std::string &tittle )
@@ -70,21 +68,17 @@ namespace systems::console
 		static void setStatus( const EWindowStatus status, const HWND hwnd = nullptr )
 		{
 			const int  command = ( bool ) status ? SW_SHOW : SW_HIDE;
-			const HWND window  = hwnd ? hwnd : m_hConsole;
+			const HWND window  = hwnd ? hwnd : s_hConsole;
 
 			ShowWindow( window, command );
 
-			if ( window == m_hConsole )
+			if ( window == s_hConsole )
 			{
-				m_status = status;
+				s_status = status;
 				spdlog::debug( "{} Console", status == EWindowStatus::eShow ? "Show" : "Hide" );
-			} else spdlog::debug( "{} Window: {}", status == EWindowStatus::eShow ? "Show" : "Hide", hwnd -> unused );
+			} else spdlog::debug( "{} Window", status == EWindowStatus::eShow ? "Show" : "Hide" );
 		}
 
-		auto static getState( ) { return m_status; }
-
-	private:
-		inline static EWindowStatus m_status;
-		inline static HWND          m_hConsole;
+		const argh::parser static Args( ) { return s_args; }
 	};
 }

@@ -11,9 +11,6 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include <wil/resource.h>
-#include <wil/result.h>
-
 #include <utf8cpp/utf8.h>
 
 export module systems.files;
@@ -37,7 +34,12 @@ namespace systems::files
 
 	export class CResource
 	{
-		static std::unordered_map< std::wstring, std::span< uint8 > > cache;
+	public:
+		using iterator = std::span< uint8 >::iterator;
+		using const_iterator = std::span< uint8 >::const_iterator;
+
+	private:
+		static std::unordered_map< std::wstring, std::span< uint8 > > m_cache;
 		std::span< uint8 >                                            m_Data;
 		utils::EncodingInfo::EncodingType                             m_EncodingType = utils::EncodingInfo::EncodingType::UNKNOWN;
 
@@ -46,12 +48,12 @@ namespace systems::files
 
 		CResource( const std::wstring wsID, const bool bText = false )
 		{
-			auto it = cache . find( wsID );
-			if ( it != cache . end( ) ) m_Data = it -> second;
+			auto it = m_cache . find( wsID );
+			if ( it != m_cache . end( ) ) m_Data = it -> second;
 			else
 			{
-				m_Data        = _LoadResource( wsID, bText );
-				cache[ wsID ] = m_Data;
+				m_Data          = _LoadResource( wsID, bText );
+				m_cache[ wsID ] = m_Data;
 			}
 		}
 
@@ -89,62 +91,29 @@ namespace systems::files
 			}
 		}
 
+		iterator       begin( ) { return m_Data . begin( ); }
+		const_iterator cbegin( ) const { return m_Data . cbegin( ); }
+		iterator       end( ) { return m_Data . end( ); }
+		const_iterator cend( ) const { return m_Data . cend( ); }
+
 	private:
 		_NODISCARD std::span< uint8 > _LoadResource( std::wstring_view wsID, bool bText = false )
 		{
-			try
-			{
-				wil::unique_hmodule hModule( GetModuleHandleW( nullptr ) );
+			HMODULE hModule = GetModuleHandleW( nullptr );
 
-				HRSRC hResInfo = FindResourceW( hModule . get( ), wsID . data( ),RT_RCDATA );
-				THROW_LAST_ERROR_IF_NULL( hResInfo );
+			HRSRC hResInfo = FindResourceW( hModule, wsID . data( ),RT_RCDATA );
 
-				wil::unique_hglobal hResData( LoadResource( hModule . get( ), hResInfo ) );
-				THROW_LAST_ERROR_IF_NULL( hResData );
+			HGLOBAL hResData( LoadResource( hModule, hResInfo ) );
 
-				void *pData = LockResource( hResData . get( ) );
-				THROW_LAST_ERROR_IF_NULL( pData );
+			void *pData = LockResource( hResData );
 
-				DWORD size = SizeofResource( hModule . get( ), hResInfo );
+			DWORD size = SizeofResource( hModule, hResInfo );
 
-				m_Data = std::span( static_cast< uint8 * >( pData ), size );
+			m_Data = std::span( static_cast< uint8 * >( pData ), size );
 
-				if ( bText ) m_EncodingType = utils::EncodingInfo::checkEncoding( m_Data );
+			if ( bText ) m_EncodingType = utils::EncodingInfo::checkEncoding( m_Data );
 
-				return m_Data;
-			} catch ( const wil::ResultException & )
-			{
-				spdlog::warn( "Catch ResultException" );
-				return { };
-			}
+			return m_Data;
 		}
 	};
-
-	_NODISCARD float Q_rsqrt( float number )
-	{
-		switch ( static_cast< int >( number ) )
-		{
-			case 4: return 0.5f;
-			case 16: return 0.25f;
-			case 64: return 0.125f;
-			case 256: return 0.0625f;
-			case 1024: return 0.03125f;
-			default: break;
-		}
-
-		long            i;
-		float           x2, y;
-		constexpr float threehalfs = 1.5F;
-
-		x2 = number * 0.5F;
-		y  = number;
-
-		i = *( long * ) &y;
-		i = 0x5f3759df - ( i >> 1 );
-
-		y = *( float * ) &i;
-		y = y * ( threehalfs - ( x2 * y * y ) );
-
-		return y;
-	}
 }
