@@ -8,17 +8,18 @@
 
 #include <filesystem>
 #include <crossguid/guid.hpp>
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-export module systems.utils;
-import app.config;
+export module utils;
+import config;
 import types;
 
 using namespace std::literals;
 
-namespace systems::utils
+namespace utils
 {
 	export std::string create_guid( ) { return xg::newGuid( ) . str( ); }
 
@@ -152,4 +153,6 @@ namespace systems::utils
 
 		return logger;
 	}
+
+	template< class _Ty > std::string_view type_name( ) { return std::string_view( typeid( _Ty ) . name( ) ) . substr( 6 ); };
 }

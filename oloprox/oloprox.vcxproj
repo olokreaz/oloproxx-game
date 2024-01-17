@@ -295,7 +295,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="include\oloprox\enigne\"/>
+        <Folder Include="include\oloproxx\enigne\"/>
         <Folder Include="source\engine\"/>
     </ItemGroup>
 

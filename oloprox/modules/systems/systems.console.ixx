@@ -11,8 +11,8 @@
 #include <magic_enum_all.hpp>
 
 export module systems.console;
-import systems.utils;
-import app.config;
+import utils;
+import config;
 import types;
 
 namespace systems::console
@@ -27,8 +27,8 @@ namespace systems::console
 	{
 		Console( ) = delete;
 
-		inline static std::shared_ptr< spdlog::logger > s_log;
-		static inline argh::parser                             s_args;
+		inline static std::shared_ptr< spdlog::logger > s_log = utils::create_logger( "application" );
+		static inline argh::parser                      s_args;
 
 		inline static EWindowStatus s_status;
 		inline static HWND          s_hConsole;
@@ -39,10 +39,8 @@ namespace systems::console
 			using namespace std::chrono_literals;
 			if ( !s_hConsole ) s_hConsole = GetConsoleWindow( );
 
-			auto logger = utils::create_logger( "application" );
-
-			register_logger( logger );
-			set_default_logger( logger );
+			register_logger( s_log );
+			set_default_logger( s_log );
 
 			spdlog::set_automatic_registration( true );
 			spdlog::set_level( spdlog::level::trace );

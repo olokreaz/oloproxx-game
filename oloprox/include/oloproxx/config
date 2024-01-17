@@ -10,13 +10,14 @@ spdlog::critical( "["#func" - stacktrace]: {}", std::to_string( __ex_handler_cst
 
 
 #define REGISTER_CONFIG(className) \
-    import engine.config \
-	namespace { \
+    namespace { \
 	struct className##Registration { \
 	className##Registration() { \
-	ConfigRegistry::instance()->__registerConfig(#className, []() { return std::make_unique<className>(); }); \
+	engine::config::ConfigRegistry::instance()->__registerConfig(#className, [] { return std::make_shared<className>(); }); \
 	} \
 	} className##RegistrationInstance; \
 	}
 
 
+#define PROPERTY(name, type ) engine::config::Property<type> name { #name, m_config };
+#define PROPERTY_DEFAULT(name, type, def ) engine::config::Property<type> name { #name, m_config, def };
