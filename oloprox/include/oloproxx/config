@@ -7,17 +7,3 @@
 auto __ex_handler_cst = std::stacktrace::current(); \
 spdlog::critical( "["#func"]: {}", ex . what( ) ); \
 spdlog::critical( "["#func" - stacktrace]: {}", std::to_string( __ex_handler_cst ) );
-
-
-#define REGISTER_CONFIG(className) \
-    namespace { \
-	struct className##Registration { \
-	className##Registration() { \
-	engine::config::ConfigRegistry::instance()->__registerConfig(#className, [] { return std::make_shared<className>(); }); \
-	} \
-	} className##RegistrationInstance; \
-	}
-
-
-#define PROPERTY(name, type ) engine::config::Property<type> name { #name, m_config };
-#define PROPERTY_DEFAULT(name, type, def ) engine::config::Property<type> name { #name, m_config, def };

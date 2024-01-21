@@ -7,7 +7,7 @@
 #include <vulkan/vulkan.hpp>
 
 export module engine.types;
-import types;
+export import types;
 
 namespace engine::type
 {
