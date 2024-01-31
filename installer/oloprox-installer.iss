@@ -1,11 +1,11 @@
-#define MyAppName "oloprox"
+#define MyAppName "oloproxx"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "@olokreaz"
-#define MyAppURL "https://github.com/olokreaz/oloprox-game"
+#define MyAppURL "https://github.com/olokreaz/oloproxx-game"
 #define MyAppExeName "oloprox.exe"
-#define MyBinaryPath "E:\c++\oloprox\build.x64\Release"
+#define MyBinaryPath "E:\c++\oloprox\build.x64\Debug"
 #define MyContentPath "E:\c++\oloprox\data"
-#define MyProtocolName "oloprox"
+#define MyProtocolName "oloproxx"
 
 [Setup]
 AppId={{DFC44B4D-56D1-4AB1-9548-03B2647B9409}
@@ -24,7 +24,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=E:\c++\oloprox\installer\output
 OutputBaseFilename=oloprox-setup
 SetupIconFile={#MyBinaryPath}\{#MyAppName}.ico
-Password=oloprox
+Password=oloproxx
 Encryption=yes
 Compression=lzma
 SolidCompression=yes

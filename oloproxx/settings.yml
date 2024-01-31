@@ -1,0 +1,65 @@
+0:
+  window:
+    update: 17093008893675470
+    monitors:
+      - &1
+        refresh_rate: 144
+        bits:
+          - 8
+          - 8
+          - 8
+        resolution: 6184752908800
+        cotent_scale:
+          - 1
+          - 1
+        physical_size:
+          - 597
+          - 336
+      - refresh_rate: 165
+        bits:
+          - 8
+          - 8
+          - 8
+        resolution: 4638564681600
+        cotent_scale:
+          - 1
+          - 1
+        physical_size:
+          - 527
+          - 296
+    window:
+      monitor_selected: *1
+      mode: 0
+      resolution: 6184752908800
+window:
+  update: 17093053324624265
+  monitors:
+    - &2
+      refresh_rate: 144
+      bits:
+        - 8
+        - 8
+        - 8
+      resolution: 6184752908800
+      cotent_scale:
+        - 1
+        - 1
+      physical_size:
+        - 597
+        - 336
+    - refresh_rate: 165
+      bits:
+        - 8
+        - 8
+        - 8
+      resolution: 4638564681600
+      cotent_scale:
+        - 1
+        - 1
+      physical_size:
+        - 527
+        - 296
+  window:
+    monitor_selected: *2
+    mode: 0
+    resolution: 6184752908800

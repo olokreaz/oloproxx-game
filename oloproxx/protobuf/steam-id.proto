@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+package app.users;
+
+
+
+message User {
+    int64 steamid_key = 1;
+    int64 steamid = 2;
+    string name = 3;
+    double rating = 4;
+    repeated int64 friends = 5;
+}
