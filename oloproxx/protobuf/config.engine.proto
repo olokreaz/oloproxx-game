@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+package app.config.engine;
+
+enum EWindowMode{
+  kWindowed = 0;
+  kBorderless = 1;
+  kFullscreen = 2 ;
+}
+
+message EngineConfig {
+  uint32 version = 1;
+  EWindowMode window_mode = 2;
+}

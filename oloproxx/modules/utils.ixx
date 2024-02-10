@@ -41,11 +41,12 @@ namespace utils
 			UTF32_BOM = UTF32 | BOM ,
 		};
 
+
 		static EncodingType checkEncoding( const std::span < unsigned char > &data )
 		{
 			if ( data . size( ) >= 3 && data[ 0 ] == 0xEF && data[ 1 ] == 0xBB && data[ 2 ] == 0xBF ) return EncodingType::UTF8_BOM;
 
-			if ( data . size( ) >= 2 ) if ( data[ 0 ] == 0xFE && data[ 1 ] == 0xFF ) return EncodingType::UTF16_BOM; // UTF-16 Big-Endian
+			if ( data . size( ) >= 2 ) if ( data[ 0 ] == 0xFE && data[ 1 ] == 0xFF ) return EncodingType::UTF16_BOM;// UTF-16 Big-Endian
 
 			if ( data . size( ) >= 4 && data[ 0 ] == 0x00 && data[ 1 ] == 0x00 && data[ 2 ] == 0xFE && data[ 3 ] == 0xFF ) return EncodingType::UTF32_BOM;
 
@@ -71,7 +72,7 @@ namespace utils
 
 		static constexpr EncodingType getUTF( const EncodingType encType )
 		{
-			auto NoBOMMask = ~static_cast < uint8 >( EncodingType::BOM );
+			constexpr auto NoBOMMask = ~static_cast < uint8 >( EncodingType::BOM );
 			return static_cast < EncodingType >( static_cast < unsigned >( encType ) & NoBOMMask );
 		}
 
@@ -84,13 +85,14 @@ namespace utils
 		}
 	};
 
+
 	export _NODISCARD constexpr float Q_rsqrt( float number )
 	{
 		float           y;
 		constexpr float threehalfs = 1.5F;
 
-		float x2 = number * 0.5F;
-		y        = number;
+		const float x2 = number * 0.5F;
+		y              = number;
 
 		long i = *( long * ) &y;
 		i      = 0x5f3759df - ( i >> 1 );
@@ -103,31 +105,27 @@ namespace utils
 
 	export _NODISCARD void NukeProcess( int code = -1, const int offset = 0xff ) { exit( offset | code ); }
 
-	export std::shared_ptr < spdlog::logger > create_logger( const std::string_view logger_name, std::string file_name = "application" )
+	/*export std::shared_ptr < spdlog::logger > create_logger( const std::string_view logger_name, std::string file_name = "application" )
 	{
-		auto siDialy = std::make_shared < spdlog::sinks::daily_file_sink_mt >(
+		const auto siDialy = std::make_shared < spdlog::sinks::daily_file_sink_mt >(
 				( std::filesystem::current_path( ) / config::kConfig_Logger_Dir / fmt::format(
 						"{}.log",
 						file_name
 						) ) .
 				string( ), 0, 0
 				);
-		auto siStdout = std::make_shared < spdlog::sinks::stdout_color_sink_mt >( );
+		const auto siStdout = std::make_shared < spdlog::sinks::stdout_color_sink_mt >( );
+
 
 		siStdout -> set_color(
 				spdlog::level::trace,
-				FOREGROUND_INTENSITY
-				| FOREGROUND_GREEN
-				| FOREGROUND_BLUE
-				| FOREGROUND_RED
-				| BACKGROUND_BLUE
-				| BACKGROUND_GREEN
+				0b111111
 				);
+
 
 		std::shared_ptr < spdlog::logger > logger;
 
 		logger = std::make_shared < spdlog::logger >( logger_name . data( ) );
-
 		logger -> sinks( ) . clear( );
 
 		logger -> sinks( ) . push_back( siStdout );
@@ -140,7 +138,13 @@ namespace utils
 		logger -> trace( "logger created" );
 
 		return logger;
-	}
+	}*/
 
 	template< class _Ty > std::string_view type_name( ) { return std::string_view( typeid( _Ty ) . name( ) ) . substr( 6 ); }
+
+	export inline const std::filesystem::path &exe_path( )
+	{
+		static const auto p = std::filesystem::path( *__argv ) . parent_path( );
+		return p;
+	}
 }

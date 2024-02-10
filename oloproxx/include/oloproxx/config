@@ -1,9 +1,22 @@
 ﻿#pragma once
 
+//window
 #define VK_USE_PLATFORM_WIN32_KHR
 #define GLFW_EXPOSE_NATIVE_WIN32
 
+// glog
+#define GLOG_NO_ABBREVIATED_SEVERITIES
+
+#ifdef _DEBUG
+        #define RESOURCE_PATH "../data/"
+    #else
+        #define RESOURCE_PATH "./resource/"
+#endif
+
 #define O_EXCEPTION_HANDLER(func, ex) \
-auto __ex_handler_cst = std::stacktrace::current(); \
-spdlog::critical( "["#func"]: {}", ex . what( ) ); \
-spdlog::critical( "["#func" - stacktrace]: {}", std::to_string( __ex_handler_cst ) );
+		const auto __ex_handler_cst = std::stacktrace::current( ); \
+		LOG( ERROR ) << ex . what( ); \
+		LOG( ERROR ) << "stacktrace: " << std::to_string( __ex_handler_cst );
+
+#define OLOPROXX_VERSION VK_MAKE_VERSION( 1, 0, 0 )
+#define OLOPROXX_ENGINE_VERSION VK_MAKE_VERSION( 1, 0, 0 )

@@ -2,12 +2,13 @@
 
 #include <stacktrace>
 #include <string>
+#include <windows.h>
+#include <glog/logging.h>
+#include <glog/stl_logging.h>
 
+#include "oloproxx/engine/engine.hpp"
 
-#include <fmt/std.h>
-#include <spdlog/spdlog.h>
-
-#include <oloproxx/engine/Window.h>
+#pragma comment(lib, "vulkan-1.lib")
 
 import systems;
 import types;
@@ -21,16 +22,12 @@ int main( int argc, char **argv )
 	try
 	{
 		systems::console::Console::initialize( argv, argc );
-		systems::console::Console::setLogLevel( spdlog::level::trace );
 		systems::console::Console::setConsoleTitle( "oloproxx" );
-		set_default_logger( utils::create_logger( "application" ) );
 
-		window::Window window;
-	} catch ( const std::exception &ex )
-	{
-		O_EXCEPTION_HANDLER( main, ex )
-		return -1;
-	}
+		Engine engine;
+		engine . run( );
+	} catch ( const std::exception &ex ) { return -1; }
+
 
 	return 0;
 }

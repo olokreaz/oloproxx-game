@@ -62,7 +62,7 @@
             <WarningLevel>Level3</WarningLevel>
             <Optimization>Disabled</Optimization>
             <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
             <ConformanceMode>true</ConformanceMode>
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -76,7 +76,7 @@
             <SubSystem>Console</SubSystem>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <ShowProgress>LinkVerbose</ShowProgress>
-            <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;$(SolutionDir)\third_party\library\*.lib;vulkan-1.lib</AdditionalDependencies>
+            <AdditionalDependencies>E:\dev\vcpackage\installed\x64-windows\lib\vulkan-1.lib;%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;$(SolutionDir)third_party\library\*.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -87,7 +87,7 @@
             <FunctionLevelLinking>true</FunctionLevelLinking>
             <IntrinsicFunctions>true</IntrinsicFunctions>
             <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
             <ConformanceMode>true</ConformanceMode>
             <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
             <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -102,7 +102,7 @@
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
             <OptimizeReferences>true</OptimizeReferences>
             <GenerateDebugInformation>true</GenerateDebugInformation>
-            <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;$(SolutionDir)\third_party\library\*.lib;vulkan-1.lib</AdditionalDependencies>
+            <AdditionalDependencies>%(AdditionalDependencies);$(_ZVcpkgCurrentInstalledDir)$(_ZVcpkgConfigSubdir)lib\*.lib;vulkan-1.lib;$(SolutionDir)third_party\library\*.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
@@ -115,6 +115,7 @@
 
 
     <ItemGroup>
+        <Content Include=".clang-format"/>
         <Content Include="data\**\*" Exclude="data\**\*.{glsl,hlsl,spv}">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
@@ -136,170 +137,404 @@
 
         <ClInclude Include="include\**\*" Exclude="include\**\*.pb.cc"/>
         <ClCompile Include="include\**\*.pb.cc"/>
-        <ClCompile Include="include\oloproxx\engine\Window.cpp"/>
         <ClCompile Include="modules\**\*.ixx"/>
         <ClCompile Include="modules\**\*.cppm"/>
         <ClCompile Include="source\**\*.cpp"/>
         <ClCompile Include="source\**\*.cppm"/>
         <ClCompile Include="source\**\*.c"/>
         <ClCompile Include="source\**\*.cc"/>
-        <ClCompile Update="modules\systems\systems.windows\systems.windows.ixx">
-            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-            <Optimization>Disabled</Optimization>
-            <SupportJustMyCode>true</SupportJustMyCode>
-            <AssemblerOutput>NoListing</AssemblerOutput>
-            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-            <BrowseInformation>false</BrowseInformation>
-            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-            <CompileAs>Default</CompileAs>
-            <ConformanceMode>true</ConformanceMode>
-            <DiagnosticsFormat>Column</DiagnosticsFormat>
-            <DisableLanguageExtensions>false</DisableLanguageExtensions>
-            <ErrorReporting>Prompt</ErrorReporting>
-            <ExpandAttributedSource>false</ExpandAttributedSource>
-            <ExceptionHandling>Sync</ExceptionHandling>
-            <EnableASAN>false</EnableASAN>
-            <EnableFuzzer>false</EnableFuzzer>
-            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-            <FloatingPointModel>Precise</FloatingPointModel>
-            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-            <GenerateModuleDependencies>false</GenerateModuleDependencies>
-            <GenerateSourceDependencies>false</GenerateSourceDependencies>
-            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-            <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-            <IntrinsicFunctions>false</IntrinsicFunctions>
-            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-            <LanguageStandard>stdcpplatest</LanguageStandard>
-            <LanguageStandard_C>stdc17</LanguageStandard_C>
-            <MinimalRebuild>false</MinimalRebuild>
-            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-            <OmitDefaultLibName>false</OmitDefaultLibName>
-            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-            <WholeProgramOptimization>false</WholeProgramOptimization>
-            <ObjectFileName>x64\Debug\</ObjectFileName>
-            <CallingConvention>Cdecl</CallingConvention>
-            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
-            <PrecompiledHeader>NotUsing</PrecompiledHeader>
-            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-            <PrecompiledHeaderOutputFile>x64\Debug\oloprox.pch</PrecompiledHeaderOutputFile>
-            <PreprocessToFile>false</PreprocessToFile>
-            <PreprocessKeepComments>false</PreprocessKeepComments>
-            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-            <ShowIncludes>false</ShowIncludes>
-            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-            <SuppressStartupBanner>true</SuppressStartupBanner>
-            <BufferSecurityCheck>true</BufferSecurityCheck>
-            <SmallerTypeCheck>false</SmallerTypeCheck>
-            <SpectreMitigation>false</SpectreMitigation>
-            <StructMemberAlignment>Default</StructMemberAlignment>
-            <TrackerLogDirectory>x64\Debug\oloprox.tlog\</TrackerLogDirectory>
-            <TranslateIncludes>false</TranslateIncludes>
-            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-            <TreatWarningAsError>false</TreatWarningAsError>
-            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-            <UseFullPaths>true</UseFullPaths>
-            <WarningLevel>Level3</WarningLevel>
-            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-            <IntelJCCErratum>false</IntelJCCErratum>
-            <BuildStlModules>true</BuildStlModules>
-            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-            <SDLCheck>true</SDLCheck>
-            <MultiProcessorCompilation>true</MultiProcessorCompilation>
-            <StringPooling>true</StringPooling>
-            <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-            <LinkCompiled>true</LinkCompiled>
-            <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
-        </ClCompile>
-        <ClCompile Update="source\Configs.cpp">
-            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-            <Optimization>Disabled</Optimization>
-            <SupportJustMyCode>true</SupportJustMyCode>
-            <AssemblerOutput>NoListing</AssemblerOutput>
-            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-            <BrowseInformation>false</BrowseInformation>
-            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-            <CompileAs>Default</CompileAs>
-            <ConformanceMode>true</ConformanceMode>
-            <DiagnosticsFormat>Column</DiagnosticsFormat>
-            <DisableLanguageExtensions>false</DisableLanguageExtensions>
-            <ErrorReporting>Prompt</ErrorReporting>
-            <ExpandAttributedSource>false</ExpandAttributedSource>
-            <ExceptionHandling>Sync</ExceptionHandling>
-            <EnableASAN>false</EnableASAN>
-            <EnableFuzzer>false</EnableFuzzer>
-            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-            <FloatingPointModel>Precise</FloatingPointModel>
-            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-            <GenerateModuleDependencies>false</GenerateModuleDependencies>
-            <GenerateSourceDependencies>false</GenerateSourceDependencies>
-            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-            <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-            <IntrinsicFunctions>false</IntrinsicFunctions>
-            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-            <LanguageStandard>stdcpplatest</LanguageStandard>
-            <LanguageStandard_C>stdc17</LanguageStandard_C>
-            <MinimalRebuild>false</MinimalRebuild>
-            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-            <OmitDefaultLibName>false</OmitDefaultLibName>
-            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-            <WholeProgramOptimization>false</WholeProgramOptimization>
-            <ObjectFileName>x64\Debug\</ObjectFileName>
-            <CallingConvention>Cdecl</CallingConvention>
-            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
-            <PrecompiledHeader>NotUsing</PrecompiledHeader>
-            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-            <PrecompiledHeaderOutputFile>x64\Debug\oloprox.pch</PrecompiledHeaderOutputFile>
-            <PreprocessToFile>false</PreprocessToFile>
-            <PreprocessKeepComments>false</PreprocessKeepComments>
-            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-            <ShowIncludes>false</ShowIncludes>
-            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-            <SuppressStartupBanner>true</SuppressStartupBanner>
-            <BufferSecurityCheck>true</BufferSecurityCheck>
-            <SmallerTypeCheck>false</SmallerTypeCheck>
-            <SpectreMitigation>false</SpectreMitigation>
-            <StructMemberAlignment>Default</StructMemberAlignment>
-            <TrackerLogDirectory>x64\Debug\oloprox.tlog\</TrackerLogDirectory>
-            <TranslateIncludes>false</TranslateIncludes>
-            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-            <TreatWarningAsError>false</TreatWarningAsError>
-            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-            <UseFullPaths>true</UseFullPaths>
-            <WarningLevel>Level3</WarningLevel>
-            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-            <IntelJCCErratum>false</IntelJCCErratum>
-            <BuildStlModules>true</BuildStlModules>
-            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-            <SDLCheck>true</SDLCheck>
-            <MultiProcessorCompilation>true</MultiProcessorCompilation>
-            <StringPooling>true</StringPooling>
-            <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-            <LinkCompiled>true</LinkCompiled>
-            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
-        </ClCompile>
-        <ClCompile Update="source\impl\serializer.cpp">
+        <ClCompile Update="*.cc;*.*.cpp;*.cppm;*.ixx">
+            <!--        <ClCompile Update="modules\systems\systems.windows\systems.windows.ixx">-->
+            <!--            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>-->
+            <!--            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>-->
+            <!--            <Optimization>Disabled</Optimization>-->
+            <!--            <SupportJustMyCode>true</SupportJustMyCode>-->
+            <!--            <AssemblerOutput>NoListing</AssemblerOutput>-->
+            <!--            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>-->
+            <!--            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>-->
+            <!--            <BrowseInformation>false</BrowseInformation>-->
+            <!--            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>-->
+            <!--            <CompileAs>Default</CompileAs>-->
+            <!--            <ConformanceMode>true</ConformanceMode>-->
+            <!--            <DiagnosticsFormat>Column</DiagnosticsFormat>-->
+            <!--            <DisableLanguageExtensions>false</DisableLanguageExtensions>-->
+            <!--            <ErrorReporting>Prompt</ErrorReporting>-->
+            <!--            <ExpandAttributedSource>false</ExpandAttributedSource>-->
+            <!--            <ExceptionHandling>Sync</ExceptionHandling>-->
+            <!--            <EnableASAN>false</EnableASAN>-->
+            <!--            <EnableFuzzer>false</EnableFuzzer>-->
+            <!--            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>-->
+            <!--            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>-->
+            <!--            <FloatingPointModel>Precise</FloatingPointModel>-->
+            <!--            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>-->
+            <!--            <GenerateModuleDependencies>false</GenerateModuleDependencies>-->
+            <!--            <GenerateSourceDependencies>false</GenerateSourceDependencies>-->
+            <!--            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>-->
+            <!--            <InlineFunctionExpansion>Default</InlineFunctionExpansion>-->
+            <!--            <IntrinsicFunctions>false</IntrinsicFunctions>-->
+            <!--            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>-->
+            <!--            <LanguageStandard>stdcpplatest</LanguageStandard>-->
+            <!--            <LanguageStandard_C>stdc17</LanguageStandard_C>-->
+            <!--            <MinimalRebuild>false</MinimalRebuild>-->
+            <!--            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>-->
+            <!--            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>-->
+            <!--            <OmitDefaultLibName>false</OmitDefaultLibName>-->
+            <!--            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>-->
+            <!--            <WholeProgramOptimization>false</WholeProgramOptimization>-->
+            <!--            <ObjectFileName>x64\Debug\</ObjectFileName>-->
+            <!--            <CallingConvention>Cdecl</CallingConvention>-->
+            <!--            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>-->
+            <!--            <PrecompiledHeader>NotUsing</PrecompiledHeader>-->
+            <!--            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>-->
+            <!--            <PrecompiledHeaderOutputFile>x64\Debug\oloprox.pch</PrecompiledHeaderOutputFile>-->
+            <!--            <PreprocessToFile>false</PreprocessToFile>-->
+            <!--            <PreprocessKeepComments>false</PreprocessKeepComments>-->
+            <!--            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>-->
+            <!--            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>-->
+            <!--            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>-->
+            <!--            <ShowIncludes>false</ShowIncludes>-->
+            <!--            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>-->
+            <!--            <SuppressStartupBanner>true</SuppressStartupBanner>-->
+            <!--            <BufferSecurityCheck>true</BufferSecurityCheck>-->
+            <!--            <SmallerTypeCheck>false</SmallerTypeCheck>-->
+            <!--            <SpectreMitigation>false</SpectreMitigation>-->
+            <!--            <StructMemberAlignment>Default</StructMemberAlignment>-->
+            <!--            <TrackerLogDirectory>x64\Debug\oloprox.tlog\</TrackerLogDirectory>-->
+            <!--            <TranslateIncludes>false</TranslateIncludes>-->
+            <!--            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>-->
+            <!--            <TreatWarningAsError>false</TreatWarningAsError>-->
+            <!--            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>-->
+            <!--            <UseFullPaths>true</UseFullPaths>-->
+            <!--            <WarningLevel>Level3</WarningLevel>-->
+            <!--            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>-->
+            <!--            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>-->
+            <!--            <IntelJCCErratum>false</IntelJCCErratum>-->
+            <!--            <BuildStlModules>true</BuildStlModules>-->
+            <!--            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>-->
+            <!--            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>-->
+            <!--            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>-->
+            <!--            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>-->
+            <!--            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>-->
+            <!--            <SDLCheck>true</SDLCheck>-->
+            <!--            <MultiProcessorCompilation>true</MultiProcessorCompilation>-->
+            <!--            <StringPooling>true</StringPooling>-->
+            <!--            <DisableSpecificWarnings>4996</DisableSpecificWarnings>-->
+            <!--            <LinkCompiled>true</LinkCompiled>-->
+            <!--            <AdditionalIncludeDirectories>;E:\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>-->
+            <!--        </ClCompile>-->
+            <!--        <ClCompile Update="source\Configs.cpp">-->
+            <!--            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>-->
+            <!--            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>-->
+            <!--            <Optimization>Disabled</Optimization>-->
+            <!--            <SupportJustMyCode>true</SupportJustMyCode>-->
+            <!--            <AssemblerOutput>NoListing</AssemblerOutput>-->
+            <!--            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>-->
+            <!--            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>-->
+            <!--            <BrowseInformation>false</BrowseInformation>-->
+            <!--            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>-->
+            <!--            <CompileAs>Default</CompileAs>-->
+            <!--            <ConformanceMode>true</ConformanceMode>-->
+            <!--            <DiagnosticsFormat>Column</DiagnosticsFormat>-->
+            <!--            <DisableLanguageExtensions>false</DisableLanguageExtensions>-->
+            <!--            <ErrorReporting>Prompt</ErrorReporting>-->
+            <!--            <ExpandAttributedSource>false</ExpandAttributedSource>-->
+            <!--            <ExceptionHandling>Sync</ExceptionHandling>-->
+            <!--            <EnableASAN>false</EnableASAN>-->
+            <!--            <EnableFuzzer>false</EnableFuzzer>-->
+            <!--            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>-->
+            <!--            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>-->
+            <!--            <FloatingPointModel>Precise</FloatingPointModel>-->
+            <!--            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>-->
+            <!--            <GenerateModuleDependencies>false</GenerateModuleDependencies>-->
+            <!--            <GenerateSourceDependencies>false</GenerateSourceDependencies>-->
+            <!--            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>-->
+            <!--            <InlineFunctionExpansion>Default</InlineFunctionExpansion>-->
+            <!--            <IntrinsicFunctions>false</IntrinsicFunctions>-->
+            <!--            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>-->
+            <!--            <LanguageStandard>stdcpplatest</LanguageStandard>-->
+            <!--            <LanguageStandard_C>stdc17</LanguageStandard_C>-->
+            <!--            <MinimalRebuild>false</MinimalRebuild>-->
+            <!--            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>-->
+            <!--            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>-->
+            <!--            <OmitDefaultLibName>false</OmitDefaultLibName>-->
+            <!--            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>-->
+            <!--            <WholeProgramOptimization>false</WholeProgramOptimization>-->
+            <!--            <ObjectFileName>x64\Debug\</ObjectFileName>-->
+            <!--            <CallingConvention>Cdecl</CallingConvention>-->
+            <!--            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>-->
+            <!--            <PrecompiledHeader>NotUsing</PrecompiledHeader>-->
+            <!--            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>-->
+            <!--            <PrecompiledHeaderOutputFile>x64\Debug\oloprox.pch</PrecompiledHeaderOutputFile>-->
+            <!--            <PreprocessToFile>false</PreprocessToFile>-->
+            <!--            <PreprocessKeepComments>false</PreprocessKeepComments>-->
+            <!--            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>-->
+            <!--            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>-->
+            <!--            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>-->
+            <!--            <ShowIncludes>false</ShowIncludes>-->
+            <!--            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>-->
+            <!--            <SuppressStartupBanner>true</SuppressStartupBanner>-->
+            <!--            <BufferSecurityCheck>true</BufferSecurityCheck>-->
+            <!--            <SmallerTypeCheck>false</SmallerTypeCheck>-->
+            <!--            <SpectreMitigation>false</SpectreMitigation>-->
+            <!--            <StructMemberAlignment>Default</StructMemberAlignment>-->
+            <!--            <TrackerLogDirectory>x64\Debug\oloprox.tlog\</TrackerLogDirectory>-->
+            <!--            <TranslateIncludes>false</TranslateIncludes>-->
+            <!--            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>-->
+            <!--            <TreatWarningAsError>false</TreatWarningAsError>-->
+            <!--            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>-->
+            <!--            <UseFullPaths>true</UseFullPaths>-->
+            <!--            <WarningLevel>Level3</WarningLevel>-->
+            <!--            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>-->
+            <!--            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>-->
+            <!--            <IntelJCCErratum>false</IntelJCCErratum>-->
+            <!--            <BuildStlModules>true</BuildStlModules>-->
+            <!--            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>-->
+            <!--            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>-->
+            <!--            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>-->
+            <!--            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>-->
+            <!--            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>-->
+            <!--            <SDLCheck>true</SDLCheck>-->
+            <!--            <MultiProcessorCompilation>true</MultiProcessorCompilation>-->
+            <!--            <StringPooling>true</StringPooling>-->
+            <!--            <DisableSpecificWarnings>4996</DisableSpecificWarnings>-->
+            <!--            <LinkCompiled>true</LinkCompiled>-->
+            <!--            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>-->
+            <!--        </ClCompile>-->
+            <!--        <ClCompile Update="source\impl\serializer.cpp">-->
+            <!--            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>-->
+            <!--            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>-->
+            <!--            <Optimization>Disabled</Optimization>-->
+            <!--            <SupportJustMyCode>true</SupportJustMyCode>-->
+            <!--            <AssemblerOutput>NoListing</AssemblerOutput>-->
+            <!--            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>-->
+            <!--            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>-->
+            <!--            <BrowseInformation>false</BrowseInformation>-->
+            <!--            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>-->
+            <!--            <CompileAs>Default</CompileAs>-->
+            <!--            <ConformanceMode>true</ConformanceMode>-->
+            <!--            <DiagnosticsFormat>Column</DiagnosticsFormat>-->
+            <!--            <DisableLanguageExtensions>false</DisableLanguageExtensions>-->
+            <!--            <ErrorReporting>Prompt</ErrorReporting>-->
+            <!--            <ExpandAttributedSource>false</ExpandAttributedSource>-->
+            <!--            <ExceptionHandling>Sync</ExceptionHandling>-->
+            <!--            <EnableASAN>false</EnableASAN>-->
+            <!--            <EnableFuzzer>false</EnableFuzzer>-->
+            <!--            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>-->
+            <!--            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>-->
+            <!--            <FloatingPointModel>Precise</FloatingPointModel>-->
+            <!--            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>-->
+            <!--            <GenerateModuleDependencies>false</GenerateModuleDependencies>-->
+            <!--            <GenerateSourceDependencies>false</GenerateSourceDependencies>-->
+            <!--            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>-->
+            <!--            <InlineFunctionExpansion>Default</InlineFunctionExpansion>-->
+            <!--            <IntrinsicFunctions>false</IntrinsicFunctions>-->
+            <!--            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>-->
+            <!--            <LanguageStandard>stdcpplatest</LanguageStandard>-->
+            <!--            <LanguageStandard_C>stdc17</LanguageStandard_C>-->
+            <!--            <MinimalRebuild>false</MinimalRebuild>-->
+            <!--            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>-->
+            <!--            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>-->
+            <!--            <OmitDefaultLibName>false</OmitDefaultLibName>-->
+            <!--            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>-->
+            <!--            <WholeProgramOptimization>false</WholeProgramOptimization>-->
+            <!--            <ObjectFileName>x64\Debug\</ObjectFileName>-->
+            <!--            <CallingConvention>Cdecl</CallingConvention>-->
+            <!--            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>-->
+            <!--            <PrecompiledHeader>NotUsing</PrecompiledHeader>-->
+            <!--            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>-->
+            <!--            <PrecompiledHeaderOutputFile>x64\Debug\oloproxx.pch</PrecompiledHeaderOutputFile>-->
+            <!--            <PreprocessToFile>false</PreprocessToFile>-->
+            <!--            <PreprocessKeepComments>false</PreprocessKeepComments>-->
+            <!--            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>-->
+            <!--            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>-->
+            <!--            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>-->
+            <!--            <ShowIncludes>false</ShowIncludes>-->
+            <!--            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>-->
+            <!--            <SuppressStartupBanner>true</SuppressStartupBanner>-->
+            <!--            <BufferSecurityCheck>true</BufferSecurityCheck>-->
+            <!--            <SmallerTypeCheck>false</SmallerTypeCheck>-->
+            <!--            <SpectreMitigation>false</SpectreMitigation>-->
+            <!--            <StructMemberAlignment>Default</StructMemberAlignment>-->
+            <!--            <TrackerLogDirectory>x64\Debug\oloproxx.tlog\</TrackerLogDirectory>-->
+            <!--            <TranslateIncludes>false</TranslateIncludes>-->
+            <!--            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>-->
+            <!--            <TreatWarningAsError>false</TreatWarningAsError>-->
+            <!--            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>-->
+            <!--            <UseFullPaths>true</UseFullPaths>-->
+            <!--            <WarningLevel>Level3</WarningLevel>-->
+            <!--            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>-->
+            <!--            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>-->
+            <!--            <IntelJCCErratum>false</IntelJCCErratum>-->
+            <!--            <BuildStlModules>true</BuildStlModules>-->
+            <!--            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>-->
+            <!--            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>-->
+            <!--            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>-->
+            <!--            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>-->
+            <!--            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>-->
+            <!--            <SDLCheck>true</SDLCheck>-->
+            <!--            <MultiProcessorCompilation>true</MultiProcessorCompilation>-->
+            <!--            <StringPooling>true</StringPooling>-->
+            <!--            <DisableSpecificWarnings>4996</DisableSpecificWarnings>-->
+            <!--            <LinkCompiled>true</LinkCompiled>-->
+            <!--            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>-->
+            <!--        </ClCompile>-->
+            <!--        <ClCompile Update="source\impl\custom_forrmater.cpp">-->
+            <!--            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>-->
+            <!--            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>-->
+            <!--            <Optimization>Disabled</Optimization>-->
+            <!--            <SupportJustMyCode>true</SupportJustMyCode>-->
+            <!--            <AssemblerOutput>NoListing</AssemblerOutput>-->
+            <!--            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>-->
+            <!--            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>-->
+            <!--            <BrowseInformation>false</BrowseInformation>-->
+            <!--            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>-->
+            <!--            <CompileAs>Default</CompileAs>-->
+            <!--            <ConformanceMode>true</ConformanceMode>-->
+            <!--            <DiagnosticsFormat>Column</DiagnosticsFormat>-->
+            <!--            <DisableLanguageExtensions>false</DisableLanguageExtensions>-->
+            <!--            <ErrorReporting>Prompt</ErrorReporting>-->
+            <!--            <ExpandAttributedSource>false</ExpandAttributedSource>-->
+            <!--            <ExceptionHandling>Sync</ExceptionHandling>-->
+            <!--            <EnableASAN>false</EnableASAN>-->
+            <!--            <EnableFuzzer>false</EnableFuzzer>-->
+            <!--            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>-->
+            <!--            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>-->
+            <!--            <FloatingPointModel>Precise</FloatingPointModel>-->
+            <!--            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>-->
+            <!--            <GenerateModuleDependencies>false</GenerateModuleDependencies>-->
+            <!--            <GenerateSourceDependencies>false</GenerateSourceDependencies>-->
+            <!--            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>-->
+            <!--            <InlineFunctionExpansion>Default</InlineFunctionExpansion>-->
+            <!--            <IntrinsicFunctions>false</IntrinsicFunctions>-->
+            <!--            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>-->
+            <!--            <LanguageStandard>stdcpplatest</LanguageStandard>-->
+            <!--            <LanguageStandard_C>stdc17</LanguageStandard_C>-->
+            <!--            <MinimalRebuild>false</MinimalRebuild>-->
+            <!--            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>-->
+            <!--            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>-->
+            <!--            <OmitDefaultLibName>false</OmitDefaultLibName>-->
+            <!--            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>-->
+            <!--            <WholeProgramOptimization>false</WholeProgramOptimization>-->
+            <!--            <ObjectFileName>x64\Debug\</ObjectFileName>-->
+            <!--            <CallingConvention>Cdecl</CallingConvention>-->
+            <!--            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>-->
+            <!--            <PrecompiledHeader>NotUsing</PrecompiledHeader>-->
+            <!--            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>-->
+            <!--            <PrecompiledHeaderOutputFile>x64\Debug\oloproxx.pch</PrecompiledHeaderOutputFile>-->
+            <!--            <PreprocessToFile>false</PreprocessToFile>-->
+            <!--            <PreprocessKeepComments>false</PreprocessKeepComments>-->
+            <!--            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>-->
+            <!--            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>-->
+            <!--            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>-->
+            <!--            <ShowIncludes>false</ShowIncludes>-->
+            <!--            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>-->
+            <!--            <SuppressStartupBanner>true</SuppressStartupBanner>-->
+            <!--            <BufferSecurityCheck>true</BufferSecurityCheck>-->
+            <!--            <SmallerTypeCheck>false</SmallerTypeCheck>-->
+            <!--            <SpectreMitigation>false</SpectreMitigation>-->
+            <!--            <StructMemberAlignment>Default</StructMemberAlignment>-->
+            <!--            <TrackerLogDirectory>x64\Debug\oloproxx.tlog\</TrackerLogDirectory>-->
+            <!--            <TranslateIncludes>false</TranslateIncludes>-->
+            <!--            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>-->
+            <!--            <TreatWarningAsError>false</TreatWarningAsError>-->
+            <!--            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>-->
+            <!--            <UseFullPaths>true</UseFullPaths>-->
+            <!--            <WarningLevel>Level3</WarningLevel>-->
+            <!--            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>-->
+            <!--            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>-->
+            <!--            <IntelJCCErratum>false</IntelJCCErratum>-->
+            <!--            <BuildStlModules>true</BuildStlModules>-->
+            <!--            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>-->
+            <!--            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>-->
+            <!--            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>-->
+            <!--            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>-->
+            <!--            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>-->
+            <!--            <SDLCheck>true</SDLCheck>-->
+            <!--            <MultiProcessorCompilation>true</MultiProcessorCompilation>-->
+            <!--            <StringPooling>true</StringPooling>-->
+            <!--            <DisableSpecificWarnings>4996</DisableSpecificWarnings>-->
+            <!--            <LinkCompiled>true</LinkCompiled>-->
+            <!--            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>-->
+            <!--        </ClCompile>-->
+            <!--        <ClCompile Update="source\Window.cpp">-->
+            <!--            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>-->
+            <!--            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>-->
+            <!--            <Optimization>Disabled</Optimization>-->
+            <!--            <SupportJustMyCode>true</SupportJustMyCode>-->
+            <!--            <AssemblerOutput>NoListing</AssemblerOutput>-->
+            <!--            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>-->
+            <!--            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>-->
+            <!--            <BrowseInformation>false</BrowseInformation>-->
+            <!--            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>-->
+            <!--            <CompileAs>Default</CompileAs>-->
+            <!--            <ConformanceMode>true</ConformanceMode>-->
+            <!--            <DiagnosticsFormat>Column</DiagnosticsFormat>-->
+            <!--            <DisableLanguageExtensions>false</DisableLanguageExtensions>-->
+            <!--            <ErrorReporting>Prompt</ErrorReporting>-->
+            <!--            <ExpandAttributedSource>false</ExpandAttributedSource>-->
+            <!--            <ExceptionHandling>Sync</ExceptionHandling>-->
+            <!--            <EnableASAN>false</EnableASAN>-->
+            <!--            <EnableFuzzer>false</EnableFuzzer>-->
+            <!--            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>-->
+            <!--            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>-->
+            <!--            <FloatingPointModel>Precise</FloatingPointModel>-->
+            <!--            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>-->
+            <!--            <GenerateModuleDependencies>false</GenerateModuleDependencies>-->
+            <!--            <GenerateSourceDependencies>false</GenerateSourceDependencies>-->
+            <!--            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>-->
+            <!--            <InlineFunctionExpansion>Default</InlineFunctionExpansion>-->
+            <!--            <IntrinsicFunctions>false</IntrinsicFunctions>-->
+            <!--            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>-->
+            <!--            <LanguageStandard>stdcpplatest</LanguageStandard>-->
+            <!--            <LanguageStandard_C>stdc17</LanguageStandard_C>-->
+            <!--            <MinimalRebuild>false</MinimalRebuild>-->
+            <!--            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>-->
+            <!--            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>-->
+            <!--            <OmitDefaultLibName>false</OmitDefaultLibName>-->
+            <!--            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>-->
+            <!--            <WholeProgramOptimization>false</WholeProgramOptimization>-->
+            <!--            <ObjectFileName>x64\Debug\</ObjectFileName>-->
+            <!--            <CallingConvention>Cdecl</CallingConvention>-->
+            <!--            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>-->
+            <!--            <PrecompiledHeader>NotUsing</PrecompiledHeader>-->
+            <!--            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>-->
+            <!--            <PrecompiledHeaderOutputFile>x64\Debug\oloproxx.pch</PrecompiledHeaderOutputFile>-->
+            <!--            <PreprocessToFile>false</PreprocessToFile>-->
+            <!--            <PreprocessKeepComments>false</PreprocessKeepComments>-->
+            <!--            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>-->
+            <!--            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>-->
+            <!--            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>-->
+            <!--            <ShowIncludes>false</ShowIncludes>-->
+            <!--            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>-->
+            <!--            <SuppressStartupBanner>true</SuppressStartupBanner>-->
+            <!--            <BufferSecurityCheck>true</BufferSecurityCheck>-->
+            <!--            <SmallerTypeCheck>false</SmallerTypeCheck>-->
+            <!--            <SpectreMitigation>false</SpectreMitigation>-->
+            <!--            <StructMemberAlignment>Default</StructMemberAlignment>-->
+            <!--            <TrackerLogDirectory>x64\Debug\oloproxx.tlog\</TrackerLogDirectory>-->
+            <!--            <TranslateIncludes>false</TranslateIncludes>-->
+            <!--            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>-->
+            <!--            <TreatWarningAsError>false</TreatWarningAsError>-->
+            <!--            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>-->
+            <!--            <UseFullPaths>true</UseFullPaths>-->
+            <!--            <WarningLevel>Level3</WarningLevel>-->
+            <!--            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>-->
+            <!--            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>-->
+            <!--            <IntelJCCErratum>false</IntelJCCErratum>-->
+            <!--            <BuildStlModules>true</BuildStlModules>-->
+            <!--            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>-->
+            <!--            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>-->
+            <!--            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>-->
+            <!--            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>-->
+            <!--            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>-->
+            <!--            <SDLCheck>true</SDLCheck>-->
+            <!--            <MultiProcessorCompilation>true</MultiProcessorCompilation>-->
+            <!--            <StringPooling>true</StringPooling>-->
+            <!--            <DisableSpecificWarnings>4996</DisableSpecificWarnings>-->
+            <!--            <LinkCompiled>true</LinkCompiled>-->
+            <!--            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>-->
+            <!--        </ClCompile>-->
+            <!--        <ClCompile Update="source\engine\Engine.cpp">-->
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
             <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
             <Optimization>Disabled</Optimization>
@@ -377,84 +612,7 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
-        <ClCompile Update="source\impl\custom_forrmater.cpp">
-            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-            <Optimization>Disabled</Optimization>
-            <SupportJustMyCode>true</SupportJustMyCode>
-            <AssemblerOutput>NoListing</AssemblerOutput>
-            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-            <BrowseInformation>false</BrowseInformation>
-            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-            <CompileAs>Default</CompileAs>
-            <ConformanceMode>true</ConformanceMode>
-            <DiagnosticsFormat>Column</DiagnosticsFormat>
-            <DisableLanguageExtensions>false</DisableLanguageExtensions>
-            <ErrorReporting>Prompt</ErrorReporting>
-            <ExpandAttributedSource>false</ExpandAttributedSource>
-            <ExceptionHandling>Sync</ExceptionHandling>
-            <EnableASAN>false</EnableASAN>
-            <EnableFuzzer>false</EnableFuzzer>
-            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-            <FloatingPointModel>Precise</FloatingPointModel>
-            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-            <GenerateModuleDependencies>false</GenerateModuleDependencies>
-            <GenerateSourceDependencies>false</GenerateSourceDependencies>
-            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-            <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-            <IntrinsicFunctions>false</IntrinsicFunctions>
-            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-            <LanguageStandard>stdcpplatest</LanguageStandard>
-            <LanguageStandard_C>stdc17</LanguageStandard_C>
-            <MinimalRebuild>false</MinimalRebuild>
-            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-            <OmitDefaultLibName>false</OmitDefaultLibName>
-            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-            <WholeProgramOptimization>false</WholeProgramOptimization>
-            <ObjectFileName>x64\Debug\</ObjectFileName>
-            <CallingConvention>Cdecl</CallingConvention>
-            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
-            <PrecompiledHeader>NotUsing</PrecompiledHeader>
-            <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-            <PrecompiledHeaderOutputFile>x64\Debug\oloproxx.pch</PrecompiledHeaderOutputFile>
-            <PreprocessToFile>false</PreprocessToFile>
-            <PreprocessKeepComments>false</PreprocessKeepComments>
-            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-            <ShowIncludes>false</ShowIncludes>
-            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-            <SuppressStartupBanner>true</SuppressStartupBanner>
-            <BufferSecurityCheck>true</BufferSecurityCheck>
-            <SmallerTypeCheck>false</SmallerTypeCheck>
-            <SpectreMitigation>false</SpectreMitigation>
-            <StructMemberAlignment>Default</StructMemberAlignment>
-            <TrackerLogDirectory>x64\Debug\oloproxx.tlog\</TrackerLogDirectory>
-            <TranslateIncludes>false</TranslateIncludes>
-            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-            <TreatWarningAsError>false</TreatWarningAsError>
-            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-            <UseFullPaths>true</UseFullPaths>
-            <WarningLevel>Level3</WarningLevel>
-            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-            <IntelJCCErratum>false</IntelJCCErratum>
-            <BuildStlModules>true</BuildStlModules>
-            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-            <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-            <SDLCheck>true</SDLCheck>
-            <MultiProcessorCompilation>true</MultiProcessorCompilation>
-            <StringPooling>true</StringPooling>
-            <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-            <LinkCompiled>true</LinkCompiled>
-            <AdditionalIncludeDirectories>;E:\dev\vcpkg\installed\x64-windows\include</AdditionalIncludeDirectories>
-        </ClCompile>
+
     </ItemGroup>
 
     <ItemGroup>
@@ -468,14 +626,14 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
-    <Target Name="Create Setuper" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<!--    <Target Name="Create Setuper" AfterTargets="Build" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">-->
 
-        <PropertyGroup>
-            <Builder>C:\Program Files (x86)\Inno Setup 6\ISCC.exe</Builder>
-        </PropertyGroup>
+<!--        <PropertyGroup>-->
+<!--            <Builder>C:\Program Files (x86)\Inno Setup 6\ISCC.exe</Builder>-->
+<!--        </PropertyGroup>-->
 
-        <Exec Command="$(Builder) $(SolutionDir)installer\oloprox-installer.iss"/>
-    </Target>
+<!--        <Exec Command="$(Builder) $(SolutionDir)installer\oloprox-installer.iss"/>-->
+<!--    </Target>-->
 
     <Target Name="coping dll out from third-party lib" AfterTargets="Build">
         <ItemGroup>
