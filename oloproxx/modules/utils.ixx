@@ -6,7 +6,6 @@
 #include <span>
 #include <string>
 
-
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -139,6 +138,12 @@ namespace utils
 
 		return logger;
 	}*/
+
+	export template< class T > bool included( const std::span < T > span, T value )
+	{
+		for ( const auto &v : span ) if ( v == value ) return true;
+		return false;
+	}
 
 	template< class _Ty > std::string_view type_name( ) { return std::string_view( typeid( _Ty ) . name( ) ) . substr( 6 ); }
 

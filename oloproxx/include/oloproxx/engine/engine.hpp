@@ -27,7 +27,6 @@ class Engine
 
 	app::config::engine::EngineConfig m_config;
 
-
 	// window
 	GLFWwindow *m_pWindow;
 	HWND        m_hWindow;
@@ -40,7 +39,6 @@ class Engine
 
 	Window m_window { m_windowSize, "oloproxx" };
 
-
 	void __update( glm::f32 dt = 0.0f )
 	{
 		m_window . update( );
@@ -50,27 +48,21 @@ class Engine
 	bool Quited( ) { return glfwWindowShouldClose( m_pWindow ) /* && btnQuit */; }
 
 public:
-	Engine( ) { m_window . initialize( ); }
+	Engine( )
+	{
+		m_window . initialize( );
+		m_pWindow = m_window . get_window( );
+		m_hWindow = m_window . get_hwnd( );
+	}
 
 	void run( )
 	{
-		m_pWindow = m_window . get_window( );
-		m_hWindow = m_window . get_hwnd( );
-
-		std::thread thRenderUpdate(
-				[this]
-				{
-					while ( !Quited( ) )
-					{
-						std::this_thread::sleep_for( 50ms );
-						m_window . update( );
-						DLOG_EVERY_N( INFO, 100 ) << "Rendering";
-					}
-				}
-				);
-
-
-		thRenderUpdate . join( );
+		while ( !Quited( ) )
+		{
+			std::this_thread::sleep_for( 50ms );
+			m_window . update( );
+			// DLOG_EVERY_N( INFO, 100 ) << "Rendering";
+		}
 	}
 
 	~Engine( ) { }
