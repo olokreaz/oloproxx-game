@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <oloproxx/config>
+#include <oloproxx/protobuf/config.engine.pb.h>
 
 #include <string_view>
 
@@ -8,7 +9,6 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-#include <oloproxx/protobuf/config.engine.pb.h>
 #include <vulkan/vulkan.hpp>
 
 import types.vulkan;
@@ -42,13 +42,16 @@ class Window
 
 	vk::Format m_vkSwapChainImageFormat;
 
+	// Instance
 	vk::Instance       m_vkInstance;
+
 	vk::PhysicalDevice m_vkPhysicalDevice;
+
 	vk::Device         m_vkDevice;
 
 	vk::SurfaceKHR   m_vkSurface;
 	vk::SwapchainKHR m_vkSwapchain;
-	vk::SwapchainKHR m_vkOldSwapchain;
+	// vk::SwapchainKHR m_v kOldSwapchain;
 
 	type::vulkan::QueueFamilyIndices m_vkQueueFamilyIndices;
 	vk::Queue                        m_vkGraphicsQueue;

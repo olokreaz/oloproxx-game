@@ -1,34 +1,18 @@
 ﻿#include "oloproxx/engine/window.hpp"
 
-#include <GLFW/glfw3native.h>
-#include <boost/nowide/convert.hpp>
+#include <vector>
 
 #include <GLFW/glfw3native.h>
+
+#include <boost/nowide/convert.hpp>
+
 #include <glog/logging.h>
 #include <glog/stl_logging.h>
 
-#include <vulkan/vulkan_hpp_macros.hpp>
+#include <vulkan/vulkan_extension_inspection.hpp>
 
 import utils;
-
-namespace deteils
-{
-	VkResult CreateDebugUtilsMessengerEXT(
-			VkInstance                instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo, const VkAllocationCallbacks *pAllocator,
-			VkDebugUtilsMessengerEXT *pDebugMessenger
-			)
-	{
-		static const auto func = ( PFN_vkCreateDebugUtilsMessengerEXT ) vkGetInstanceProcAddr( instance, "vkCreateDebugUtilsMessengerEXT" );
-		if ( func != nullptr ) return func( instance, pCreateInfo, pAllocator, pDebugMessenger );
-		return VK_ERROR_EXTENSION_NOT_PRESENT;
-	}
-
-	void DestroyDebugUtilsMessengerEXT( VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks *pAllocator )
-	{
-		static const auto func = ( PFN_vkDestroyDebugUtilsMessengerEXT ) vkGetInstanceProcAddr( instance, "vkDestroyDebugUtilsMessengerEXT" );
-		if ( func != nullptr ) func( instance, debugMessenger, pAllocator );
-	}
-}
+import vulkan;
 
 void Window::__error_glfw( std::wstring_view werror )
 {
@@ -84,12 +68,20 @@ void Window::__CreateInstance( )
 {
 	glm::u32     count { };
 	const char **pExtensions = glfwGetRequiredInstanceExtensions( &count );
-	std::vector  requiredInstanceExt( pExtensions, pExtensions + count );
-	requiredInstanceExt . push_back( VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME );
-	requiredInstanceExt . push_back( VK_KHR_DISPLAY_EXTENSION_NAME );
-	requiredInstanceExt . push_back( VK_KHR_WIN32_SURFACE_EXTENSION_NAME );
 
-	const std::vector requiredInstanceLayers {
+	std::vector reqInstanceExt( pExtensions, pExtensions + count );
+
+	reqInstanceExt . push_back( VK_KHR_WIN32_SURFACE_EXTENSION_NAME );
+	reqInstanceExt . push_back( VK_KHR_DISPLAY_EXTENSION_NAME );
+
+	constexpr std::array < const char *,
+			       #ifndef RELEASED
+			       3
+			       #else
+		     2
+			       #endif
+
+	> reqInstanceLayers {
 				#ifndef RELEASED
 				"VK_LAYER_KHRONOS_validation",
 				#endif
@@ -98,40 +90,23 @@ void Window::__CreateInstance( )
 			};
 
 	vk::ApplicationInfo appInfo;
-	appInfo . setPApplicationName( "oloproxx" );
-	appInfo . setApplicationVersion( OLOPROXX_VERSION );
-	appInfo . setPEngineName( "oloproxx-engine" );
-	appInfo . setEngineVersion( OLOPROXX_VERSION );
-	appInfo . setApiVersion( VK_API_VERSION_1_3 );
+	appInfo . setPApplicationName( "oloproxx" )
+		. setApplicationVersion( OLOPROXX_VERSION )
+		. setPEngineName( "oloproxx-engine" )
+		. setEngineVersion( OLOPROXX_VERSION )
+		. setApiVersion( vk::ApiVersion13 );
 
-	vk::InstanceCreateInfo createInfo { };
-	createInfo . setPApplicationInfo( &appInfo );
+	vk::InstanceCreateInfo info;
+	info . setPApplicationInfo( &appInfo )
+	     . setEnabledExtensionCount( reqInstanceExt . size( ) )
+	     . setPpEnabledExtensionNames( reqInstanceExt . data( ) )
+	     . setEnabledLayerCount( reqInstanceLayers . size( ) )
+	     . setPpEnabledLayerNames( reqInstanceLayers . data( ) );
 
-	createInfo . setEnabledExtensionCount( requiredInstanceExt . size( ) );
-	createInfo . setPpEnabledExtensionNames( requiredInstanceExt . data( ) );
-
-	createInfo . setEnabledLayerCount( requiredInstanceLayers . size( ) );
-	createInfo . setPpEnabledLayerNames( requiredInstanceLayers . data( ) );
-
-	m_vkInstance = vk::createInstance( createInfo );
-
+	m_vkInstance = vulkan::createInstance( info );
 }
 
-void Window::__SelectPhysicalDevice( )
-{
-	const auto enumeratePhysicalDevices = m_vkInstance . enumeratePhysicalDevices( );
-	if ( enumeratePhysicalDevices . empty( ) ) __error_vulkan( L"No physical devices found" );
-
-	for ( const auto &phDevice : enumeratePhysicalDevices )
-	{
-		const auto properties = phDevice . getProperties( );
-		if ( properties . deviceType == vk::PhysicalDeviceType::eDiscreteGpu )
-		{
-			m_vkPhysicalDevice = phDevice;
-			return;
-		}
-	}
-}
+void Window::__SelectPhysicalDevice( ) { m_vkPhysicalDevice = vulkan::selectPhysicalDevice( m_vkInstance, m_vkSurface ); }
 
 void Window::__CreateDevice( )
 {
@@ -175,11 +150,7 @@ void Window::__CreateDevice( )
 
 void Window::__CreateSurface( )
 {
-	vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo;
-	surfaceCreateInfo . setHinstance( this -> m_hInstance = GetModuleHandle( nullptr ) );
-	surfaceCreateInfo . setHwnd( this -> m_hWindow );
-	this -> m_vkSurface = m_vkInstance . createWin32SurfaceKHR( surfaceCreateInfo );
-
+	m_vkSurface = vulkan::createSurface( m_vkInstance, m_pWindow );
 	// VkSurfaceKHR   srf;
 	// const VkResult glfwResult = glfwCreateWindowSurface( *m_vkInstance, m_pWindow, nullptr, &srf );
 	// if ( glfwResult != VK_SUCCESS ) throw std::runtime_error( "failed to create window surface!" );
@@ -219,18 +190,16 @@ void Window::__CreateSwapChain( )
 		createInfo . pQueueFamilyIndices   = queueFamilyIndices;
 	} else createInfo . imageSharingMode = vk::SharingMode::eExclusive;
 
-	createInfo . preTransform   = swapChainSupport . capabilities . currentTransform;
-	createInfo . compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
-	createInfo . presentMode    = presentMode;
-	createInfo . clipped        = VK_TRUE;
+	createInfo . setPreTransform( swapChainSupport . capabilities . currentTransform );
+	createInfo . setCompositeAlpha( vk::CompositeAlphaFlagBitsKHR::eOpaque );
+	createInfo . setPresentMode( presentMode );
+	createInfo . setClipped( true );
 
-	createInfo . oldSwapchain = m_vkOldSwapchain;
+	createInfo . setOldSwapchain( nullptr );
 
 	createInfo . imageArrayLayers = 1;
 
-	// if ( ( m_vkSwapchain = m_vkDevice . createSwapchainKHR( createInfo ) ) ) throw std::runtime_error( "failed to create swap chain!" );
-
-	vkCreateSwapchainKHR( m_vkDevice, ( VkSwapchainCreateInfoKHR * ) &createInfo, nullptr, ( VkSwapchainKHR * ) &m_vkSwapchain );
+	LOG( INFO ) << "Swapchain created " << m_vkSwapchain;
 
 	m_vkSwapchainImages = m_vkDevice . getSwapchainImagesKHR( m_vkSwapchain );
 
@@ -284,11 +253,12 @@ void Window::__init_vulkan( )
 	__CreateInstance( );
 	if ( !m_vkInstance ) __error_vulkan( L"Failed to create instance" );
 
+	__CreateSurface( );
+	if ( !m_vkSurface ) __error_vulkan( L"Failed to create surface" );
+
 	__SelectPhysicalDevice( );
 	if ( !m_vkPhysicalDevice ) __error_vulkan( L"Failed to select physical device" );
 
-	__CreateSurface( );
-	if ( !m_vkSurface ) __error_vulkan( L"Failed to create surface" );
 
 	__CreateDevice( );
 	if ( !m_vkDevice ) __error_vulkan( L"Failed to create device" );
